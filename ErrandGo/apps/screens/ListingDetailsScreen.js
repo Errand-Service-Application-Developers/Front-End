@@ -14,7 +14,7 @@ function ListingDetailsScreen({image,title,subtitle}) {
              <AppText style={styles.title}>{title}</AppText>
              <AppText style={styles.subtitle}>{subtitle}</AppText>
              <View style={styles.itemcontainer}>
-             <ListItem image={require('../assets/man.png')} title='Pinto Aaron' subtitle='8 tasks' />
+             <ListItem image={require('../assets/mosh.jpg')} title='Pinto Aaron' subtitle='8 tasks' />
 
              </View>
             

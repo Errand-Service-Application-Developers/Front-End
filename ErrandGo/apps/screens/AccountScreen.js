@@ -28,12 +28,13 @@ function AccountScreen(props) {
     return (
 
         <Screen style={styles.screen}>
-            <View style={styles.accountStyle}>
-                <ListItem title='Pinto Aaron' subtitle='aaronpinto111@gmail.com' image={require('../assets/mosh.jpg')}/>
+            <View style={styles.container}>
+                <ListItem title='Pinto Aaron'  subtitle='aaronpinto111@gmail.com' image={require('../assets/mosh.jpg')}/>
             </View>
 
-            <View style={{backgroundColor:'#fff', marginBottom:30,padding:5}} >
 
+                <View style={{marginVertical:20}}>
+                    
                 <FlatList  
                 data={menuItems} 
                 keyExtractor={menuItem => menuItem.title}
@@ -42,15 +43,16 @@ function AccountScreen(props) {
                 IconComponent= { <Icon name={item.icon.name} size={45} backgroundColor={item.icon.backgroundColor} />}   /> }  
                 ItemSeparatorComponent={ListItemSeparator}/>
 
-            </View>
+                </View>
+
+            
 
 
-            <View style={{backgroundColor:'#fff', marginBottom:30, padding:5}} >
+           
 
               <ListItem title='Log Out' IconComponent={<Icon name='logout' backgroundColor='#ffe66d' size={45}/>}/>
 
-            </View>
-
+       
             
 
 
@@ -68,7 +70,7 @@ function AccountScreen(props) {
 
 
 const styles = StyleSheet.create({
-    accountStyle:{
+    container:{
     
         backgroundColor: colors.white,
         width: '100%',

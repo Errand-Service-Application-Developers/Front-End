@@ -9,15 +9,26 @@ import Screen from './apps/screens/Screen';
 import ListItemSeparator from './apps/components/ListItemSeparator';
 import ListItemDeleteAction from './apps/components/ListItemDeleteAction';
 import  Swipeable  from 'react-native-gesture-handler/Swipeable';
+import AccountScreen from './apps/screens/AccountScreen';
+import ListItem from './apps/components/ListItem';
+import Icon from './apps/components/Icon';
+import colors from './apps/config/colors';
+import ListingScreen from './apps/screens/ListingScreen';
 
 export default function App() {
   console.log('App Executed');
 
   return(
-    <MessagesScreen/>
+
+   <ListingScreen/>
+
+
+   
+   
     
   );
 }
-
-
 //<ListingDetailsScreen title='Buy Me Food From Campus' subtitle='$20' image={require('./apps/assets/woman.jpg')} />
+//<ListingDetailsScreen/>
+
+//

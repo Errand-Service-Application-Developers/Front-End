@@ -9,7 +9,7 @@ import defaultStyles from '../config/styles';
 
 function AppTextInput({icon,...otherProps}) {
     return (
-        <Screen>
+        
 
         <View style={styles.container}> 
 
@@ -19,7 +19,7 @@ function AppTextInput({icon,...otherProps}) {
         <TextInput style={defaultStyles.text} {...otherProps}  />
 
         </View>
-        </Screen>
+        
     );
 }
 

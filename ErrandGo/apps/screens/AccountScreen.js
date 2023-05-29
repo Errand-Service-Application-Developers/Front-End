@@ -29,7 +29,7 @@ function AccountScreen(props) {
 
         <Screen style={styles.screen}>
             <View style={styles.container}>
-                <ListItem title='Pinto Aaron'  subtitle='aaronpinto111@gmail.com' image={require('../assets/mosh.jpg')}/>
+                <ListItem title='Pinto Aaron'  subtitle='aaronpinto111@gmail.com' image={require('../assets/pinto.jpg')}/>
             </View>
 
 

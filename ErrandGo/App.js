@@ -21,6 +21,8 @@ import ListingScreen from './apps/screens/ListingScreen';
 import AppTextInput from './apps/components/AppTextInput';
 import AppPicker from './apps/components/AppPicker';
 import AppText from './apps/components/AppText';
+import LoginScreen from './apps/screens/LoginScreen';
+import WelcomeScreen2 from './apps/screens/WelcomeScreen2';
 
 
 
@@ -50,14 +52,10 @@ export default function App() {
 
   return(
 
-    <Screen>
 
-    <AppPicker  selectedItem={category} onSelectItem={item=>setCategory(item)} items={categories} icon='apps' placeholder='Category'/>
+    <WelcomeScreen2/>
 
-    <AppTextInput icon='email' placeholder='Your Email'/>
-
-   </Screen>
-
+  
    
     
   );

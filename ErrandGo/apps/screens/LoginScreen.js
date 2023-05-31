@@ -1,15 +1,12 @@
 import React from 'react';
-import { Formik } from 'formik'
-import { StyleSheet,Image, View , Text} from 'react-native';
+import { StyleSheet, View , } from 'react-native';
 import * as Yup from 'yup';
 
 
-import Screen from './Screen';
-import AppTextInput from '../components/AppTextInput';
-import AppButtons from '../components/AppButtons';
+
+
 import defaultStyles from '../config/styles';
-import AppText from '../components/AppText';
-import ErrorMessage from '../components/ErrorMessage';
+import {AppForm,AppFormField,SubmitButton,} from '../components/forms'
 
 
 const validationSchema = Yup.object().shape(
@@ -32,42 +29,35 @@ function LoginScreen(props) {
             <View style={styles.formContainer}>
             
 
-            <Formik 
+            <AppForm
             initialValues={{email:'', password:''}}
             onSubmit={values=> console.log(values)}  
             validationSchema={validationSchema} >
 
-                {({handleChange,handleSubmit,errors})=>(
-                <>
-                <AppTextInput 
+                <AppFormField
+                name="email"
                 icon='email'
                 placeholder='Email'
                 autoCapitalize='none'
                 autoCorrect={false}
                 keyboardType='email-address'
                 textContentType='emailAddress'
-                onChangeText = {handleChange("email")} 
                 />
-                <ErrorMessage error={errors.email}/>
 
-                <AppTextInput 
+                <AppFormField
+                name="password"
                 icon='lock'
                 placeholder='Password'
                 autoCapitalize='none'
                 autoCorrect={false}
                 textContentType='password'
                 secureTextEntry
-                onChangeText = {handleChange("password")}
                 />
-                <ErrorMessage error={errors.password}/>
 
-               <AppButtons title='Login' color='blue' onPress={handleSubmit}/>
-                    
-                </>
+                <SubmitButton title="Login"/>
 
+            </AppForm>
                 
-                )}
-            </Formik>
 
 
             </View>

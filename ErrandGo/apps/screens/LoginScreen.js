@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View , } from 'react-native';
+import { StyleSheet, View ,Image} from 'react-native';
 import * as Yup from 'yup';
 
 
@@ -23,6 +23,9 @@ function LoginScreen(props) {
 
         
             <View style={styles.container}>
+               
+                 <Image style={styles.logo} source={require('../assets/logo.png')}/>
+               
 
             </View>
 
@@ -79,7 +82,11 @@ const styles = StyleSheet.create({
         height: '40%',
         backgroundColor: defaultStyles.colors.blue,
         marginBottom: 40,
-        borderBottomLeftRadius: 75
+        borderBottomLeftRadius: 75,
+        justifyContent: 'center',
+        alignItems: 'center',
+        
+      
 
     },
 
@@ -87,6 +94,13 @@ const styles = StyleSheet.create({
         padding: 10
 
     },
+    logo:{
+        width:260,
+        height: 120,
+        alignSelf: 'center',
+    
+       
+    }
 
    
     

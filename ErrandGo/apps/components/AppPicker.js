@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet,TextInput,View,Platform, TouchableWithoutFeedback, Modal, Button, FlatList } from 'react-native';
+import { StyleSheet,View, TouchableWithoutFeedback, Modal, FlatList } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 
@@ -26,9 +26,12 @@ function AppPicker({icon, selectedItem, onSelectItem,items,placeholder,}) {
 
         {icon && <MaterialCommunityIcons style={styles.icon} name={icon} size={20} color={defaultStyles.colors.grey} />}
 
-        <AppText style={styles.text}>
-        {selectedItem ? selectedItem.label : placeholder}
-        </AppText>
+
+        {selectedItem ? 
+        <AppText>{selectedItem.label}</AppText> : 
+        <AppText style={styles.placeholder}>{placeholder}</AppText>}
+
+        
 
         <MaterialCommunityIcons name='chevron-down' size={20} color={defaultStyles.colors.grey} />
 
@@ -38,7 +41,11 @@ function AppPicker({icon, selectedItem, onSelectItem,items,placeholder,}) {
         </TouchableWithoutFeedback>
         <Modal visible={modalVisible}  animationType='slide'>
             <Screen>
-            <Button color={defaultStyles.colors.grey} title='Close' onPress={()=>setModalVisible(false)}/>
+                <View style={{justifyContent:'center',alignItems:'center'}}>
+                 
+                 <MaterialCommunityIcons name='close' size={25} onPress={()=>setModalVisible(false)}/>
+
+                </View>
 
             <FlatList 
             data={items}
@@ -73,6 +80,10 @@ const styles = StyleSheet.create({
     icon:{
         marginRight:10,
 
+    },
+    placeholder:{
+        color: defaultStyles.colors.grey,
+        flex: 1,
     },
     text:{
         color:defaultStyles.colors.grey,

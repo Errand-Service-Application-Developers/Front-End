@@ -1,13 +1,21 @@
 import React from 'react';
-import { TouchableOpacity,StyleSheet } from 'react-native';
-import AppText from './AppText';
+import { TouchableOpacity,StyleSheet, View,Text } from 'react-native';
+import ListItemSeparator from './ListItemSeparator';
+
 
 function PickerItem({label,onPress}) {
     return (
         <TouchableOpacity onPress={onPress}>
-            <AppText style={styles.text}>
+
+            <View style={styles.textContainer}>
+            <ListItemSeparator/>
+
+            <Text style={styles.text}>
                 {label}
-            </AppText>
+            </Text>
+            
+
+            </View>
         </TouchableOpacity>
       
     );
@@ -18,7 +26,13 @@ function PickerItem({label,onPress}) {
 const styles = StyleSheet.create({
     text:{
         padding:8,
+        fontSize:16,
+        fontWeight: '600',
     
+    },
+    textContainer:{
+        borderBottomColor: 'transparent',
+
     }
 })
 

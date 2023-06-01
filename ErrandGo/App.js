@@ -23,37 +23,20 @@ import AppPicker from './apps/components/AppPicker';
 import AppText from './apps/components/AppText';
 import LoginScreen from './apps/screens/LoginScreen';
 import WelcomeScreen2 from './apps/screens/WelcomeScreen2';
+import ListingEditScreen from './apps/screens/ListingEditScreen';
 
 
 
-
-const categories = [
-  {
-      value: 1, label:"Pickup or Delivery",     
-  },
-  {
-      value: 2, label:"Laundry",   
-  },
-  {
-      value: 3,label:"Cleaning ",
-  },
-  {
-      value: 4,label:"Cooking",  
-  }
-]
 
 
 export default function App() {
   console.log('App Executed');
 
-  const [category,setCategory]= useState();
-  
-
 
   return(
 
 
-    <WelcomeScreen2/>
+    <ListingEditScreen/>
 
   
    

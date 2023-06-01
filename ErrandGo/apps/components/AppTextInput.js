@@ -16,7 +16,9 @@ function AppTextInput({icon,...otherProps}) {
         {icon && <MaterialCommunityIcons style={styles.icon} name={icon} size={20} color={defaultStyles.colors.grey} />}
 
 
-        <TextInput style={defaultStyles.text} {...otherProps}  />
+        <TextInput 
+        placeholderTextColor={defaultStyles.colors.grey}
+        style={defaultStyles.text} {...otherProps}  />
 
         </View>
         

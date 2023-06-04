@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import Screen from './Screen';
 import { AppForm, AppFormField, SubmitButton} from '../components/forms'
 import AppFormPicker from '../components/forms/AppFormPicker';
+import CategoryPickerItem from '../components/CategoryPickerItem';
 
 
 
@@ -20,17 +21,23 @@ const validationSchema = Yup.object().shape({
 
 const categories = [
     {
-        value: 1, label:"Pickup or Delivery",     
+        value: 1, label:"Pickup or Delivery", backgroundColor:"#ff5252" , icon: "truck-delivery"    
     },
     {
-        value: 2, label:"Laundry",   
+        value: 2, label:"Gas Filling", backgroundColor:"#4ecdc4" , icon: "gas-station" 
     },
     {
-        value: 3,label:"Cleaning ",
+        value: 3, label:"Laundry",  backgroundColor:"orange" , icon: "washing-machine"    
     },
     {
-        value: 4,label:"Cooking",  
-    }
+        value: 4, label:"Cleaning ", backgroundColor:"#2596de" , icon: "broom" 
+    },
+    {
+        value: 5, label:"Cooking", backgroundColor:"green" , icon: "food-fork-drink"   
+    },
+    {
+        value: 6, label:"Others" ,   icon: "apps"   
+    },
   ]
 
 
@@ -58,25 +65,31 @@ function ListingEditScreen(props) {
             placeholder="Title" 
             maxLength = {255}
             />
+              
+           <AppFormField
+            fieldWidth="40%"
+            name = "price"
+            maxLength = {8}
+            placeholder = "Price"
+            keyboardType = "numeric" />
 
-            <AppFormField
+            <AppFormPicker
+            PickerItemComponent={CategoryPickerItem}
+            numberOfColumns={3}
+            items={categories}
+            fieldWidth="70%"
+            name="category"
+            placeholder = "Category" />
+
+
+           <AppFormField
             name = "description"
             placeholder = "Description"
             maxLength = {255}
             multilines
             numberOfLines = {3} 
             />
-
-            <AppFormPicker
-            items={categories}
-            name="category"
-            placeholder = "Category" />
-            
-            <AppFormField
-            name = "price"
-            maxLength = {8}
-            placeholder = "Price"
-            keyboardType = "numeric" />
+          
 
             <SubmitButton title="Post"/>
 

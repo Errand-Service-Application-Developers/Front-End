@@ -35,11 +35,19 @@ export default function App() {
 
   return(
 
-
     <ListingEditScreen/>
-
   
    
     
   );
+
 }
+
+const styles = StyleSheet.create({
+  screen:{
+    backgroundColor: colors.light,
+    paddingTop: 40,
+    flex: 1
+  }
+})
+

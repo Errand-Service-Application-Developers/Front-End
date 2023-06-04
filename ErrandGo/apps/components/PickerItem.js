@@ -1,17 +1,16 @@
 import React from 'react';
 import { TouchableOpacity,StyleSheet, View,Text } from 'react-native';
-import ListItemSeparator from './ListItemSeparator';
 
 
-function PickerItem({label,onPress}) {
+
+function PickerItem({item,onPress}) {
     return (
         <TouchableOpacity onPress={onPress}>
 
             <View style={styles.textContainer}>
-            <ListItemSeparator/>
-
+           
             <Text style={styles.text}>
-                {label}
+                {item.label}
             </Text>
             
 
@@ -32,6 +31,7 @@ const styles = StyleSheet.create({
     },
     textContainer:{
         borderBottomColor: 'transparent',
+        marginBottom: 10,
 
     }
 })

@@ -2,9 +2,6 @@
 import { useState } from 'react';
 import { SafeAreaView, StyleSheet, Switch, Text, View } from 'react-native';
 
-
-
-
 import WelcomeScreen from './apps/screens/WelcomeScreen';
 import Card from './apps/components/Card';
 import ListingDetailsScreen from './apps/screens/ListingDetailsScreen';
@@ -26,12 +23,7 @@ import WelcomeScreen2 from './apps/screens/WelcomeScreen2';
 import ListingEditScreen from './apps/screens/ListingEditScreen';
 
 
-
-
-
 export default function App() {
-  console.log('App Executed');
-
 
   return(
 

@@ -1,6 +1,8 @@
 //import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { SafeAreaView, StyleSheet, Switch, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Button, SafeAreaView, StyleSheet, Switch, Image,Text, View } from 'react-native';
+import * as ImagePicker from 'expo-image-picker'
+
 
 import WelcomeScreen from './apps/screens/WelcomeScreen';
 import Card from './apps/components/Card';
@@ -21,6 +23,8 @@ import AppText from './apps/components/AppText';
 import LoginScreen from './apps/screens/LoginScreen';
 import WelcomeScreen2 from './apps/screens/WelcomeScreen2';
 import ListingEditScreen from './apps/screens/ListingEditScreen';
+import ImageInput from './apps/components/ImageInput';
+import ImageInputList from './apps/components/ImageInputList';
 
 
 export default function App() {
@@ -28,18 +32,9 @@ export default function App() {
   return(
 
     <ListingEditScreen/>
-  
+    
    
     
   );
-
-}
-
-const styles = StyleSheet.create({
-  screen:{
-    backgroundColor: colors.light,
-    paddingTop: 40,
-    flex: 1
   }
-})
 

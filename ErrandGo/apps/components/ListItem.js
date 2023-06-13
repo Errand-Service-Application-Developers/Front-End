@@ -59,9 +59,9 @@ const styles = StyleSheet.create({
     },
 
     title:{
-        marginBottom:8,
+        marginBottom:10,
         fontWeight: '500',
-        fontSize: 17
+        fontSize: 18
 
     },
      

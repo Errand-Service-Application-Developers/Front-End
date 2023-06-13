@@ -3,21 +3,21 @@ import { Image, ImageBackground,StyleSheet, Text, View } from 'react-native';
 
 
 import AppButtons from '../components/AppButtons';
+import colors from '../config/colors';
 
-function WelcomeScreen(props) {
+function WelcomeScreen({navigation}) {
     return (
-        <ImageBackground blurRadius={5} style={styles.background} source={require('../assets/background.jpg')}>
+        <ImageBackground blurRadius={3} style={styles.background} source={require('../assets/shopcart.jpg')}>
             <View style={styles.logoContainer}>
 
-                <Image style={styles.logo} source={require('../assets/logo-red.png')} />
-                <Text style={styles.tagline}> Let Me Do It </Text>
-               
+                <Image style={styles.logo} source={require('../assets/logo.png')} />
+                <Text style={styles.tagline}>Need Help! Just Post It</Text>
                 
             </View>
 
             <View style={styles.buttoncontainer}>
-                <AppButtons title='Login' />
-                <AppButtons title='register' color='secondary' />
+                <AppButtons title='Login'  onPress={()=> navigation.navigate("Login")}  />
+                <AppButtons title='Register' color='secondary' onPress={()=> navigation.navigate("Register")} />
             </View>
 
 
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     },
 
     logo:{
-        width:100,
+        width:220,
         height:100,
     },
 
@@ -59,8 +59,9 @@ const styles = StyleSheet.create({
     },
     tagline:{
         fontSize:20,
-        fontWeight:'600',
-        paddingTop: 10,
+        fontWeight:'500',
+        paddingTop: 3,
+        
     },
 
     

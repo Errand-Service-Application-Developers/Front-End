@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     design:{
         width:'100%',
         height: '20%',
-        backgroundColor: defaultStyles.colors.blue,
+        backgroundColor: defaultStyles.colors.secondary,
         borderBottomLeftRadius: 55,
         justifyContent:'center',
         alignContent:'center',

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     container:{
         width: '100%',
         height: '40%',
-        backgroundColor: defaultStyles.colors.blue,
+        backgroundColor: defaultStyles.colors.secondary,
         marginBottom: 40,
         borderBottomLeftRadius: 75,
         justifyContent: 'center',

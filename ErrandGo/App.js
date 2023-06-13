@@ -1,40 +1,154 @@
-//import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
-import { Button, SafeAreaView, StyleSheet, Switch, Image,Text, View } from 'react-native';
-import * as ImagePicker from 'expo-image-picker'
+import React from 'react';
+import {  Text } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 
-import WelcomeScreen from './apps/screens/WelcomeScreen';
-import Card from './apps/components/Card';
-import ListingDetailsScreen from './apps/screens/ListingDetailsScreen';
-import MessagesScreen from './apps/screens/MessagesScreen';
 import Screen from './apps/screens/Screen';
-import ListItemSeparator from './apps/components/ListItemSeparator';
-import ListItemDeleteAction from './apps/components/ListItemDeleteAction';
-import  Swipeable  from 'react-native-gesture-handler/Swipeable';
-import AccountScreen from './apps/screens/AccountScreen';
-import ListItem from './apps/components/ListItem';
-import Icon from './apps/components/Icon';
-import colors from './apps/config/colors';
-import ListingScreen from './apps/screens/ListingScreen';
-import AppTextInput from './apps/components/AppTextInput';
-import AppPicker from './apps/components/AppPicker';
-import AppText from './apps/components/AppText';
 import LoginScreen from './apps/screens/LoginScreen';
-import WelcomeScreen2 from './apps/screens/WelcomeScreen2';
-import ListingEditScreen from './apps/screens/ListingEditScreen';
-import ImageInput from './apps/components/ImageInput';
-import ImageInputList from './apps/components/ImageInputList';
+import RegisterScreen from './apps/screens/RegisterScreen';
+import AuthNavigator from './apps/navigation/AuthNavigator';
+import AppNavigator from './apps/navigation/AppNavigator';
+import WelcomeScreen from './apps/screens/WelcomeScreen';
+import navigationTheme from './apps/navigation/navigationTheme';
+
+
+const Tweets =  ({navigation}) => 
+    (
+    <Screen>
+    <Text onPress={()=>navigation.navigate("TweetDetails",{name:"Pinto",id:"1"})}>
+      My tweets
+    </Text> 
+      
+    </Screen>
+
+    );
+
+
+const TweetDetails = ({route}) => (
+  <Screen>
+    <Text>
+      Tweet Details {route.params.id}
+    </Text>
+  </Screen>
+
+);
+
+const Account = () => (
+  <Screen>
+    <Text>Account</Text>
+  </Screen>
+)
+
+
+const AddItem = () => (
+  <Screen>
+    <Text>Adding Screen</Text>
+  </Screen>
+)
+
+
+const Stack = createNativeStackNavigator();
+
+const ListNavigator = () => (
+  <Stack.Navigator
+  screenOptions = {{
+    headerStyle: {backgroundColor: "dodgerblue"},
+    headerTintColor: "white",
+  }}>
+
+    <Stack.Screen  name="Tweets" component={Tweets}/>
+
+    <Stack.Screen  name="TweetDetails" component={TweetDetails} options={({route}) => ({ title: route.params.id})}/>
+
+
+  </Stack.Navigator>
+)
+
+
+const AddItemNavigator = () => (
+  <Stack.Navigator
+  screenOptions = {{
+    headerStyle: {backgroundColor: "dodgerblue"},
+    headerTintColor: "white",
+  }}>
+
+    <Stack.Screen  name="Tweets" component={Tweets}/>
+
+    <Stack.Screen  name="TweetDetails" component={TweetDetails} options={({route}) => ({ title: route.params.id})}/>
+
+
+  </Stack.Navigator>
+)
+
+
+
+const AccountNavigator = () => (
+  <Stack.Navigator
+  screenOptions = {{
+    headerStyle: {backgroundColor: "dodgerblue"},
+    headerTintColor: "white",
+  }}>
+
+    <Stack.Screen  name="Tweets" component={Tweets}/>
+
+    <Stack.Screen  name="TweetDetails" component={TweetDetails} options={({route}) => ({ title: route.params.id})}/>
+
+
+  </Stack.Navigator>
+)
+
+
+const Tab = createBottomTabNavigator();
+
+const TabNavigator = () => (
+  <Tab.Navigator 
+  screenOptions ={{
+    tabBarActiveBackgroundColor: 'dodgerblue',
+    tabBarActiveTintColor: 'white',
+    tabBarInactiveBackgroundColor: '#eee',
+    tabBarInactiveTintColor:'black'
+ 
+  }}>
+
+    <Tab.Screen 
+    name='Feed'
+    component={ListNavigator}
+    options={{
+      tabBarIcon: ({size,color})=> <MaterialCommunityIcons name="home" color={color} size={size}/>
+    }} />
+    <Tab.Screen
+    name='add'
+    component={AddItemNavigator} 
+    options={{
+      tabBarIcon: ({size,color})=> <MaterialCommunityIcons name="plus" color={color} size={size}/>
+    }}/>
+    <Tab.Screen
+    name='Account'
+    component={AccountNavigator} 
+    options={{
+      tabBarIcon: ({size,color})=> <MaterialCommunityIcons name="account" color={color} size={size}/>
+    }}/>
+
+  </Tab.Navigator>
+)
+
+
 
 
 export default function App() {
 
+  console.log("App Executed")
+
   return(
 
-    <ListingEditScreen/>
-    
-   
-    
+   <NavigationContainer theme={navigationTheme}>
+    <AppNavigator/>
+   </NavigationContainer>
   );
-  }
+  
+}
+ 
 

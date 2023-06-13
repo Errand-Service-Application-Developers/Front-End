@@ -8,6 +8,7 @@ import ListItem from '../components/ListItem';
 import colors from '../config/colors';
 import ListItemSeparator from '../components/ListItemSeparator';
 import Icon from '../components/Icon';
+import route from '../navigation/route';
 
 
 const menuItems = [
@@ -20,16 +21,18 @@ const menuItems = [
      icon:{
         name: "email",
         backgroundColor: colors.secondary
-     }}
+     },
+    targetScreen:route.MESSAGES
+    }
 
 ]
 
-function AccountScreen(props) {
+function AccountScreen({navigation}) {
     return (
 
         <Screen style={styles.screen}>
             <View style={styles.container}>
-                <ListItem title='Pinto Aaron'  subtitle='aaronpinto111@gmail.com' image={require('../assets/pinto.jpg')}/>
+                <ListItem title='Pinto Aaron'  subtitle='aaronpinto111@gmail.com' image={require('../assets/pinto.jpg')} showChevrons/>
             </View>
 
 
@@ -40,7 +43,9 @@ function AccountScreen(props) {
                 keyExtractor={menuItem => menuItem.title}
                 renderItem={({item}) => <ListItem 
                 title={item.title} 
-                IconComponent= { <Icon name={item.icon.name} size={45} backgroundColor={item.icon.backgroundColor} />}   /> }  
+                showChevrons
+                IconComponent= { <Icon name={item.icon.name} size={45} backgroundColor={item.icon.backgroundColor} />}   
+                onPress={()=> navigation.navigate(item.targetScreen)}/> }  
                 ItemSeparatorComponent={ListItemSeparator}/>
 
                 </View>

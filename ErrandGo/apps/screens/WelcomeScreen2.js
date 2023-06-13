@@ -8,7 +8,7 @@ import defaultStyles from '../config/styles';
 import AppButtons from '../components/AppButtons';
 import colors from '../config/colors';
 
-function WelcomeScreen2(props) {
+function WelcomeScreen2({navigation}) {
     return (
         <SafeAreaView style={styles.screen}>
             <Image style={styles.imagecontainer} source={require('../assets/GIRL.jpg')}></Image>
@@ -21,8 +21,8 @@ function WelcomeScreen2(props) {
                  </View>
                 </View>
                 <View style={styles.buttoncontainer}>
-                <AppButtons title='Login'color='primary2'/>
-                <AppButtons title='Register' color='secondary2'/>
+                <AppButtons title='Login'color='primary2' onPress={()=> navigation.navigate("Login")}/>
+                <AppButtons title='Register' color='secondary2' onPress={()=> navigation.navigate("Register")}/>
             </View>
             </View>
             

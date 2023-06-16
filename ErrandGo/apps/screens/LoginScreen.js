@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View ,Image} from 'react-native';
+import { StyleSheet, View ,Image,Text} from 'react-native';
 import * as Yup from 'yup';
 
 
@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 
 import defaultStyles from '../config/styles';
 import {AppForm,AppFormField,SubmitButton,} from '../components/forms'
+import colors from '../config/colors';
 
 
 const validationSchema = Yup.object().shape(
@@ -17,7 +18,7 @@ const validationSchema = Yup.object().shape(
     }
 )
 
-function LoginScreen(props) {
+function LoginScreen({navigation}) {
     return (
         <View>
 
@@ -26,7 +27,10 @@ function LoginScreen(props) {
                
                  <Image style={styles.logo} source={require('../assets/logo.png')}/>
                
-
+            </View>
+            <View style={{flexDirection:'row', padding:20,marginBottom:10}}>
+                <Text style={{fontStyle:'italic',color:colors.grey}}>Don't have an account? </Text>
+                <Text style={{ color:colors.primary}} onPress={()=> navigation.navigate("Register")}>Sign Up </Text>
             </View>
 
             <View style={styles.formContainer}>
@@ -38,6 +42,7 @@ function LoginScreen(props) {
             validationSchema={validationSchema} >
 
                 <AppFormField
+                style={styles.Textinput}
                 name="email"
                 icon='email'
                 placeholder='Email'
@@ -48,6 +53,7 @@ function LoginScreen(props) {
                 />
 
                 <AppFormField
+                style={styles.Textinput}
                 name="password"
                 icon='lock'
                 placeholder='Password'
@@ -67,8 +73,6 @@ function LoginScreen(props) {
         
       </View>
  
-
- 
        
     );
 }
@@ -79,9 +83,9 @@ const styles = StyleSheet.create({
 
     container:{
         width: '100%',
-        height: '40%',
+        height: '35%',
         backgroundColor: defaultStyles.colors.secondary,
-        marginBottom: 40,
+        marginBottom: 10,
         borderBottomLeftRadius: 75,
         justifyContent: 'center',
         alignItems: 'center',
@@ -98,8 +102,12 @@ const styles = StyleSheet.create({
         width:260,
         height: 120,
         alignSelf: 'center',
-    
-       
+
+    },
+    Textinput:{
+        borderWidth:1,
+        borderColor: defaultStyles.colors.secondary
+
     }
 
    

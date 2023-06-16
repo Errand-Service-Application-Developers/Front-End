@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View ,Image,Text} from 'react-native';
+import { StyleSheet, View ,Image,Text, ScrollView} from 'react-native';
 import * as Yup from 'yup';
 import  { MaterialCommunityIcons } from '@expo/vector-icons'
 
@@ -15,14 +15,15 @@ const validationSchema = Yup.object().shape(
         email: Yup.string().required().email().label('Email'),
         password: Yup.string().required().min(5).label('Password'),
         username: Yup.string().required().label('Username'),
-        fullname: Yup.string().required().label('Full Name'),
+        
      
 
     }
 )
 
-function RegisterScreen(props) {
+function RegisterScreen({navigation}) {
     return (
+
         <View style={styles.container}>
             <View style={styles.design}>
 
@@ -51,18 +52,12 @@ function RegisterScreen(props) {
             
 
             <AppForm
-            initialValues={{fullname:'', username:'',email:'', password:'',}}
+            initialValues={{ username:'',email:'', password:'',}}
             onSubmit={values=> console.log(values)}  
             validationSchema={validationSchema} >
 
-              <AppFormField
-                name="fullname"
-                placeholder='Full name'
-                autoCapitalize='words'
-                autoCorrect={false}
-                />
-                
                 <AppFormField
+                style={styles.Textinput}
                 name="username"
                 icon='account'
                 placeholder='Username'
@@ -71,6 +66,7 @@ function RegisterScreen(props) {
                 />
 
                 <AppFormField
+                style={styles.Textinput}
                 name="email"
                 icon='email'
                 placeholder='Email'
@@ -81,6 +77,7 @@ function RegisterScreen(props) {
                 />
 
                 <AppFormField
+                style={styles.Textinput}
                 name="password"
                 icon='lock'
                 placeholder='Password'
@@ -95,10 +92,15 @@ function RegisterScreen(props) {
             </AppForm>
 
             </View>
+            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                <Text style={{fontStyle:'italic',color:defaultStyles.colors.grey,textAlign:'center'}}>Already have an account? </Text>
+                <Text style={{ color:"#f8ee39",textAlign:'center'}} onPress={()=> navigation.navigate("Login")}>Login</Text>
+            </View>
         
       </View>
  
        
+    
     );
 }
 
@@ -123,6 +125,11 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignContent:'center',
         
+    },
+    Textinput:{
+        borderWidth:1,
+        borderColor: defaultStyles.colors.secondary
+
     }
    
    

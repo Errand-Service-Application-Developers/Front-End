@@ -18,13 +18,13 @@ function NewListingButton({onPress}) {
 
 const styles = StyleSheet.create({
     container:{
-        height:80,
-        width: 80,
-        borderRadius: 40,
+        height:70,
+        width: 70,
+        borderRadius: 35,
         backgroundColor: colors.primary,
-        bottom: 20,
+        bottom: 16,
         borderColor: colors.white,
-        borderWidth: 10,
+        borderWidth: 8,
         alignItems: 'center',
         justifyContent: 'center',
 

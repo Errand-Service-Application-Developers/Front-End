@@ -11,7 +11,7 @@ function ListingDetailsScreen({ route }) {
 
     return (
         <View>
-             <Image style={styles.image} source={listing.image}></Image>
+             <Image style={styles.image} source={{ uri: listing.images[0].url}}></Image>
              <View style={styles.detailscontainer}>
                 <View style={{flexDirection:'row'}}>
                     <View style={{flex:1}}>
@@ -38,7 +38,7 @@ export default ListingDetailsScreen;
 const styles = StyleSheet.create({
     image:{
         width: '100%',
-        height:300,
+        height:'45%',
 
     },
     detailscontainer:{

@@ -11,7 +11,7 @@ function SubmitButton({title}) {
     const { handleSubmit } = useFormikContext();    
 
     return (
-        <AppButtons title={title} color='primary' onPress={handleSubmit}/>
+        <AppButtons title={title} color='secondary' onPress={handleSubmit}/>
     );
 }
 

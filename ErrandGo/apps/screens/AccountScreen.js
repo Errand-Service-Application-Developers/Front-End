@@ -79,10 +79,10 @@ const styles = StyleSheet.create({
     
         backgroundColor: colors.white,
         width: '100%',
-        marginBottom: 40,
+        marginBottom: 20,
     },
     screen:{
-        paddingTop: Constants.statusBarHeight + Constants.statusBarHeight,
+        paddingTop: Constants.statusBarHeight ,
         backgroundColor: colors.light
     },
     

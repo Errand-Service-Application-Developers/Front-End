@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import * as Yup from 'yup';
 
@@ -10,15 +10,18 @@ import AppFormPicker from '../components/forms/AppFormPicker';
 import CategoryPickerItem from '../components/CategoryPickerItem';
 import FormImagePicker from '../components/forms/FormImagePicker';
 import useLocation from '../hooks/useLocation';
+import listingsApi from '../api/listings';
+import UploadScreen from '../components/UploadScreen';
+
 
 
 
 const validationSchema = Yup.object().shape({
     title: Yup.string().required().label('Title'),
     description: Yup.string().required().label('Description'),
-    category: Yup.object().required().nullable().label('Category'),
-    price: Yup.number().required().min(10).max(100).label('Price'),
-    images: Yup.array().min(1,"Please select at least one image").max(4,"You can't select more than 4 images")
+    category: Yup.object().required().label('Category'),
+    price: Yup.number().required().min(1).label('Price'),
+    images: Yup.array().min(1,"Please selecy at least one image").max(3,"You can't select more than 3 images")
    
 })
 
@@ -46,14 +49,30 @@ const categories = [
 
 
 
+
 function ListingEditScreen(props) {
     const location = useLocation();
+    const [uploadVisible,setUploadVisible] = useState(false);
+    const [progress,setProgress] = useState(0);
+
+    const handleSubmit = async (listing) => {
+        setProgress(0);
+        setUploadVisible(true);
+        const result = await listingsApi.addListing({...listing,location},progress => setProgress(progress));
+        setUploadVisible(false);
+
+        if (!result.ok)
+           return console.log(result.problem,result.data)
+        alert('success')
+        console.log(result.data)
+    }
 
 
     return (
 
 
         <Screen style={styles.screen}>
+            <UploadScreen progress={progress} visible = {uploadVisible}/>
 
             <AppForm 
             
@@ -65,7 +84,7 @@ function ListingEditScreen(props) {
                 images: []
                
             }}
-            onSubmit={values=> console.log(location)}
+            onSubmit={handleSubmit}
             validationSchema={validationSchema} >
             
             <FormImagePicker name="images"/>
@@ -101,7 +120,7 @@ function ListingEditScreen(props) {
             />
           
 
-            <SubmitButton title="Post"/>
+            <SubmitButton title="Post" />
 
 
             </AppForm>

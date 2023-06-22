@@ -11,7 +11,7 @@ function ListingDetailsScreen({ route }) {
 
     return (
         <View>
-             <Image style={styles.image} source={{ uri: listing.images[0].url}}></Image>
+             <Image style={styles.image} source={{ uri: "http://192.168.43.173:8000"+ listing.images[0].url}}></Image>
              <View style={styles.detailscontainer}>
                 <View style={{flexDirection:'row'}}>
                     <View style={{flex:1}}>

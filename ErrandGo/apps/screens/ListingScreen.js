@@ -56,16 +56,18 @@ const loadListings = async () => {
             </>}
 
             <ActivityIndicator visible ={loading} />
+            
 
             <FlatList 
             data={listings}
             keyExtractor={listings => listings.id.toString() }
-            renderItem={({item}) =>
-             <Card title={item.title} 
-             subtitle={'Ghc '+ item.price} 
-             imageUrl ={"http://192.168.43.173:8000" + item.images[0].url}
+            renderItem={({item}) => 
+            <Card title={item.title}
+             subtitle={'Ghc '+item.price} 
+             imageUrl= {"http://192.168.43.173:8000"+item.images[0].url}
              onPress={()=>navigation.navigate(route.LISTING_DETAILS,item)} /> } 
-            />
+            
+            /> 
 
        
 

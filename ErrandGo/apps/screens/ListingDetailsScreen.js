@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet,View,Image,Text } from 'react-native';
+import { StyleSheet,View,Text } from 'react-native';
+import { Image} from 'react-native-expo-image-cache'
 
 
 import AppText from '../components/AppText';
@@ -11,7 +12,7 @@ function ListingDetailsScreen({ route }) {
 
     return (
         <View>
-             <Image style={styles.image} source={{ uri: "http://192.168.43.173:8000"+ listing.images[0].url}}></Image>
+             <Image style={styles.image} uri={"http://192.168.43.173:8000"+ listing.images[0].url}/>
              <View style={styles.detailscontainer}>
                 <View style={{flexDirection:'row'}}>
                     <View style={{flex:1}}>

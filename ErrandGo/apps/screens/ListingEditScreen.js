@@ -19,7 +19,7 @@ import UploadScreen from '../components/UploadScreen';
 const validationSchema = Yup.object().shape({
     title: Yup.string().required().label('Title'),
     description: Yup.string().required().label('Description'),
-    category: Yup.object().required().label('Category'),
+    category: Yup.object().required().nullable().label('Category'),
     price: Yup.number().required().min(1).label('Price'),
     images: Yup.array().min(1,"Please selecy at least one image").max(3,"You can't select more than 3 images")
    

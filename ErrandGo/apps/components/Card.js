@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet,View,Image,TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet,View,TouchableWithoutFeedback } from 'react-native';
+import { Image } from 'react-native-expo-image-cache'
 
 
 
@@ -10,7 +11,7 @@ function Card({title,subtitle,imageUrl,onPress}) {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
         <View style={styles.card}>
-            <Image style={styles.image} source={{uri: imageUrl}} />
+            <Image style={styles.image} uri={imageUrl} />
             <View style={styles.detailscontainer}>
               <AppText style={styles.title} >{title}</AppText>
               <AppText style={styles.subtitle} >{subtitle}</AppText>

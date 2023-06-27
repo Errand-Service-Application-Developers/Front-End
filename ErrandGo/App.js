@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 import Screen from './apps/screens/Screen';
@@ -16,17 +17,26 @@ import navigationTheme from './apps/navigation/navigationTheme';
 
 
 
+import OfflineNotice from './apps/components/OfflineNotice';
+
 
 
 export default function App() {
 
   console.log("App Executed")
 
-  return(
+  
 
-   <NavigationContainer theme={navigationTheme}>
-    <AppNavigator/>
-   </NavigationContainer>
+
+  return (
+
+    <>
+    <OfflineNotice/>
+    <NavigationContainer theme={navigationTheme}>
+     <AppNavigator/>
+    </NavigationContainer>
+
+    </>
   );
   
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View ,Image,Text} from 'react-native';
 import * as Yup from 'yup';
 
@@ -6,19 +6,38 @@ import * as Yup from 'yup';
 
 
 import defaultStyles from '../config/styles';
-import {AppForm,AppFormField,SubmitButton,} from '../components/forms'
+import {AppForm,AppFormField,SubmitButton,ErrorMessage} from '../components/forms'
 import colors from '../config/colors';
+import authApi from '../api/auth';
 
 
 const validationSchema = Yup.object().shape(
     {
-        email: Yup.string().required().email().label('Email'),
+        username: Yup.string().required().min(5).label('Username'),
         password: Yup.string().required().min(5).label('Password'),
 
     }
 )
 
 function LoginScreen({navigation}) {
+    const [loginFailed,setLoginFailed] = useState(false);
+
+
+    const handleSubmit = async (loginInfo,actions) => {
+        const result = await authApi.login(loginInfo.username,loginInfo.password);
+
+        if (!result.ok){
+            return setLoginFailed(true);
+        }
+        
+        setLoginFailed(false);
+
+    actions.resetForm();
+    }
+
+
+
+
     return (
         <View>
 
@@ -37,19 +56,19 @@ function LoginScreen({navigation}) {
             
 
             <AppForm
-            initialValues={{email:'', password:''}}
-            onSubmit={values=> console.log(values)}  
+            initialValues={{ username:"", password:""}}
+            onSubmit={handleSubmit}  
             validationSchema={validationSchema} >
 
+                <ErrorMessage error="Invalid username or password" visible={loginFailed}/>
                 <AppFormField
                 style={styles.Textinput}
-                name="email"
-                icon='email'
-                placeholder='Email'
+                name="username"
+                icon='account'
+                placeholder='Username'
                 autoCapitalize='none'
                 autoCorrect={false}
-                keyboardType='email-address'
-                textContentType='emailAddress'
+                
                 />
 
                 <AppFormField

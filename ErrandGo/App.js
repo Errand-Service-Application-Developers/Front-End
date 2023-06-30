@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {  Text } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -18,25 +18,27 @@ import navigationTheme from './apps/navigation/navigationTheme';
 
 
 import OfflineNotice from './apps/components/OfflineNotice';
+import AuthContext from './apps/auth/context';
 
 
 
 export default function App() {
 
   console.log("App Executed")
+  const [user,setUser] = useState();
 
   
 
 
   return (
 
-    <>
+    <AuthContext.Provider value={{user, setUser}}>
     <OfflineNotice/>
     <NavigationContainer theme={navigationTheme}>
-     <AuthNavigator/>
+     {user? <AppNavigator/>: <AuthNavigator/>}
     </NavigationContainer>
 
-    </>
+    </AuthContext.Provider >
   );
   
 }

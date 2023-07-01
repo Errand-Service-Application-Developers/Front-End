@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet,View,FlatList } from 'react-native';
 import  Constants from 'expo-constants';
 
@@ -9,6 +9,8 @@ import colors from '../config/colors';
 import ListItemSeparator from '../components/ListItemSeparator';
 import Icon from '../components/Icon';
 import route from '../navigation/route';
+import apiClient from '../api/client';
+import AuthContext from '../auth/context';
 
 
 const menuItems = [
@@ -28,11 +30,37 @@ const menuItems = [
 ]
 
 function AccountScreen({navigation}) {
+
+    const [currentUser,setCurrentUser] = useState([]);
+
+
+    useEffect(()=>{
+        
+        getUser(user);
+
+    },[])
+
+    const {user,setUser}= useContext(AuthContext);
+
+    const getUser = async (users) => {
+        const response = await apiClient.get('/user/' + users.user_id);
+
+        if (!response.ok)
+           console.log(response.problem)
+        
+
+        
+        setCurrentUser(response.data);
+        
+              
+    }
+
+
     return (
 
         <Screen style={styles.screen}>
             <View style={styles.container}>
-                <ListItem title='Pinto Aaron'  subtitle='aaronpinto111@gmail.com' image={require('../assets/pinto.jpg')} showChevrons/>
+                <ListItem title={currentUser.username}  subtitle={currentUser.email} image={require('../assets/woman.jpg')} showChevrons/>
             </View>
 
 
@@ -55,7 +83,10 @@ function AccountScreen({navigation}) {
 
            
 
-              <ListItem title='Log Out' IconComponent={<Icon name='logout' backgroundColor='#ffe66d' size={45}/>}/>
+              <ListItem title='Log Out' 
+              IconComponent={<Icon name='logout'
+              backgroundColor='#ffe66d' size={45}/>}
+              onPress={()=>setUser(null)}/>
 
        
             

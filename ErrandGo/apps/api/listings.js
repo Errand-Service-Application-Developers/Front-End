@@ -1,5 +1,5 @@
-import { date } from 'yup';
 import client from './client'
+
 
 
 const endpoint = '/items';
@@ -7,6 +7,7 @@ const endpoint = '/items';
 const getListings = () => client.get(endpoint);
 
 const addListing = (listing,onUploadProgress)=>{
+
     const data = new FormData()
     data.append('title',listing.title);
     data.append('description',listing.description);

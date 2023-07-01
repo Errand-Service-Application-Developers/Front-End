@@ -11,6 +11,7 @@ import {AppForm,AppFormField,SubmitButton,ErrorMessage} from '../components/form
 import colors from '../config/colors';
 import authApi from '../api/auth';
 import AuthContext from '../auth/context';
+import authStorage from '../auth/storage';
 
 
 const validationSchema = Yup.object().shape(
@@ -38,6 +39,7 @@ function LoginScreen({navigation}) {
         access_token = result.data['access']
         const user = jwtDecode(access_token);
         authContext.setUser(user);
+        authStorage.storeToken(access_token)
         
 
     actions.resetForm();

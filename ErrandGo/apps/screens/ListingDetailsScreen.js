@@ -12,7 +12,7 @@ function ListingDetailsScreen({ route }) {
 
     return (
         <View>
-             <Image style={styles.image} uri={"http://192.168.43.173:8000"+ listing.images[0].url}/>
+             <Image style={styles.image} uri={(listing.images[0]? "http://192.168.43.173:8000"+listing.images[0].url : "http://192.168.43.173:8000/media/help.jpg")}/>
              <View style={styles.detailscontainer}>
                 <View style={{flexDirection:'row'}}>
                     <View style={{flex:1}}>

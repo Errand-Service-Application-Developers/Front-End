@@ -7,7 +7,7 @@ import { Image } from 'react-native-expo-image-cache'
 import colors from '../config/colors';
 import AppText from './AppText';
 
-function Card({title,subtitle,imageUrl,onPress}) {
+function Card({title,subtitle,imageUrl="http://192.168.43.173:8000/media/help.jpg",onPress}) {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
         <View style={styles.card}>

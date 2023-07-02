@@ -21,7 +21,7 @@ const validationSchema = Yup.object().shape({
     description: Yup.string().required().label('Description'),
     category: Yup.object().required().nullable().label('Category'),
     price: Yup.number().required().min(1).label('Price'),
-    images: Yup.array().min(1,"Please selecy at least one image").max(3,"You can't select more than 3 images")
+    images: Yup.array().min(1,"Please select at least one image").max(3,"You can't select more than 3 images")
    
 })
 
@@ -64,7 +64,7 @@ function ListingEditScreen(props) {
         if (!result.ok){
             setUploadVisible(false);
 
-            return console.log(result.problem,result.data);
+            return;
         }
         
         actions.resetForm();

@@ -30,7 +30,6 @@ const getUser = async() => {
     return (token) ? jwtDecode(token) : null;
 }
 
-
 const removeToken = async()=> {
     try {
         await SecureStore.deleteItemAsync(key);

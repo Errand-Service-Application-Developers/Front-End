@@ -9,9 +9,9 @@ import colors from '../config/colors';
 import ListItemSeparator from '../components/ListItemSeparator';
 import Icon from '../components/Icon';
 import route from '../navigation/route';
-import apiClient from '../api/client';
 import AuthContext from '../auth/context';
 import authStorage from '../auth/storage';
+import useCurrentUser from '../hooks/useCurrentUser';
 
 
 const menuItems = [
@@ -31,30 +31,10 @@ const menuItems = [
 ]
 
 function AccountScreen({navigation}) {
+   const {user,setUser} = useContext(AuthContext);
+   const user_id = user.user_id;
 
-    const [currentUser,setCurrentUser] = useState([]);
-
-
-    useEffect(()=>{
-        
-        getUser(user);
-
-    },[])
-
-    const {user,setUser}= useContext(AuthContext);
-
-    const getUser = async (users) => {
-        const response = await apiClient.get('/user/' + users.user_id);
-
-        if (!response.ok)
-           console.log(response.problem)
-        
-
-        
-        setCurrentUser(response.data);
-        
-              
-    }
+   const currentUser = useCurrentUser(user_id);
 
 
     const handleLogOut = () => {

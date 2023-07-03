@@ -6,9 +6,11 @@ import { Image} from 'react-native-expo-image-cache'
 import AppText from '../components/AppText';
 import colors from '../config/colors';
 import ListItem from '../components/ListItem';
+import useCurrentUser from '../hooks/useCurrentUser';
 
 function ListingDetailsScreen({ route }) {
     const listing = route.params
+    const poster = useCurrentUser(listing.user_id);
 
     return (
         <View>
@@ -22,7 +24,7 @@ function ListingDetailsScreen({ route }) {
                 </View>
                 <Text style={styles.description}>{listing.description}</Text>
              <View style={styles.itemcontainer}>
-             <ListItem image={require('../assets/mosh.jpg')} title='Pinto Aaron' subtitle='8 tasks' showChevrons />
+             <ListItem image={require('../assets/mosh.jpg')} title={poster.username} subtitle={poster.post_count + " tasks"} showChevrons />
 
              </View>
             

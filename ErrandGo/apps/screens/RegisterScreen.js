@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View ,Image,Text, ScrollView} from 'react-native';
 import * as Yup from 'yup';
+import  Constants  from 'expo-constants';
 import  { MaterialCommunityIcons } from '@expo/vector-icons'
 
 
@@ -15,9 +16,9 @@ const validationSchema = Yup.object().shape(
         email: Yup.string().required().email().label('Email'),
         password: Yup.string().required().min(5).label('Password'),
         username: Yup.string().required().label('Username'),
+        phone: Yup.string().required(). min(10,"Incorrect phone number").max(10,"Incorrect phone number").label('Phone'),
         
      
-
     }
 )
 
@@ -25,24 +26,20 @@ function RegisterScreen({navigation}) {
     return (
 
         <View style={styles.container}>
+           
             <View style={styles.design}>
+            <View style={{flexDirection:'row'}}>
+ 
 
-              <View style={{flexDirection:'row'}}>
-               
-
-                <Text style={{fontSize:18, paddingLeft:35,color:'white',paddingRight:5}}>
+           <Text style={{fontSize:20,color:defaultStyles.colors.blue,paddingRight:5}}>
                 Hello
-                </Text>
-                <MaterialCommunityIcons name='hand-wave' color='#f8ee39' size={20}/>
-                <Text style={{fontSize:18,color:'white',}}>
-                ,  Welcome To ErrandGo
-                </Text>
-              </View>
-
+            </Text>
+            <MaterialCommunityIcons name='hand-wave' color='#f8ee39' size={20}/>
+            <Text style={{fontSize:20,color:defaultStyles.colors.blue,}}>
+            ,  Welcome To ErrandGo
+            </Text>
             </View>
-            <View style={{paddingLeft:35, paddingTop:10}}>
-                <Text style={{fontSize:20,fontWeight:'500',color:defaultStyles.colors.blue,marginBottom:10}}>Register</Text>
-                <Text style={{fontSize:14,fontWeight:'300',color:defaultStyles.colors.grey,marginBottom:10}}>
+                <Text style={{fontSize:14,fontWeight:'300',color:defaultStyles.colors.grey,marginBottom:10,marginTop:10}}>
                     Create your new account
                 </Text>
             </View>
@@ -52,7 +49,7 @@ function RegisterScreen({navigation}) {
             
 
             <AppForm
-            initialValues={{ username:'',email:'', password:'',}}
+            initialValues={{ username:'',email:'', password:'',phone:''}}
             onSubmit={values=> console.log(values)}  
             validationSchema={validationSchema} >
 
@@ -74,6 +71,18 @@ function RegisterScreen({navigation}) {
                 autoCorrect={false}
                 keyboardType='email-address'
                 textContentType='emailAddress'
+                />
+
+                
+                <AppFormField
+                style={styles.Textinput}
+                name="phone"
+                icon='phone'
+                placeholder='Phone Number'
+                autoCapitalize='none'
+                autoCorrect={false}
+                keyboardType='numeric'
+                textContentType='telephoneNumber'
                 />
 
                 <AppFormField
@@ -115,25 +124,18 @@ const styles = StyleSheet.create({
     formContainer:{
         padding: 10,
         marginBottom:20,
-
-    },
-    design:{
-        width:'100%',
-        height: '20%',
-        backgroundColor: defaultStyles.colors.secondary,
-        borderBottomLeftRadius: 55,
-        justifyContent:'center',
-        alignContent:'center',
-        
     },
     Textinput:{
         borderWidth:1,
         borderColor: defaultStyles.colors.secondary
 
+    },
+    design:{
+        paddingTop: Constants.statusBarHeight + Constants.statusBarHeight,
+        paddingLeft: 25
     }
    
    
-    
 })
 
 

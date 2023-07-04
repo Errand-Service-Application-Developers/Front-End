@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet,View,Text } from 'react-native';
-import { Image} from 'react-native-expo-image-cache'
+import { Image} from 'react-native-expo-image-cache';
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 
 import AppText from '../components/AppText';
@@ -23,6 +24,14 @@ function ListingDetailsScreen({ route }) {
                 <AppText style={styles.price}>Ghc {listing.price}</AppText>
                 </View>
                 <Text style={styles.description}>{listing.description}</Text>
+
+            <View style={styles.contact}>
+            <View>
+                <MaterialCommunityIcons name='whatsapp' size={20} color = '#2AB318' />
+            </View>
+            <Text style={styles.phone}>{poster.phone}</Text>
+
+            </View>
              <View style={styles.itemcontainer}>
              <ListItem image={require('../assets/mosh.jpg')} title={poster.username} subtitle={poster.post_count + " tasks"} showChevrons />
 
@@ -66,6 +75,18 @@ const styles = StyleSheet.create({
     itemcontainer: {
         marginVertical: 40
     },
+    contact:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 20,
+        gap: 10
+        
+    },
+    phone:{
+        fontSize: 15,
+        fontWeight: '500',
+    
+    }
 
     
 })

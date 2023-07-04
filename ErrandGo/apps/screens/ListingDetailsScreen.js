@@ -33,7 +33,7 @@ function ListingDetailsScreen({ route }) {
 
             </View>
              <View style={styles.itemcontainer}>
-             <ListItem image={require('../assets/mosh.jpg')} title={poster.username} subtitle={poster.post_count + " tasks"} showChevrons />
+             <ListItem image={require('../assets/profile.jpg')} title={poster.username} subtitle={poster.post_count + " tasks"} showChevrons />
 
              </View>
             

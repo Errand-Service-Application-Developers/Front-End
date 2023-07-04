@@ -22,6 +22,7 @@ function ListingScreen({navigation}) {
 const [listings,setListings] = useState([]);
 const [error,setError] = useState(false);
 const [loading,setLoading] = useState(false);
+const [refreshing,setRefreshing] = useState(false);
 
 useEffect(() =>{
     loadListings();
@@ -69,6 +70,8 @@ const loadListings = async () => {
                 onPress={()=>navigation.navigate(route.LISTING_DETAILS,item)} /> 
            
             }
+            refreshing = {refreshing}
+            onRefresh={ ()=> {loadListings();}}
             
             /> 
 

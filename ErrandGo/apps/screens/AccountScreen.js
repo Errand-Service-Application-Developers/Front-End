@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import { StyleSheet,View,FlatList } from 'react-native';
 import  Constants from 'expo-constants';
 
@@ -9,9 +9,8 @@ import colors from '../config/colors';
 import ListItemSeparator from '../components/ListItemSeparator';
 import Icon from '../components/Icon';
 import route from '../navigation/route';
-import AuthContext from '../auth/context';
-import authStorage from '../auth/storage';
 import useCurrentUser from '../hooks/useCurrentUser';
+import useAuth from '../hooks/useAuth';
 
 
 const menuItems = [
@@ -20,7 +19,7 @@ const menuItems = [
         name: "format-list-bulleted",
         backgroundColor: colors.primary
      }},
-     {title:"My Messages",
+    {title:"My Reviews",
      icon:{
         name: "email",
         backgroundColor: colors.secondary
@@ -31,23 +30,17 @@ const menuItems = [
 ]
 
 function AccountScreen({navigation}) {
-   const {user,setUser} = useContext(AuthContext);
-   const user_id = user.user_id;
+   const {user,logout} = useAuth();
 
-   const currentUser = useCurrentUser(user_id);
+   const currentUser = useCurrentUser(user.user_id);
 
-
-    const handleLogOut = () => {
-        setUser(null);
-        authStorage.removeToken();
-    }
 
 
     return (
 
         <Screen style={styles.screen}>
             <View style={styles.container}>
-                <ListItem title={currentUser.username}  subtitle={currentUser.email} image={require('../assets/woman.jpg')} showChevrons/>
+                <ListItem title={currentUser.username}  subtitle={currentUser.email} image={require('../assets/profile.jpg')} />
             </View>
 
 
@@ -73,7 +66,7 @@ function AccountScreen({navigation}) {
               <ListItem title='Log Out' 
               IconComponent={<Icon name='logout'
               backgroundColor='#ffe66d' size={45}/>}
-              onPress={handleLogOut}/>
+              onPress={()=>logout()}/>
 
        
             

@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, View ,Image,Text, ScrollView} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View ,Image,Text,} from 'react-native';
 import * as Yup from 'yup';
 import  Constants  from 'expo-constants';
 import  { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -8,7 +8,10 @@ import  { MaterialCommunityIcons } from '@expo/vector-icons'
 
 
 import defaultStyles from '../config/styles';
-import {AppForm,AppFormField,SubmitButton,} from '../components/forms'
+import {AppForm,AppFormField,SubmitButton,ErrorMessage} from '../components/forms';
+import authApi from '../api/auth';
+import auth from '../api/auth';
+import useAuth from '../hooks/useAuth';
 
 
 const validationSchema = Yup.object().shape(
@@ -23,6 +26,36 @@ const validationSchema = Yup.object().shape(
 )
 
 function RegisterScreen({navigation}) {
+   
+    const { login } = useAuth();
+    const [registerError,setRegisterError] = useState();
+    const [registerFailed,setRegisterFailed] = useState(false);
+
+
+    const handleSubmit = async (registerInfo,actions) => {
+        const result = await authApi.register(registerInfo);
+
+        if (!result.ok){
+            if(result.data) {
+                setRegisterError((result.data.username ? result.data.username : result.data.email))
+            }
+            else {
+                setRegisterError('An error occurred');
+                console.log(result);
+                
+            }
+            return setRegisterFailed(true);
+            
+        }
+        
+        setRegisterFailed(false);
+        const {data: token } = await authApi.login(registerInfo.username, registerInfo.password);
+        login(token['access']);
+        
+
+    actions.resetForm();
+    }
+
     return (
 
         <View style={styles.container}>
@@ -49,9 +82,11 @@ function RegisterScreen({navigation}) {
             
 
             <AppForm
-            initialValues={{ username:'',email:'', password:'',phone:''}}
-            onSubmit={values=> console.log(values)}  
+            initialValues={{ username:'',email:'',phone:'',password:''}}
+            onSubmit={handleSubmit}  
             validationSchema={validationSchema} >
+
+            <ErrorMessage error={registerError} visible={registerFailed}/>
 
                 <AppFormField
                 style={styles.Textinput}

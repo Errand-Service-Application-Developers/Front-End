@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet,View,FlatList } from 'react-native';
+import moment from 'moment';
 
 
 import Screen from './Screen';
@@ -10,6 +11,7 @@ import listingApi from '../api/listings';
 import AppText from '../components/AppText';
 import AppButtons from '../components/AppButtons';
 import ActivityIndicator from '../components/ActivityIndicator';
+import { date } from 'yup';
 
 
 
@@ -63,10 +65,10 @@ const loadListings = async () => {
             data={listings}
             keyExtractor={listings => listings.id.toString() }
             renderItem={({item}) => 
-
                 <Card title={item.title}
                 subtitle={'Ghc '+item.price} 
                 imageUrl= {(item.images[0] && "http://192.168.43.173:8000"+item.images[0].url)}
+                postTime={moment(item.date_created)}
                 onPress={()=>navigation.navigate(route.LISTING_DETAILS,item)} /> 
            
             }

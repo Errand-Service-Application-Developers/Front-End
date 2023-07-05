@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View ,Image,Text,} from 'react-native';
+import { StyleSheet, View,Text,} from 'react-native';
 import * as Yup from 'yup';
 import  Constants  from 'expo-constants';
 import  { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -9,15 +9,16 @@ import  { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import defaultStyles from '../config/styles';
 import {AppForm,AppFormField,SubmitButton,ErrorMessage} from '../components/forms';
-import authApi from '../api/auth';
-import auth from '../api/auth';
+import authApi from '../api/auth';;
 import useAuth from '../hooks/useAuth';
+import useApi from '../hooks/useApi';
+import ActivityIndicator from '../components/ActivityIndicator';
 
 
 const validationSchema = Yup.object().shape(
     {
         email: Yup.string().required().email().label('Email'),
-        password: Yup.string().required().min(5).label('Password'),
+        password: Yup.string().required().min(8,'Password too short. Password should be at least 8 characters').label('Password'),
         username: Yup.string().required().label('Username'),
         phone: Yup.string().required(). min(10,"Incorrect phone number").max(10,"Incorrect phone number").label('Phone'),
         
@@ -27,13 +28,17 @@ const validationSchema = Yup.object().shape(
 
 function RegisterScreen({navigation}) {
    
+    const registerApi = useApi(authApi.register);
+    const loginApi = useApi(authApi.login);
+
+
     const { login } = useAuth();
     const [registerError,setRegisterError] = useState();
     const [registerFailed,setRegisterFailed] = useState(false);
 
 
     const handleSubmit = async (registerInfo,actions) => {
-        const result = await authApi.register(registerInfo);
+        const result = await registerApi.request(registerInfo);
 
         if (!result.ok){
             if(result.data) {
@@ -49,7 +54,7 @@ function RegisterScreen({navigation}) {
         }
         
         setRegisterFailed(false);
-        const {data: token } = await authApi.login(registerInfo.username, registerInfo.password);
+        const {data: token } = await loginApi.request(registerInfo.username, registerInfo.password);
         login(token['access']);
         
 
@@ -58,8 +63,9 @@ function RegisterScreen({navigation}) {
 
     return (
 
+    <>
+        <ActivityIndicator visible={registerApi.loading || loginApi.loading}/>
         <View style={styles.container}>
-           
             <View style={styles.design}>
             <View style={{flexDirection:'row'}}>
  
@@ -142,6 +148,7 @@ function RegisterScreen({navigation}) {
             </View>
         
       </View>
+    </>
  
        
     

@@ -45,6 +45,8 @@ const loadListings = async () => {
 
 
     return (
+    <>
+        <ActivityIndicator visible ={loading} />
         <Screen style={styles.screen}>
              {error && <>
             <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
@@ -56,7 +58,6 @@ const loadListings = async () => {
             </View>
             </>}
 
-            <ActivityIndicator visible ={loading} />
             
 
             <FlatList 
@@ -79,6 +80,7 @@ const loadListings = async () => {
 
 
         </Screen>
+</>
        
     );
 }

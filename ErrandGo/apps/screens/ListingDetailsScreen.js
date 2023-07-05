@@ -9,6 +9,7 @@ import colors from '../config/colors';
 import ListItem from '../components/ListItem';
 import useCurrentUser from '../hooks/useCurrentUser';
 import screenRoute from '../navigation/route';
+import ListItemSeparator from '../components/ListItemSeparator';
 
 function ListingDetailsScreen({ navigation,route }) {
     const listing = route.params
@@ -25,6 +26,9 @@ function ListingDetailsScreen({ navigation,route }) {
                 <AppText style={styles.price}>Ghc {listing.price}</AppText>
                 </View>
                 <Text style={styles.description}>{listing.description}</Text>
+            <View style={styles.reviews}>
+                <Text style={{fontSize: 15,color:'#91B1BC'}}>Reviews </Text>
+            </View>
 
             <View style={styles.contact}>
             <View>
@@ -34,6 +38,7 @@ function ListingDetailsScreen({ navigation,route }) {
 
             </View>
             </View>
+            <ListItemSeparator style={styles.separator}/>
              <View style={styles.itemcontainer}>
              <ListItem image={require('../assets/profile.jpg')} title={poster.username}
              subtitle={poster.post_count + " tasks"} 
@@ -77,7 +82,7 @@ const styles = StyleSheet.create({
 
     },
     itemcontainer: {
-        marginVertical: 40
+        marginVertical: 30
     },
     contact:{
         flexDirection: 'row',
@@ -94,6 +99,16 @@ const styles = StyleSheet.create({
     screen:{
         backgroundColor: colors.light,
         flex: 1
+    },
+    separator:{
+        backgroundColor: '#91B1BC',  
+        marginTop: 3
+    },
+    reviews:{
+        width: '40%',
+        justifyContent:'center',
+        marginTop: 20,
+       
     }
 
     

@@ -11,6 +11,8 @@ const endpoint = '/items';
 
 const getListings = () => client.get(endpoint);
 
+const getUserListings = (userId) => client.get('/user/'+ userId + '/history');
+
 const addListing = async(listing,onUploadProgress)=>{
 
     const user = await authStorage.getUser();
@@ -40,4 +42,5 @@ const addListing = async(listing,onUploadProgress)=>{
 export default {
     addListing,
     getListings,
+    getUserListings,
 };

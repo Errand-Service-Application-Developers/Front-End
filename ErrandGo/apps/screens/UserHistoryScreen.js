@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet,View,FlatList } from 'react-native';
 
-
 import Screen from './Screen';
 import Card from '../components/Card';
 import colors from '../config/colors';
-import route from '../navigation/route';
+import screenRoute from '../navigation/route';
 import listingApi from '../api/listings';
 import AppText from '../components/AppText';
 import AppButtons from '../components/AppButtons';
 import ActivityIndicator from '../components/ActivityIndicator';
 
 
+function UserHistoryScreen({ navigation,route }) {
 
+const user = route.params;
 
-
-function ListingScreen({navigation}) {
-
-
-    
 const [listings,setListings] = useState([]);
 const [error,setError] = useState(false);
 const [loading,setLoading] = useState(false);
@@ -32,7 +28,7 @@ useEffect(() =>{
 
 const loadListings = async () => {
     setLoading(true);
-    const response = await listingApi.getListings();
+    const response = await listingApi.getUserListings(user.id);
     setLoading(false);
 
     if (!response.ok)
@@ -40,15 +36,17 @@ const loadListings = async () => {
 
     setError(false);
     setListings(response.data);
-    
+
 }
 
 
-    return (
-        <Screen style={styles.screen}>
-             {error && <>
+   return (
+
+
+    <Screen style={styles.screen}>
+            {error && <>
             <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
-            <AppText>Couldn't retrieve posts from server</AppText>
+            <AppText>Couldn't retrieve user posts from server</AppText>
             <View style={{padding:10}}>
             <AppButtons title='Retry' onPress={loadListings} color='primary'/>
             </View>
@@ -67,7 +65,7 @@ const loadListings = async () => {
                 subtitle={'Ghc '+item.price} 
                 imageUrl= {(item.images[0] && "http://192.168.43.173:8000"+item.images[0].url)}
                 postTime={item.date_created}
-                onPress={()=>navigation.navigate(route.LISTING_DETAILS,item)} /> 
+                onPress={()=>navigation.navigate(screenRoute.USER_HISTORY_ITEM_DETAILS,item)} /> 
            
             }
             refreshing = {refreshing}
@@ -80,9 +78,9 @@ const loadListings = async () => {
 
         </Screen>
        
-    );
+    
+   );
 }
-
 
 
 const styles = StyleSheet.create({
@@ -91,9 +89,11 @@ const styles = StyleSheet.create({
         padding:15,
         
     }
-    
+
+
 })
 
-export default ListingScreen;
+
+export default UserHistoryScreen;
 
 

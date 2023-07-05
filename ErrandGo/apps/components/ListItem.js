@@ -42,7 +42,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         padding: 10,
-        backgroundColor:colors.white
+        backgroundColor:colors.white,
+        borderRadius: 10,
+       
     },
 
     detailsContainer:{

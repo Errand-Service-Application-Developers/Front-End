@@ -6,16 +6,14 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import AppText from '../components/AppText';
 import colors from '../config/colors';
-import ListItem from '../components/ListItem';
 import useCurrentUser from '../hooks/useCurrentUser';
-import screenRoute from '../navigation/route';
 
-function ListingDetailsScreen({ navigation,route }) {
+function UserHistoryItemDetails({ route }) {
     const listing = route.params
     const poster = useCurrentUser(listing.user_id);
 
     return (
-        <View style={styles.screen}>
+        <View>
              <Image style={styles.image} uri={(listing.images[0]? "http://192.168.43.173:8000"+listing.images[0].url : "http://192.168.43.173:8000/media/help.jpg")}/>
              <View style={styles.detailscontainer}>
                 <View style={{flexDirection:'row'}}>
@@ -32,29 +30,24 @@ function ListingDetailsScreen({ navigation,route }) {
             </View>
             <Text style={styles.phone}>{poster.phone}</Text>
 
-            </View>
-            </View>
-             <View style={styles.itemcontainer}>
-             <ListItem image={require('../assets/profile.jpg')} title={poster.username}
-             subtitle={poster.post_count + " tasks"} 
-             showChevrons 
-             onPress={()=>navigation.navigate(screenRoute.USER_HISTORY,poster)} />
+            </View> 
 
-             </View>
-            
-
+            </View>
 
         </View>
         
     );
 }
 
-export default ListingDetailsScreen;
+export default UserHistoryItemDetails;
 
 const styles = StyleSheet.create({
     image:{
         width: '100%',
-        height:'40%',
+        height:'70%',
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 5,
+   
 
     },
     detailscontainer:{
@@ -90,10 +83,6 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '500',
     
-    },
-    screen:{
-        backgroundColor: colors.light,
-        flex: 1
     }
 
     

@@ -18,7 +18,9 @@ const menuItems = [
      icon:{
         name: "format-list-bulleted",
         backgroundColor: colors.primary
-     }},
+     },
+    targetScreen: route.USER_HISTORY
+},
     {title:"My Reviews",
      icon:{
         name: "email",
@@ -53,14 +55,10 @@ function AccountScreen({navigation}) {
                 title={item.title} 
                 showChevrons
                 IconComponent= { <Icon name={item.icon.name} size={45} backgroundColor={item.icon.backgroundColor} />}   
-                onPress={()=> navigation.navigate(item.targetScreen)}/> }  
+                onPress={()=> navigation.navigate(item.targetScreen,currentUser)}/> }  
                 ItemSeparatorComponent={ListItemSeparator}/>
 
                 </View>
-
-            
-
-
            
 
               <ListItem title='Log Out' 

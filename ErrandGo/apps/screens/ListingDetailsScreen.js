@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet,View,Text } from 'react-native';
+import { StyleSheet,View,Text,TouchableOpacity } from 'react-native';
 import { Image} from 'react-native-expo-image-cache';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
@@ -26,9 +26,12 @@ function ListingDetailsScreen({ navigation,route }) {
                 <AppText style={styles.price}>Ghc {listing.price}</AppText>
                 </View>
                 <Text style={styles.description}>{listing.description}</Text>
+            <TouchableOpacity onPress={()=>navigation.navigate(screenRoute.MESSAGES,listing.reviews)}>
+
             <View style={styles.reviews}>
                 <Text style={{fontSize: 15,color:'#91B1BC'}}>Reviews </Text>
             </View>
+            </TouchableOpacity>
 
             <View style={styles.contact}>
             <View>

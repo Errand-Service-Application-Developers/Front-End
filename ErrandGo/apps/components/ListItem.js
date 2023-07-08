@@ -2,12 +2,13 @@ import React from 'react';
 import { StyleSheet,View,Image,Text, TouchableHighlight } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import  Swipeable from 'react-native-gesture-handler/Swipeable';
+import moment from 'moment';
 
 
 import AppText from './AppText';
 import colors from '../config/colors';
 
-function ListItem({image,title,subtitle,onPress,renderRightActions,IconComponent,showChevrons}) {
+function ListItem({image,title,subtitle,onPress,renderRightActions,IconComponent,postTime,showChevrons}) {
     return (
         <Swipeable renderRightActions={renderRightActions} >
 
@@ -20,6 +21,10 @@ function ListItem({image,title,subtitle,onPress,renderRightActions,IconComponent
               {subtitle && <AppText style={styles.subtitle} numberOfLines={2} >{subtitle}</AppText>}
 
             </View>
+            <View>
+
+            </View>
+           
 
            { showChevrons &&  <MaterialCommunityIcons name='chevron-right' size={22} color={colors.grey}/> }
 

@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet,View,FlatList } from 'react-native';
+import React,{useState,useEffect} from 'react';
+import { StyleSheet,View,} from 'react-native';
 import  Constants from 'expo-constants';
 
 
@@ -8,35 +8,31 @@ import ListItem from '../components/ListItem';
 import colors from '../config/colors';
 import ListItemSeparator from '../components/ListItemSeparator';
 import Icon from '../components/Icon';
-import route from '../navigation/route';
+import screenRoute from '../navigation/route';
 import useCurrentUser from '../hooks/useCurrentUser';
 import useAuth from '../hooks/useAuth';
+import listingsApi from '../api/listings';
 
 
-const menuItems = [
-    {title:"My tasks",
-     icon:{
-        name: "format-list-bulleted",
-        backgroundColor: colors.primary
-     },
-    targetScreen: route.USER_HISTORY
-},
-    {title:"My Reviews",
-     icon:{
-        name: "email",
-        backgroundColor: colors.secondary
-     },
-    targetScreen:route.MESSAGES
-    }
-
-]
 
 function AccountScreen({navigation}) {
    const {user,logout} = useAuth();
 
    const currentUser = useCurrentUser(user.user_id);
 
+   const [reviews,setReviews] = useState([]);
 
+    useEffect(() =>{
+     loadReviews();
+
+    },[])
+
+
+    const loadReviews = async () => {
+        const response = await listingsApi.getUserReviews(user.user_id);
+        setReviews(response.data);
+
+    }
 
     return (
 
@@ -47,16 +43,20 @@ function AccountScreen({navigation}) {
 
 
                 <View style={{marginVertical:20}}>
-                    
-                <FlatList  
-                data={menuItems} 
-                keyExtractor={menuItem => menuItem.title}
-                renderItem={({item}) => <ListItem 
-                title={item.title} 
+
+                <ListItem
+                title={"My tasks"} 
+                IconComponent={<Icon name='format-list-bulleted' size={45} backgroundColor={colors.primary}/>}
                 showChevrons
-                IconComponent= { <Icon name={item.icon.name} size={45} backgroundColor={item.icon.backgroundColor} />}   
-                onPress={()=> navigation.navigate(item.targetScreen,currentUser)}/> }  
-                ItemSeparatorComponent={ListItemSeparator}/>
+                onPress={()=> navigation.navigate(screenRoute.USER_HISTORY,currentUser)}
+                />
+                <ListItemSeparator/>
+                <ListItem
+                title={"My reviews"} 
+                IconComponent={<Icon name='email' size={45} backgroundColor={colors.secondary}/>}
+                showChevrons
+                onPress={()=>navigation.navigate(screenRoute.MESSAGES,reviews)}
+                />
 
                 </View>
            

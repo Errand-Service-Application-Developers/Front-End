@@ -13,6 +13,8 @@ const getListings = () => client.get(endpoint);
 
 const getUserListings = (userId) => client.get('/user/'+ userId + '/history');
 
+const getUserReviews = (userId) => client.get('/user/'+ userId + '/reviews');
+
 const addListing = async(listing,onUploadProgress)=>{
 
     const user = await authStorage.getUser();
@@ -43,4 +45,5 @@ export default {
     addListing,
     getListings,
     getUserListings,
+    getUserReviews,
 };

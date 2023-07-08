@@ -7,6 +7,8 @@ import ListingScreen from '../screens/ListingScreen';
 import ListingDetailsScreen from '../screens/ListingDetailsScreen';
 import UserHistoryScreen from '../screens/UserHistoryScreen';
 import UserHistoryItemDetails from '../screens/UserHistoryItemDetails';
+import MessagesScreen from '../screens/MessagesScreen';
+import ReviewDetailsScreen from '../screens/ReviewDetailsScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -27,6 +29,18 @@ const FeedNavigator = () => (
             title: 'User Listings',
             
         }}/>
+        <Stack.Screen name='Reviews' component={MessagesScreen} 
+        options={{
+            headerStyle: {backgroundColor:'#e5525f'},
+            headerTintColor: "white",
+            headerShown: true,
+            title:' Item Reviews', }}/>
+         <Stack.Screen name='ReviewDetails' component={ReviewDetailsScreen} 
+        options={{
+            headerStyle: {backgroundColor:'#e5525f'},
+            headerTintColor: "white",
+            headerShown: true,
+            title:' Review Details', }}/>
 
     </Stack.Navigator>
 );

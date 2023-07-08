@@ -1,8 +1,9 @@
 
 export default Object.freeze( {
-    MESSAGES : 'Messages',
+    MESSAGES : 'Reviews',
     LISTING_DETAILS: 'ListingDetails',
     LISTING_EDIT: 'ListingEdit',
     USER_HISTORY : 'UserHistory',
-    USER_HISTORY_ITEM_DETAILS: 'UserHistoryItemDetails'
+    USER_HISTORY_ITEM_DETAILS: 'UserHistoryItemDetails',
+    REVIEW_DETAILS: 'ReviewDetails',
 })

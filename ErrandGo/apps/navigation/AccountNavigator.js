@@ -5,6 +5,7 @@ import MessagesScreen from '../screens/MessagesScreen';
 import UserHistoryScreen from '../screens/UserHistoryScreen';
 import UserHistoryItemDetails from '../screens/UserHistoryItemDetails';
 import ReviewDetailsScreen from '../screens/ReviewDetailsScreen';
+import UserMessagesScreen from '../screens/UserMessagesScreen';
 
 
 
@@ -23,7 +24,7 @@ const AccountNavigator = () => (
             headerShown: true,
             title:'My Listings',
         }}/>
-           <Stack.Screen name='Reviews' component={MessagesScreen} 
+           <Stack.Screen name='Reviews' component={UserMessagesScreen} 
         options={{
             headerStyle: {backgroundColor:'#e5525f'},
             headerTintColor: "white",

@@ -8,12 +8,12 @@ import moment from 'moment';
 import AppText from './AppText';
 import colors from '../config/colors';
 
-function ListItem({image,title,subtitle,onPress,renderRightActions,IconComponent,postTime,showChevrons}) {
+function ListItem({image,title,subtitle,onPress,renderRightActions,IconComponent,showChevrons,style}) {
     return (
         <Swipeable renderRightActions={renderRightActions} >
 
           <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
-            <View style={styles.container}>
+            <View style={[styles.container,style]}>
             {IconComponent}    
             {image && <Image style={styles.imagestyle} source={image} />}
             <View style={styles.detailsContainer}>

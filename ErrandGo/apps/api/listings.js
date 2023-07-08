@@ -8,12 +8,25 @@ const endpoint = '/items';
 
 
 
-
 const getListings = () => client.get(endpoint);
 
 const getUserListings = (userId) => client.get('/user/'+ userId + '/history');
 
 const getUserReviews = (userId) => client.get('/user/'+ userId + '/reviews');
+
+const addReview = async(review,item_id,onUploadProgress)=>{
+
+    const user = await authStorage.getUser();
+
+    const data = new FormData()
+    data.append('message',review.message);
+    data.append('item_id',item_id);
+    data.append('user_id',user.user_id);
+
+    return client.post('/items/'+item_id+'/reviews/',data,{onUploadProgress: (progress) => onUploadProgress(progress.loaded / progress.total)})
+}
+
+
 
 const addListing = async(listing,onUploadProgress)=>{
 
@@ -46,4 +59,5 @@ export default {
     getListings,
     getUserListings,
     getUserReviews,
+    addReview,
 };

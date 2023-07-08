@@ -11,7 +11,7 @@ function ReviewDetailsScreen({route}) {
    return (
     <Screen>
         <View style={styles.container}>
-        <TextInput multiline = {true} readOnly = {true} numberOfLines={3} style={{fontSize:19,color:colors.grey}}>
+        <TextInput multiline = {true} readOnly = {true} numberOfLines={3} style={{fontSize:16,color:colors.grey}}>
         Comment: {review.message}
         </TextInput>
        
@@ -43,13 +43,13 @@ const styles = StyleSheet.create({
 
     text:{
         marginBottom: 10,
-        fontSize: 18,
+        fontSize: 16,
         color: colors.grey
 
     },
     postTime:{
         paddingRight: 5,
-        fontSize: 18,
+        fontSize: 16,
         color: colors.grey,
         marginBottom: 10
     },

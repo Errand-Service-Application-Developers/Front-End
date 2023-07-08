@@ -9,7 +9,7 @@ import UserHistoryScreen from '../screens/UserHistoryScreen';
 import UserHistoryItemDetails from '../screens/UserHistoryItemDetails';
 import MessagesScreen from '../screens/MessagesScreen';
 import ReviewDetailsScreen from '../screens/ReviewDetailsScreen';
-
+import NewCommentScreen from '../screens/NewCommentScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +41,12 @@ const FeedNavigator = () => (
             headerTintColor: "white",
             headerShown: true,
             title:' Review Details', }}/>
+        <Stack.Screen name='NewComment' component={NewCommentScreen} 
+        options={{
+            headerStyle: {backgroundColor:'#e5525f'},
+            headerTintColor: "white",
+            headerShown: true,
+            title:' Add Comment', }}/>
 
     </Stack.Navigator>
 );

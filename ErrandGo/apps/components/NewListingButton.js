@@ -3,11 +3,11 @@ import { StyleSheet,View,TouchableOpacity} from 'react-native';
 import colors from '../config/colors';
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 
-function NewListingButton({onPress}) {
+function NewListingButton({onPress,style}) {
    return (
     <TouchableOpacity onPress={onPress}>
 
-      <View style={styles.container}>
+      <View style={[styles.container,style]}>
         <MaterialCommunityIcons name='plus-circle' color={colors.white} size={36} />
 
       </View>

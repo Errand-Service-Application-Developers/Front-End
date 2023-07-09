@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet,View,Text} from 'react-native';
+import Constants  from 'expo-constants';
 import * as Yup from 'yup';
 
 
@@ -8,11 +9,10 @@ import Screen from './Screen';
 import { AppForm, AppFormField, SubmitButton} from '../components/forms'
 import AppFormPicker from '../components/forms/AppFormPicker';
 import CategoryPickerItem from '../components/CategoryPickerItem';
-import FormImagePicker from '../components/forms/FormImagePicker';
 import useLocation from '../hooks/useLocation';
 import listingsApi from '../api/listings';
 import UploadScreen from '../components/UploadScreen';
-
+import colors from '../config/colors';
 
 
 
@@ -21,7 +21,6 @@ const validationSchema = Yup.object().shape({
     description: Yup.string().required().label('Description'),
     category: Yup.object().required().nullable().label('Category'),
     price: Yup.number().required().min(1).label('Price'),
-    images: Yup.array().min(1,"Please select at least one image").max(3,"You can't select more than 3 images")
    
 })
 
@@ -76,6 +75,7 @@ function ListingEditScreen(props) {
 
         <Screen style={styles.screen}>
             <UploadScreen onDone={()=> setUploadVisible(false)} progress={progress} visible = {uploadVisible}/>
+           
 
             <AppForm 
             
@@ -84,13 +84,12 @@ function ListingEditScreen(props) {
                 description: "",
                 category: null,
                 price: "",
-                images: []
+            
                
             }}
             onSubmit={handleSubmit}
             validationSchema={validationSchema} >
             
-            <FormImagePicker name="images"/>
 
             <AppFormField 
             name="title"

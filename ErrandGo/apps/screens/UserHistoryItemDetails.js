@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet,View,Text } from 'react-native';
-import { Image} from 'react-native-expo-image-cache';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-
+import  Constants  from 'expo-constants';
 
 import AppText from '../components/AppText';
 import colors from '../config/colors';
@@ -14,7 +13,6 @@ function UserHistoryItemDetails({ route }) {
 
     return (
         <View>
-             <Image style={styles.image} uri={(listing.images[0]? "http://192.168.43.173:8000"+listing.images[0].url : "http://192.168.43.173:8000/media/help.jpg")}/>
              <View style={styles.detailscontainer}>
                 <View style={{flexDirection:'row'}}>
                     <View style={{flex:1}}>
@@ -52,6 +50,7 @@ const styles = StyleSheet.create({
     },
     detailscontainer:{
         padding: 12,
+        paddingTop: Constants.statusBarHeight + Constants.statusBarHeight
         
     },
     title: {

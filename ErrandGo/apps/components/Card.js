@@ -9,11 +9,10 @@ import moment from 'moment';
 import colors from '../config/colors';
 import AppText from './AppText';
 
-function Card({title,subtitle,imageUrl="http://192.168.43.173:8000/media/help.jpg",onPress,postTime}) {
+function Card({title,subtitle,onPress,postTime}) {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
         <View style={styles.card}>
-            <Image style={styles.image} uri={imageUrl} />
             <View style={styles.detailscontainer}>
               <AppText style={styles.title} >{title}</AppText>
               <View style = {{flexDirection:'row'}}>
@@ -51,7 +50,7 @@ const styles = StyleSheet.create({
         height: 150,
     },
     detailscontainer:{
-        padding: 15
+        padding: 25
     },
     title:{
         marginBottom:8

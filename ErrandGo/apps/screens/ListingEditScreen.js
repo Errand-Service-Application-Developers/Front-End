@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { StyleSheet,View,Text} from 'react-native';
-import Constants  from 'expo-constants';
 import * as Yup from 'yup';
 
 
@@ -12,7 +11,7 @@ import CategoryPickerItem from '../components/CategoryPickerItem';
 import useLocation from '../hooks/useLocation';
 import listingsApi from '../api/listings';
 import UploadScreen from '../components/UploadScreen';
-import colors from '../config/colors';
+
 
 
 
@@ -25,34 +24,29 @@ const validationSchema = Yup.object().shape({
 })
 
 
-const categories = [
-    {
-        value: 1, label:"Pickup or Delivery", backgroundColor:"#ff5252" , icon: "truck-delivery"    
-    },
-    {
-        value: 2, label:"Gas Filling", backgroundColor:"#4ecdc4" , icon: "gas-station" 
-    },
-    {
-        value: 3, label:"Laundry",  backgroundColor:"orange" , icon: "washing-machine"    
-    },
-    {
-        value: 4, label:"Cleaning ", backgroundColor:"#2596de" , icon: "broom" 
-    },
-    {
-        value: 5, label:"Cooking", backgroundColor:"green" , icon: "food-fork-drink"   
-    },
-    {
-        value: 6, label:"Others" ,   icon: "apps"   
-    },
-  ]
-
-
-
-
 function ListingEditScreen(props) {
+    const [categories,setCategories] = useState([])
     const location = useLocation();
     const [uploadVisible,setUploadVisible] = useState(false);
     const [progress,setProgress] = useState(0);
+
+    useEffect(() =>{
+        loadcategories();
+    
+    },[])
+
+    const loadcategories = async () =>{
+       const result = await listingsApi.getCategories();
+
+       if (!result.ok){
+        console.log(result.problem)
+        return;
+       }
+       setCategories(result.data)
+
+    }
+
+
 
     const handleSubmit = async (listing, actions) => {
         setProgress(0);
@@ -145,3 +139,8 @@ const styles = StyleSheet.create({
 
 
 export default ListingEditScreen;
+
+
+
+
+

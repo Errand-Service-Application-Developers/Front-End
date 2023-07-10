@@ -53,13 +53,14 @@ const styles = StyleSheet.create({
         padding: 25
     },
     title:{
-        marginBottom:8
+        marginBottom:12
     },
     subtitle:{
         color: colors.primary,
         fontWeight: 'bold',
         fontSize: 15,
-        flex:1
+        flex:1,
+        marginTop: 6
 
     },
     postTime:{

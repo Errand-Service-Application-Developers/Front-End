@@ -12,6 +12,7 @@ const getUserListings = (userId) => client.get('/user/'+ userId + '/history');
 
 const getUserReviews = (userId) => client.get('/user/'+ userId + '/reviews');
 
+const getCategories = () => client.get('/category');
 const addReview = async(review,item_id,onUploadProgress)=>{
 
     const user = await authStorage.getUser();
@@ -34,7 +35,7 @@ const addListing = async(listing,onUploadProgress)=>{
     data.append('title',listing.title);
     data.append('description',listing.description);
     data.append('price',listing.price);
-    data.append('category',listing.category.value);
+    data.append('category',listing.category.id);
     data.append('user_id',user.user_id);
 
 
@@ -48,4 +49,5 @@ export default {
     getUserListings,
     getUserReviews,
     addReview,
+    getCategories,
 };

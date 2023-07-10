@@ -28,7 +28,7 @@ function AppPicker({icon, selectedItem, onSelectItem,items,placeholder,size, Pic
 
 
         {selectedItem ? 
-        <AppText style={styles.placeholder}>{selectedItem.label}</AppText> : 
+        <AppText style={styles.placeholder}>{selectedItem.name}</AppText> : 
         <AppText style={styles.placeholder}>{placeholder}</AppText>}
 
         
@@ -49,7 +49,7 @@ function AppPicker({icon, selectedItem, onSelectItem,items,placeholder,size, Pic
 
             <FlatList 
             data={items}
-            keyExtractor={item => item.value.toString()}
+            keyExtractor={item => item.id.toString()}
             numColumns={numberOfColumns}
             renderItem={({item}) => <PickerItemComponent item={item} 
             onPress={()=> { setModalVisible(false); onSelectItem(item); }}/>} />

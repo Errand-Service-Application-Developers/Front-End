@@ -42,7 +42,7 @@ const loadListings = async () => {
     setListings(response.data);
     
 }
-
+ console.log(listings)
 
     return (
     <>

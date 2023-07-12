@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet,View,TouchableWithoutFeedback,Text } from 'react-native';
-import { Image } from 'react-native-expo-image-cache';
+import { StyleSheet,View,TouchableWithoutFeedback,Text } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import moment from 'moment';
 

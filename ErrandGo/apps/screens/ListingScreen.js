@@ -66,7 +66,6 @@ const loadListings = async () => {
             renderItem={({item}) => 
                 <Card title={item.title}
                 subtitle={'Ghc '+item.price} 
-                imageUrl= {(item.images[0] && "http://192.168.43.173:8000"+item.images[0].url)}
                 postTime={item.date_created}
                 onPress={()=>navigation.navigate(route.LISTING_DETAILS,item)} /> 
            

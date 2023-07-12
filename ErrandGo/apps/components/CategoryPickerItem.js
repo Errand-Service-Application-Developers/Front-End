@@ -11,7 +11,7 @@ function CategoryPickerItem({item, onPress}) {
         <TouchableOpacity onPress={onPress}>
         <Icon backgroundColor={item.backgroundColor} name={item.icon} size={80}  />
         </TouchableOpacity>
-        <Text style={styles.text}>{item.label}</Text>
+        <Text style={styles.text}>{item.name}</Text>
     </View>
     );
 }

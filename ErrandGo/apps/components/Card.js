@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet,View,TouchableWithoutFeedback,Text } from 'react-native';
-import { Image } from 'react-native-expo-image-cache';
+import { StyleSheet,View,TouchableWithoutFeedback,Text } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import moment from 'moment';
 
@@ -9,11 +8,10 @@ import moment from 'moment';
 import colors from '../config/colors';
 import AppText from './AppText';
 
-function Card({title,subtitle,imageUrl="http://192.168.43.173:8000/media/help.jpg",onPress,postTime}) {
+function Card({title,subtitle,onPress,postTime}) {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
         <View style={styles.card}>
-            <Image style={styles.image} uri={imageUrl} />
             <View style={styles.detailscontainer}>
               <AppText style={styles.title} >{title}</AppText>
               <View style = {{flexDirection:'row'}}>
@@ -51,16 +49,17 @@ const styles = StyleSheet.create({
         height: 150,
     },
     detailscontainer:{
-        padding: 15
+        padding: 25
     },
     title:{
-        marginBottom:8
+        marginBottom:12
     },
     subtitle:{
         color: colors.primary,
         fontWeight: 'bold',
         fontSize: 15,
-        flex:1
+        flex:1,
+        marginTop: 6
 
     },
     postTime:{

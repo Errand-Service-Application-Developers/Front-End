@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet,View,Text,TouchableOpacity } from 'react-native';
 import { Image } from 'react-native-expo-image-cache';
+import Constants  from 'expo-constants';
 
 
 import AppText from '../components/AppText';
@@ -16,7 +17,10 @@ function ListingDetailsScreen({ navigation,route }) {
 
     return (
         <View style={styles.screen}>
-             <Image style={styles.image} uri={(listing.images[0]? "http://192.168.43.173:8000"+listing.images[0].url : "http://192.168.43.173:8000/media/help.jpg")}/>
+            <View style={styles.design}>
+                <Text style={{fontSize:20,color: colors.white}}>Task Detail</Text>
+
+            </View>
              <View style={styles.detailscontainer}>
                 <View style={{flexDirection:'row'}}>
                     <View style={{flex:1}}>
@@ -60,6 +64,7 @@ const styles = StyleSheet.create({
     },
     detailscontainer:{
         padding: 12,
+        paddingTop: Constants.statusBarHeight + Constants.statusBarHeight
         
     },
     title: {
@@ -101,6 +106,14 @@ const styles = StyleSheet.create({
     },
     style:{
         borderRadius: 25,
+    },
+    design:{
+        width: '100%',
+        height: Constants.statusBarHeight + Constants.statusBarHeight + Constants.statusBarHeight,
+        backgroundColor: colors.primary,
+        justifyContent:'flex-end',
+        alignItems:'center',
+
     }
    
 })

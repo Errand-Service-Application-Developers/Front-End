@@ -15,7 +15,6 @@ function UserMessagesScreen({navigation,route}) {
     
     const values = route.params;
     const reviews = values['reviews']
-    
 
     return (
         <Screen>

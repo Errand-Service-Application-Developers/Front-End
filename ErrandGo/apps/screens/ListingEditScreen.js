@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useState,useEffect } from 'react';
+import { StyleSheet,View,Text} from 'react-native';
 import * as Yup from 'yup';
 
 
@@ -8,7 +8,6 @@ import Screen from './Screen';
 import { AppForm, AppFormField, SubmitButton} from '../components/forms'
 import AppFormPicker from '../components/forms/AppFormPicker';
 import CategoryPickerItem from '../components/CategoryPickerItem';
-import FormImagePicker from '../components/forms/FormImagePicker';
 import useLocation from '../hooks/useLocation';
 import listingsApi from '../api/listings';
 import UploadScreen from '../components/UploadScreen';
@@ -21,39 +20,33 @@ const validationSchema = Yup.object().shape({
     description: Yup.string().required().label('Description'),
     category: Yup.object().required().nullable().label('Category'),
     price: Yup.number().required().min(1).label('Price'),
-    images: Yup.array().min(1,"Please select at least one image").max(3,"You can't select more than 3 images")
    
 })
 
 
-const categories = [
-    {
-        value: 1, label:"Pickup or Delivery", backgroundColor:"#ff5252" , icon: "truck-delivery"    
-    },
-    {
-        value: 2, label:"Gas Filling", backgroundColor:"#4ecdc4" , icon: "gas-station" 
-    },
-    {
-        value: 3, label:"Laundry",  backgroundColor:"orange" , icon: "washing-machine"    
-    },
-    {
-        value: 4, label:"Cleaning ", backgroundColor:"#2596de" , icon: "broom" 
-    },
-    {
-        value: 5, label:"Cooking", backgroundColor:"green" , icon: "food-fork-drink"   
-    },
-    {
-        value: 6, label:"Others" ,   icon: "apps"   
-    },
-  ]
-
-
-
-
 function ListingEditScreen(props) {
+    const [categories,setCategories] = useState([])
     const location = useLocation();
     const [uploadVisible,setUploadVisible] = useState(false);
     const [progress,setProgress] = useState(0);
+
+    useEffect(() =>{
+        loadcategories();
+    
+    },[])
+
+    const loadcategories = async () =>{
+       const result = await listingsApi.getCategories();
+
+       if (!result.ok){
+        console.log(result.problem)
+        return;
+       }
+       setCategories(result.data)
+
+    }
+
+
 
     const handleSubmit = async (listing, actions) => {
         setProgress(0);
@@ -76,6 +69,7 @@ function ListingEditScreen(props) {
 
         <Screen style={styles.screen}>
             <UploadScreen onDone={()=> setUploadVisible(false)} progress={progress} visible = {uploadVisible}/>
+           
 
             <AppForm 
             
@@ -84,13 +78,12 @@ function ListingEditScreen(props) {
                 description: "",
                 category: null,
                 price: "",
-                images: []
+            
                
             }}
             onSubmit={handleSubmit}
             validationSchema={validationSchema} >
             
-            <FormImagePicker name="images"/>
 
             <AppFormField 
             name="title"
@@ -146,3 +139,8 @@ const styles = StyleSheet.create({
 
 
 export default ListingEditScreen;
+
+
+
+
+

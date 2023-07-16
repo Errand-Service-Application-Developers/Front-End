@@ -9,7 +9,7 @@ import moment from 'moment';
 import colors from '../config/colors';
 import AppText from './AppText';
 
-function Card({title,subtitle,imageUrl="http://192.168.43.173:8000/media/help.jpg",onPress,postTime}) {
+function Card({title,subtitle,imageUrl,onPress,postTime}) {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
         <View style={styles.card}>

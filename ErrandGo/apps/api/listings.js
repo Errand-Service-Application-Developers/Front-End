@@ -1,5 +1,7 @@
 import authStorage from '../auth/storage';
 import client from './client'
+import {ref, uploadBytes, getDownloadURL} from 'firebase/storage'
+import { storage } from '../config/firebase';
 
 const endpoint = '/items';
 
@@ -38,17 +40,36 @@ const addListing = async(listing,onUploadProgress)=>{
     data.append('price',listing.price);
     data.append('category',listing.category.value);
     data.append('user_id',user.user_id);
+    
 
-    listing.images.forEach((image,index) => data.append('images',{
-        name: 'image' + index,
-        type: 'image/jpeg',
-        uri: image
-    }));
+
+
+    const imageUrl = async (image) => {
+
+        const filename =  image.split('/').pop()
+        
+        const response = await fetch(image);
+        const blob = await response.blob();
+
+        const imageRef = ref(storage, filename);
+        const uploadImage = uploadBytes(imageRef, blob)
+
+        try {
+          await uploadImage;
+          const downloadUrl = await getDownloadURL(imageRef)
+          data.append('image_url',downloadUrl)
+        } catch (error) {
+          console.log(error);
+        } 
+    }
+
+   await imageUrl(listing.images[0])
+    
+    
 
     if (listing.location)
          data.append('location',JSON.stringify(listing.location)) 
     
-
 
     return client.post('/items/',data,{onUploadProgress: (progress) => onUploadProgress(progress.loaded / progress.total)})
 }

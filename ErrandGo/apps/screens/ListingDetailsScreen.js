@@ -55,7 +55,7 @@ export default ListingDetailsScreen;
 const styles = StyleSheet.create({
     image:{
         width: '100%',
-        height:'35%',
+        height:'40%',
 
     },
     detailscontainer:{

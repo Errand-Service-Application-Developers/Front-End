@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
 import * as Yup from 'yup';
 
 
@@ -54,6 +54,7 @@ function ListingEditScreen(props) {
     const location = useLocation();
     const [uploadVisible,setUploadVisible] = useState(false);
     const [progress,setProgress] = useState(0);
+    const scrollView = useRef();
 
     const handleSubmit = async (listing, actions) => {
         setProgress(0);
@@ -72,6 +73,8 @@ function ListingEditScreen(props) {
 
 
     return (
+        
+        <ScrollView  ref={scrollView} >
 
 
         <Screen style={styles.screen}>
@@ -132,6 +135,7 @@ function ListingEditScreen(props) {
 
 
         </Screen>
+    </ScrollView>
        
     );
 }

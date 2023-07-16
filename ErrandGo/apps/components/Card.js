@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet,View,TouchableWithoutFeedback,Text } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { Image } from 'react-native-expo-image-cache';
 import moment from 'moment';
 
 
@@ -12,6 +13,7 @@ function Card({title,subtitle,imageUrl,onPress,postTime}) {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
         <View style={styles.card}>
+            <Image style={styles.image} uri={imageUrl}/>
             <View style={styles.detailscontainer}>
               <AppText style={styles.title} >{title}</AppText>
               <View style = {{flexDirection:'row'}}>

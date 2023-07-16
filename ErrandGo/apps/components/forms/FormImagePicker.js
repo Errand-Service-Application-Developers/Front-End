@@ -3,6 +3,7 @@ import {useFormikContext} from 'formik'
 
 
 import ImageInputList from '../ImageInputList';
+import ImageInput from '../ImageInput';
 import ErrorMessage from './ErrorMessage';
 
 
@@ -24,7 +25,7 @@ function FormImagePicker({name}) {
 
    return (
     <>
-    <ImageInputList  
+    <ImageInputList
     imageUris={ImageUris}
     onAddImage={handleAdd}
     onRemoveImage={handleRemove}  />

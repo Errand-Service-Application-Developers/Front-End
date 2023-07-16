@@ -13,6 +13,7 @@ function UserHistoryItemDetails({ route }) {
 
     return (
         <View>
+             <Image style={styles.image} uri={ listing.image_url}/>
              <View style={styles.detailscontainer}>
                 <View style={{flexDirection:'row'}}>
                     <View style={{flex:1}}>

@@ -42,7 +42,6 @@ const loadListings = async () => {
     setListings(response.data);
     
 }
- console.log(listings)
 
     return (
     <>
@@ -66,6 +65,7 @@ const loadListings = async () => {
             renderItem={({item}) => 
                 <Card title={item.title}
                 subtitle={'Ghc '+item.price} 
+                imageUrl= {(item.image_url)}
                 postTime={item.date_created}
                 onPress={()=>navigation.navigate(route.LISTING_DETAILS,item)} /> 
            

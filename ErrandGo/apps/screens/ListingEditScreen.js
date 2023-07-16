@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from 'react';
-import { StyleSheet,View,Text} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
 import * as Yup from 'yup';
 
 
@@ -20,6 +20,7 @@ const validationSchema = Yup.object().shape({
     description: Yup.string().required().label('Description'),
     category: Yup.object().required().nullable().label('Category'),
     price: Yup.number().required().min(1).label('Price'),
+    images: Yup.array().min(1,"Please select at least one image").max(1,"You can't select more than 1 images")
    
 })
 
@@ -29,6 +30,7 @@ function ListingEditScreen(props) {
     const location = useLocation();
     const [uploadVisible,setUploadVisible] = useState(false);
     const [progress,setProgress] = useState(0);
+    const scrollView = useRef();
 
     useEffect(() =>{
         loadcategories();
@@ -65,6 +67,8 @@ function ListingEditScreen(props) {
 
 
     return (
+        
+        <ScrollView  ref={scrollView} >
 
 
         <Screen style={styles.screen}>
@@ -125,6 +129,7 @@ function ListingEditScreen(props) {
 
 
         </Screen>
+    </ScrollView>
        
     );
 }

@@ -17,10 +17,7 @@ function ListingDetailsScreen({ navigation,route }) {
 
     return (
         <View style={styles.screen}>
-            <View style={styles.design}>
-                <Text style={{fontSize:20,color: colors.white}}>Task Detail</Text>
-
-            </View>
+             <Image style={styles.image} uri={ listing.image_url }/>
              <View style={styles.detailscontainer}>
                 <View style={{flexDirection:'row'}}>
                     <View style={{flex:1}}>
@@ -59,7 +56,7 @@ export default ListingDetailsScreen;
 const styles = StyleSheet.create({
     image:{
         width: '100%',
-        height:'35%',
+        height:'40%',
 
     },
     detailscontainer:{

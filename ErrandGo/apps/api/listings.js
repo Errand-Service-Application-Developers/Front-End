@@ -70,7 +70,7 @@ const addListing = async(listing,onUploadProgress)=>{
          data.append('location',JSON.stringify(listing.location)) 
     
 
-    return client.post('/items/',data,{onUploadProgress: (progress) => onUploadProgress(progress.loaded / progress.total)})
+    return client.post('/tasks/',data,{onUploadProgress: (progress) => onUploadProgress(progress.loaded / progress.total)})
 }
 
 

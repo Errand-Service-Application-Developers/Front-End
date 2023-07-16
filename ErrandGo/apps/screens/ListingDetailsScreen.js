@@ -60,8 +60,7 @@ const styles = StyleSheet.create({
 
     },
     detailscontainer:{
-        padding: 12,
-        paddingTop: Constants.statusBarHeight + Constants.statusBarHeight
+        padding: 10
         
     },
     title: {
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
 
     },
     itemcontainer: {
-        marginVertical: 20
+        marginVertical: 10
     },
     phone:{
         fontSize: 15,

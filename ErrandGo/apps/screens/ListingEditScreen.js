@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import Screen from './Screen';
 import { AppForm, AppFormField, SubmitButton} from '../components/forms'
 import AppFormPicker from '../components/forms/AppFormPicker';
+import FormImagePicker from '../components/forms/FormImagePicker';
 import CategoryPickerItem from '../components/CategoryPickerItem';
 import useLocation from '../hooks/useLocation';
 import listingsApi from '../api/listings';
@@ -73,7 +74,6 @@ function ListingEditScreen(props) {
 
         <Screen style={styles.screen}>
             <UploadScreen onDone={()=> setUploadVisible(false)} progress={progress} visible = {uploadVisible}/>
-           
 
             <AppForm 
             
@@ -82,12 +82,13 @@ function ListingEditScreen(props) {
                 description: "",
                 category: null,
                 price: "",
-            
+                images: []
                
             }}
             onSubmit={handleSubmit}
             validationSchema={validationSchema} >
             
+            <FormImagePicker name="images"/>
 
             <AppFormField 
             name="title"
@@ -144,8 +145,3 @@ const styles = StyleSheet.create({
 
 
 export default ListingEditScreen;
-
-
-
-
-

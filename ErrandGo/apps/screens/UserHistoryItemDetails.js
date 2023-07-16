@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet,View,Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import  Constants  from 'expo-constants';
+import { Image } from 'react-native-expo-image-cache';
 
 import AppText from '../components/AppText';
 import colors from '../config/colors';
@@ -50,8 +50,7 @@ const styles = StyleSheet.create({
 
     },
     detailscontainer:{
-        padding: 12,
-        paddingTop: Constants.statusBarHeight + Constants.statusBarHeight
+        padding: 10
         
     },
     title: {

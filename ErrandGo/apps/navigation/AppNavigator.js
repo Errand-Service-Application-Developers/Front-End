@@ -21,9 +21,9 @@ const Tab = createBottomTabNavigator();
 const AppNavigator = () => {
     const {user} = useContext(AuthContext)
 
-    useEffect(()=> {
-        registerForPushNotifications();
-    },[])
+    //useEffect(()=> {
+    //    registerForPushNotifications();
+    //},[])
 
     const registerForPushNotifications = async () => {
 

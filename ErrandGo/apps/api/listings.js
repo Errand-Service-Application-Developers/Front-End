@@ -14,6 +14,8 @@ const getUserListings = (userId) => client.get('/users/'+ userId + '/history');
 
 const getUserReviews = (userId) => client.get('/users/'+ userId + '/reviews');
 
+const deleteReview = (item,review) => client.delete('/tasks/'+ item + '/reviews/'+ review + '/')
+
 const getCategories = () => client.get('/categories');
 const addReview = async(review,item_id,onUploadProgress)=>{
 
@@ -81,4 +83,5 @@ export default {
     getUserReviews,
     addReview,
     getCategories,
+    deleteReview,
 };

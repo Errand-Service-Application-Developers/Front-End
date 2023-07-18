@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     separator:{
-        backgroundColor: '#91B1BC',  
+        backgroundColor: '1B1BC#9',  
         marginTop: 3
     },
     reviews:{

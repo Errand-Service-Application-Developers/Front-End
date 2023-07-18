@@ -8,13 +8,25 @@ import Screen from './Screen';
 import screenRoute from '../navigation/route';
 
 import ListItemSeparator from '../components/ListItemSeparator';
+import colors from '../config/colors';
+import ListItemDeleteAction from '../components/ListItemDeleteAction';
+import listings from '../api/listings';
 
 function UserMessagesScreen({navigation,route}) {
 
     
     
     const values = route.params;
-    const reviews = values['reviews']
+    const userReviews = values['reviews']
+    const [reviews,SetReviews]  = useState(userReviews);
+
+    const handledelete = msg => {
+        SetReviews(reviews.filter(m => m.id !== msg.id))
+
+        listings.deleteReview(msg.item_id,msg.id);
+
+
+    }
 
     return (
         <Screen>
@@ -28,6 +40,7 @@ function UserMessagesScreen({navigation,route}) {
             subtitle={item.message} 
             onPress={()=> navigation.navigate(screenRoute.REVIEW_DETAILS, item)} 
             showChevrons
+            renderRightActions={()=> (<ListItemDeleteAction onPress={()=> handledelete(item)}/>)}
         />)}
 
         ItemSeparatorComponent={ ListItemSeparator }
@@ -44,6 +57,9 @@ const styles = StyleSheet.create({
     container:{
         paddingTop: Constants.statusBarHeight
     },
+    displayStyle:{
+        backgroundColor: colors.white
+    }
  
 })
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet,View,Image,Text, TouchableHighlight } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import  Swipeable from 'react-native-gesture-handler/Swipeable';
+import  { LongPressGestureHandler, State } from 'react-native-gesture-handler'
 import moment from 'moment';
 
 
@@ -9,8 +10,12 @@ import AppText from './AppText';
 import colors from '../config/colors';
 
 function ListItem({image,title,subtitle,onPress,renderRightActions,IconComponent,showChevrons,style}) {
+    const handleLongPress = () => {
+        console.log("Yes, that is a long press");
+      };
+
     return (
-        <Swipeable renderRightActions={renderRightActions} >
+       <Swipeable renderRightActions={renderRightActions}>
 
           <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
             <View style={[styles.container,style]}>

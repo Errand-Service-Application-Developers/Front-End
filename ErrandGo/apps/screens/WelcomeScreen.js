@@ -7,7 +7,7 @@ import colors from '../config/colors';
 
 function WelcomeScreen({navigation}) {
     return (
-        <ImageBackground blurRadius={3} style={styles.background} source={require('../assets/shopcart.jpg')}>
+        <ImageBackground blurRadius={0} style={styles.background} source={require('../assets/shopcart.jpg')}>
             <View style={styles.logoContainer}>
 
                 <Image style={styles.logo} source={require('../assets/logo.png')} />

@@ -10,7 +10,7 @@ import useCurrentUser from '../hooks/useCurrentUser';
 function UserHistoryItemDetails({ route }) {
     const listing = route.params
     const poster = useCurrentUser(listing.user_id);
-
+    
     return (
         <View>
              <Image style={styles.image} uri={ listing.image_url}/>

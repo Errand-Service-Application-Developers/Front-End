@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View,Text,} from 'react-native';
+import { StyleSheet, View,Text, ScrollView,} from 'react-native';
 import * as Yup from 'yup';
 import  Constants  from 'expo-constants';
 import  { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -65,7 +65,7 @@ function RegisterScreen({navigation}) {
 
     <>
         <ActivityIndicator visible={registerApi.loading || loginApi.loading}/>
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.design}>
             <View style={{flexDirection:'row'}}>
  
@@ -147,7 +147,7 @@ function RegisterScreen({navigation}) {
                 <Text style={{ color:"#f8ee39",textAlign:'center'}} onPress={()=> navigation.navigate("Login")}>Login</Text>
             </View>
         
-      </View>
+      </ScrollView>
     </>
  
        

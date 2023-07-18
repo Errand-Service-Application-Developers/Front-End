@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View ,Image,Text} from 'react-native';
+import { StyleSheet, View ,Image,Text, ScrollView} from 'react-native';
 import * as Yup from 'yup';
 
 
@@ -43,8 +43,9 @@ function LoginScreen({navigation}) {
 
 
     return (
+        
         <View>
-
+    
         
             <View style={styles.container}>
                
@@ -93,9 +94,8 @@ function LoginScreen({navigation}) {
 
 
             </View>
-        
-      </View>
- 
+        </View>
+    
        
     );
 }

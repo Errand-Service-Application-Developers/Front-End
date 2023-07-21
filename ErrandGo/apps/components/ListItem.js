@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet,View,Image,Text, TouchableHighlight } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import  Swipeable from 'react-native-gesture-handler/Swipeable';
-import  { LongPressGestureHandler, State } from 'react-native-gesture-handler'
 import moment from 'moment';
 
 

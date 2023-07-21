@@ -14,9 +14,15 @@ const getUserListings = (userId) => client.get('/users/'+ userId + '/history');
 
 const getUserReviews = (userId) => client.get('/users/'+ userId + '/reviews');
 
+const getCategories = () => client.get('/categories');
+
+
+
 const deleteReview = (item,review) => client.delete('/tasks/'+ item + '/reviews/'+ review + '/')
 
-const getCategories = () => client.get('/categories');
+const deleteTask = (task) => client.delete('/tasks/'+ task + '/')
+
+
 const addReview = async(review,item_id,onUploadProgress)=>{
 
     const user = await authStorage.getUser();
@@ -84,4 +90,5 @@ export default {
     addReview,
     getCategories,
     deleteReview,
+    deleteTask,
 };

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect} from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 import * as Yup from 'yup';
 
 
@@ -12,6 +12,7 @@ import CategoryPickerItem from '../components/CategoryPickerItem';
 import useLocation from '../hooks/useLocation';
 import listingsApi from '../api/listings';
 import UploadScreen from '../components/UploadScreen';
+import colors from '../config/colors';
 
 
 
@@ -74,6 +75,9 @@ function ListingEditScreen(props) {
 
         <Screen style={styles.screen}>
             <UploadScreen onDone={()=> setUploadVisible(false)} progress={progress} visible = {uploadVisible}/>
+            <Text style= {styles.hint}>
+                Select an Image desciption of your errand
+            </Text>
 
             <AppForm 
             
@@ -139,6 +143,11 @@ function ListingEditScreen(props) {
 const styles = StyleSheet.create({
     screen: {
         padding: 10,
+    },
+    hint:{
+        padding: 5,
+        color: colors.grey,
+        fontSize: 14
     }
 })
 

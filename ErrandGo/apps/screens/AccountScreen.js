@@ -49,7 +49,7 @@ function AccountScreen({navigation}) {
                 title={"My tasks"} 
                 IconComponent={<Icon name='format-list-bulleted' size={45} backgroundColor={colors.primary}/>}
                 showChevrons
-                onPress={()=> navigation.navigate(screenRoute.USER_HISTORY,currentUser)}
+                onPress={()=> navigation.navigate(screenRoute.CURRENT_USER_HISTORY,currentUser)}
                 />
                 <ListItemSeparator/>
                 <ListItem

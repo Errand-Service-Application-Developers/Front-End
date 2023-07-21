@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
         backgroundColor:colors.danger,
         alignItems: 'center',
         justifyContent: 'center',
+
     }
     
 })

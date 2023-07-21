@@ -6,6 +6,7 @@ import UserHistoryScreen from '../screens/UserHistoryScreen';
 import UserHistoryItemDetails from '../screens/UserHistoryItemDetails';
 import ReviewDetailsScreen from '../screens/ReviewDetailsScreen';
 import UserMessagesScreen from '../screens/UserMessagesScreen';
+import CurrentUserHistoryScreen from '../screens/CurrentUserHistoryScreen';
 
 
 
@@ -17,7 +18,7 @@ const AccountNavigator = () => (
     <Stack.Navigator mode="modal" screenOptions={{headerShown:false}}>
         <Stack.Screen name='Account' component={AccountScreen}/>
         <Stack.Screen name='UserHistoryItemDetails' component={UserHistoryItemDetails}/>
-        <Stack.Screen name='UserHistory' component={UserHistoryScreen} 
+        <Stack.Screen name='CurrentUserHistory' component={CurrentUserHistoryScreen} 
         options={{
             headerStyle: {backgroundColor:'#e5525f'},
             headerTintColor: "white",

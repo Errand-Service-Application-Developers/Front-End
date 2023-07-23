@@ -10,11 +10,11 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import colors from '../config/colors';
 import AppText from './AppText';
 
-function CardWithDelete({title,subtitle,imageUrl,onPress,postTime, renderRightActions}) {
+function CardWithDelete({title,subtitle,imageUrl,onPress,postTime, renderRightActions,onLongPress}) {
     return (
         <Swipeable renderRightActions={renderRightActions}>
 
-        <TouchableWithoutFeedback onPress={onPress}>
+        <TouchableWithoutFeedback onPress={onPress} onLongPress={onLongPress}>
         <View style={styles.card}>
             <Image style={styles.image} uri={imageUrl}/>
             <View style={styles.detailscontainer}>

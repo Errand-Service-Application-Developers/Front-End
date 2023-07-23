@@ -1,37 +1,53 @@
-import React from 'react';
-import { StyleSheet,Text,TextInput,View, } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet,Text,TextInput,View,FlatList} from 'react-native';
 import Screen from './Screen';
 import colors from '../config/colors';
 import moment from 'moment';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import ReplyItem from '../components/ReplyItem';
+import ListItemSeparator from '../components/ListItemSeparator';
 
 
-function ReviewDetailsScreen({route}) {
+function ReviewDetailsScreen({route,navigation}) {
+
+    const [refreshing,setRefreshing] = useState(false);
 
    const review = route.params
+
+   const [replies,setReplies] = useState([]);
+
    return (
     <Screen>
         <View style={styles.container}>
-        <TextInput multiline = {true} readOnly = {true} numberOfLines={3} style={{fontSize:14,color:colors.grey}}>
+        <Text style={{fontSize:14,color:colors.grey,fontWeight:'500'}}>
         Comment: {review.message}
-        </TextInput>
+        </Text>
        
-        <View style={{flexDirection:'row'}}>
-              <Text style={styles.postTime}>Time:</Text>
-              <Text style={styles.postTime}> {moment(review.date_created).format('dddd')}</Text>
-              <Text style={styles.postTime}>@{moment(review.date_created).format('HH:mm a')}</Text>
-
-              
+        <View style={{flexDirection:'row',paddingTop: 5}}>
+              <Text style={styles.postTime}>{moment(review.date_created).format('dddd')}</Text>
+              <Text style={styles.postTime}>@{moment(review.date_created).format('HH:mm a')}</Text>     
         </View>
-    
-
-        <Text style={styles.text}>By: {review.user.username}</Text>
-        <Text style={styles.text}>contact: {review.user.phone}</Text>
-        <Text style={styles.email}>Email: {review.user.email}</Text>
-
-        
-        
+        <Text style={{color: colors.primary}} onPress={()=> console.log(review)}>reply here</Text>
 
 
+        <Text style={styles.email} onPress={()=> setReplies(review.replies)}>show replies</Text>
+
+        <FlatList 
+            data={replies}
+            keyExtractor={reply => reply.id.toString() }
+            renderItem={({item}) => 
+                <ReplyItem 
+                message={item.reply}
+                replier={item.user.username} 
+                time= {item.date_created}
+                /> 
+            }
+            ItemSeparatorComponent={ListItemSeparator}
+            refreshing = {refreshing}
+            onRefresh={ ()=> console.log("wait")}
+            
+            /> 
+                
         </View>
     </Screen>
      
@@ -48,19 +64,20 @@ const styles = StyleSheet.create({
 
     },
     postTime:{
-        paddingRight: 5,
         fontSize: 14,
         color: colors.grey,
         marginBottom: 10
     },
     container:{
-        paddingLeft: 6,
+        paddingLeft: 10,
+       
 
     },
     email:{
         marginBottom: 10,
+        paddingTop: 20,
         fontSize: 14,
-        color: colors.secondary
+        color: '#337AB7'
     }
 
 

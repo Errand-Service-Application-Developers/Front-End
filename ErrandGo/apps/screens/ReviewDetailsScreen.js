@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import { StyleSheet,Text,TextInput,View,FlatList} from 'react-native';
+
+
+
 import Screen from './Screen';
 import colors from '../config/colors';
 import moment from 'moment';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ReplyItem from '../components/ReplyItem';
 import ListItemSeparator from '../components/ListItemSeparator';
+import screenRoute from '../navigation/route';
 
 
 function ReviewDetailsScreen({route,navigation}) {
 
-    const [refreshing,setRefreshing] = useState(false);
+   const [refreshing,setRefreshing] = useState(false);
 
    const review = route.params
 
@@ -27,7 +31,7 @@ function ReviewDetailsScreen({route,navigation}) {
               <Text style={styles.postTime}>{moment(review.date_created).format('dddd')}</Text>
               <Text style={styles.postTime}>@{moment(review.date_created).format('HH:mm a')}</Text>     
         </View>
-        <Text style={{color: colors.primary}} onPress={()=> console.log(review)}>reply here</Text>
+        <Text style={{color: colors.primary}} onPress={()=> navigation.navigate(screenRoute.NEW_REPLY,review)}>reply here</Text>
 
 
         <Text style={styles.email} onPress={()=> setReplies(review.replies)}>show replies</Text>

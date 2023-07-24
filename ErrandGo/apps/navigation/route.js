@@ -7,5 +7,6 @@ export default Object.freeze( {
     USER_HISTORY_ITEM_DETAILS: 'UserHistoryItemDetails',
     REVIEW_DETAILS: 'ReviewDetails',
     NEW_COMMENT: 'NewComment',
-    CURRENT_USER_HISTORY: 'CurrentUserHistory'
+    CURRENT_USER_HISTORY: 'CurrentUserHistory',
+    NEW_REPLY : 'NewReply'
 })

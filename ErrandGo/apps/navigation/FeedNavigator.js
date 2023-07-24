@@ -10,6 +10,7 @@ import UserHistoryItemDetails from '../screens/UserHistoryItemDetails';
 import MessagesScreen from '../screens/MessagesScreen';
 import ReviewDetailsScreen from '../screens/ReviewDetailsScreen';
 import NewCommentScreen from '../screens/NewCommentScreen';
+import NewReplyScreen from '../screens/NewReplyScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +22,7 @@ const FeedNavigator = () => (
         <Stack.Screen name='Listings' component={ListingScreen}/>
         <Stack.Screen name='ListingDetails' component={ListingDetailsScreen} />
         <Stack.Screen name='UserHistoryItemDetails' component={UserHistoryItemDetails}/>
-        <Stack.Screen name='UserHistory' component={UserHistoryScreen} 
+        <Stack.Screen name='UserHistory' component={UserHistoryScreen}
         options={{
             headerStyle: {backgroundColor:'#e5525f'},
             headerTintColor: "white",
@@ -47,6 +48,12 @@ const FeedNavigator = () => (
             headerTintColor: "white",
             headerShown: true,
             title:' Add Comment', }}/>
+        <Stack.Screen name='NewReply' component={NewReplyScreen} 
+        options={{
+            headerStyle: {backgroundColor:'#e5525f'},
+            headerTintColor: "white",
+            headerShown: true,
+            title:' Reply Post', }}/>
 
     </Stack.Navigator>
 );

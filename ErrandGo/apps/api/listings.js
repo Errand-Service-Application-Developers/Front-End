@@ -36,6 +36,22 @@ const addReview = async(review,item_id,onUploadProgress)=>{
 }
 
 
+const addReply = async(reply,item_id,review_id,onUploadProgress)=>{
+
+  const user = await authStorage.getUser();
+
+  
+
+  const data = new FormData()
+  data.append('review_id',review_id);
+  data.append('reply',reply.message);
+  data.append('user_id',user.user_id);
+  data.append('item_id',item_id);
+
+
+  return client.post('/tasks/'+item_id+'/reviews/'+review_id+'/replies/',data,{onUploadProgress: (progress) => onUploadProgress(progress.loaded / progress.total)})
+}
+
 
 const addListing = async(listing,onUploadProgress)=>{
 
@@ -91,4 +107,5 @@ export default {
     getCategories,
     deleteReview,
     deleteTask,
+    addReply,
 };

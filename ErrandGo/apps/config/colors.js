@@ -9,5 +9,7 @@ export default{
     dark:'#0c0c0c',
     blue: '#3d4665',
     offwhite:'#f7f6f5',
+    green: '#0A5A00',
+    lightBlue: '#91B1BC'
     
 }

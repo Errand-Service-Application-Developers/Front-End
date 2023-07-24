@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet,View,Text,TouchableOpacity } from 'react-native';
 import { Image } from 'react-native-expo-image-cache';
 import Constants  from 'expo-constants';
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+
 
 
 import AppText from '../components/AppText';
@@ -10,12 +10,24 @@ import colors from '../config/colors';
 import ListItem from '../components/ListItem';
 import useCurrentUser from '../hooks/useCurrentUser';
 import screenRoute from '../navigation/route';
-import ListItemSeparator from '../components/ListItemSeparator';
+import TaskAcceptButton from '../components/TaskAcceptButton';
+import TaskStatusButton from '../components/TaskStatusButton';
 
 function ListingDetailsScreen({ navigation,route }) {
+    const [request, setRequest] = useState(" ACCEPT ");
     const listing = route.params
     const poster = useCurrentUser(listing.user_id);
+    const status = listing.task_status
+    
 
+    const handleRequest = () => {
+        if ( status === 'COMPLETED')
+           return;
+        else if ( status === 'IN PROGRESS')
+           return;
+        setRequest("REQUEST SENT");
+
+    }
     return (
         <View style={styles.screen}>
              <Image style={styles.image} uri={ listing.image_url }/>
@@ -27,22 +39,27 @@ function ListingDetailsScreen({ navigation,route }) {
                 <AppText style={styles.price}>Ghc {listing.price}</AppText>
                 </View>
                 <Text style={styles.description}>{listing.description}</Text>
-                <View style={styles.contact}>
-                 <View>
-                    <MaterialCommunityIcons name='whatsapp' size={20} color = '#2AB318' />
-                 </View>
-                 <Text style={styles.phone}>{poster.phone}</Text>
 
-                </View>
+            <View style={{marginBottom:8, marginTop: 8}}>
+                <TaskStatusButton title={status}/>
+            </View>
+
+            <View style={{flexDirection: 'row',alignContent:'center',alignItems:'center'}}>
+
+
+           <View style={{flex: 1}}>
             <TouchableOpacity onPress={()=>navigation.navigate(screenRoute.MESSAGES,{'reviews':listing.reviews,'item_id':listing.id})}>
-
-            <View style={styles.reviews}>
-                <Text style={{fontSize: 15,color:'#91B1BC'}}>Reviews </Text>
-            </View>
+                <Text style={{fontSize: 17,color:colors.primary,paddingLeft: 5,fontWeight: '400'}}>Reviews</Text>
             </TouchableOpacity>
-            
             </View>
-            <ListItemSeparator style={styles.separator}/>
+            
+            <View style={styles.AcceptButton}>
+            <TaskAcceptButton title={request} onPress={()=> handleRequest()}/>
+            </View>
+
+            </View>
+
+            </View>
              <View style={styles.itemcontainer}>
              <ListItem image={require('../assets/profile.jpg')} title={poster.username}
              subtitle={poster.post_count + " tasks"} 
@@ -51,6 +68,8 @@ function ListingDetailsScreen({ navigation,route }) {
              onPress={()=>navigation.navigate(screenRoute.USER_HISTORY,poster)} />
 
              </View>
+
+
             
 
 
@@ -68,7 +87,7 @@ const styles = StyleSheet.create({
 
     },
     detailscontainer:{
-        padding: 10
+        padding: 5
         
     },
     title: {
@@ -130,6 +149,10 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '500',
     
+    },
+    AcceptButton:{
+        width: '50%',
+
     }
    
 })

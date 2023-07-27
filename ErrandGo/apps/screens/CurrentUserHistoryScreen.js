@@ -11,7 +11,7 @@ import AppButtons from '../components/AppButtons';
 import ActivityIndicator from '../components/ActivityIndicator';
 import CardWithDelete from '../components/CardWithDelete';
 import ListItemDeleteAction from '../components/ListItemDeleteAction';
-import listingsApi from '../api/listings';
+
 
 
 function CurrentUserHistoryScreen({ navigation,route }) {
@@ -19,6 +19,7 @@ function CurrentUserHistoryScreen({ navigation,route }) {
 const user = route.params;
 
 const [listings,setListings] = useState([]);
+const [accept,SetAccept] = useState("ACCEPT")
 const [error,setError] = useState(false);
 const [loading,setLoading] = useState(false);
 const [refreshing,setRefreshing] = useState(false);
@@ -29,9 +30,10 @@ useEffect(() =>{
 },[])
 
 
+
 const loadListings = async () => {
     setLoading(true);
-    const response = await listingApi.getUserListings(user.id);
+    const response = await listingApi.getUserOwnedRequests(user.id);
     setLoading(false);
 
     if (!response.ok)
@@ -47,6 +49,23 @@ const handledelete = item => {
 
     listingApi.deleteTask(item.id);
 
+}
+
+const handleDecline = request =>{
+    setListings(listings.filter(m => m.id !== request.id))
+
+    listingApi.deleteRequest(request.id);
+
+}
+
+const handleAccept = (request) =>{
+    setListings(listings.filter(m => m.id !== request.id));
+
+    listingApi.UpdateRequestStatus(request.id,"Accepted");
+    listingApi.UpdateTaskStatus(request.task.id,"IN PROGRESS");
+
+    SetAccept("ACCEPTED")
+    
 
 }
 
@@ -71,11 +90,16 @@ const handledelete = item => {
             data={listings}
             keyExtractor={listings => listings.id.toString() }
             renderItem={({item}) => 
-                <CardWithDelete title={item.title}
-                subtitle={'Ghc '+item.price} 
-                imageUrl= {item.image_url}
-                postTime={item.date_created}
-                onPress={()=>navigation.navigate(screenRoute.USER_HISTORY_ITEM_DETAILS,item)} 
+                <CardWithDelete title={item.task.title} 
+                imageUrl= {item.task.image_url}
+                task_status={ item.task.task_status}
+                RequesterTitle={item.requester.username}
+                Requestersubtitle={item.requester.phone}
+                email={ item.requester.email}
+                AcceptRequest={()=>handleAccept(item)}
+                DeclineRequest={()=>handleDecline(item)}
+                ACCEPTED={accept}
+                onPress={()=>navigation.navigate(screenRoute.USER_HISTORY_ITEM_DETAILS,item.task)} 
                 renderRightActions={()=> (<ListItemDeleteAction onPress={()=> handledelete(item)}/>)}    /> 
            
             }

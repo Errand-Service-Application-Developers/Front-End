@@ -1,15 +1,15 @@
 import React from 'react';
 import { StyleSheet,View,Text } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+
 import { Image } from 'react-native-expo-image-cache';
 
 import AppText from '../components/AppText';
 import colors from '../config/colors';
-import useCurrentUser from '../hooks/useCurrentUser';
+
 
 function UserHistoryItemDetails({ route }) {
     const listing = route.params
-    const poster = useCurrentUser(listing.user_id);
+    
     
     return (
         <View>
@@ -23,13 +23,7 @@ function UserHistoryItemDetails({ route }) {
                 </View>
                 <Text style={styles.description}>{listing.description}</Text>
 
-            <View style={styles.contact}>
-            <View>
-                <MaterialCommunityIcons name='whatsapp' size={20} color = '#2AB318' />
-            </View>
-            <Text style={styles.phone}>{poster.phone}</Text>
-
-            </View> 
+            
 
             </View>
 

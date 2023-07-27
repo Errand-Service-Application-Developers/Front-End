@@ -10,6 +10,10 @@ export default{
     blue: '#3d4665',
     offwhite:'#f7f6f5',
     green: '#0A5A00',
-    lightBlue: '#91B1BC'
+    lightBlue: '#91B1BC',
+    dodgerblue: 'dodgerblue',
+    darkblue: '#2F5655',
+    lightblue: '#9CDED1',
+    gold: '#F7D000'
     
 }

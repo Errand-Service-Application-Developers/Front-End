@@ -12,6 +12,7 @@ import useCurrentUser from '../hooks/useCurrentUser';
 import screenRoute from '../navigation/route';
 import TaskAcceptButton from '../components/TaskAcceptButton';
 import TaskStatusButton from '../components/TaskStatusButton';
+import listingsApi from '../api/listings';
 
 function ListingDetailsScreen({ navigation,route }) {
     const [request, setRequest] = useState(" ACCEPT ");
@@ -19,13 +20,20 @@ function ListingDetailsScreen({ navigation,route }) {
     const poster = useCurrentUser(listing.user_id);
     const status = listing.task_status
     
+    
 
-    const handleRequest = () => {
+    const handleRequest = async () => {
         if ( status === 'COMPLETED')
            return;
         else if ( status === 'IN PROGRESS')
            return;
+
+
+        await listingsApi.makeRequest(listing.id,listing.user_id)
         setRequest("REQUEST SENT");
+        
+
+
 
     }
     return (

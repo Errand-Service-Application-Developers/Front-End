@@ -14,6 +14,10 @@ const getUserListings = (userId) => client.get('/users/'+ userId + '/history');
 
 const getUserReviews = (userId) => client.get('/users/'+ userId + '/reviews');
 
+const getUserOwnedRequests = (userId) => client.get('/users/'+ userId + '/ownedrequests');
+
+const getUserSentRequests = (userId) => client.get('/users/'+ userId + '/sentrequests');
+
 const getCategories = () => client.get('/categories');
 
 
@@ -21,6 +25,32 @@ const getCategories = () => client.get('/categories');
 const deleteReview = (item,review) => client.delete('/tasks/'+ item + '/reviews/'+ review + '/')
 
 const deleteTask = (task) => client.delete('/tasks/'+ task + '/')
+
+const deleteRequest = (request) => client.delete('/requests/'+ request + '/')
+
+
+
+const UpdateTaskStatus  = (task,status) => client.patch('/tasks/'+ task + '/',{task_status: status});
+
+
+
+const UpdateRequestStatus  = (request,status) => client.patch('/requests/'+ request + '/',{status: status});
+
+
+
+
+
+const makeRequest = async(task,owner)=>{
+
+  const user = await authStorage.getUser();
+
+  const data = new FormData()
+  data.append('task_id',task);
+  data.append('owner_id',owner);
+  data.append('requester_id',user.user_id);
+
+  return client.post('/requests/',data)
+}
 
 
 const addReview = async(review,item_id,onUploadProgress)=>{
@@ -108,4 +138,11 @@ export default {
     deleteReview,
     deleteTask,
     addReply,
+    makeRequest,
+    getUserOwnedRequests,
+    getUserSentRequests,
+    deleteRequest,
+    UpdateTaskStatus,
+    UpdateRequestStatus
+
 };

@@ -99,8 +99,8 @@ const handleAccept = (request) =>{
                 AcceptRequest={()=>handleAccept(item)}
                 DeclineRequest={()=>handleDecline(item)}
                 ACCEPTED={accept}
-                onPress={()=>navigation.navigate(screenRoute.USER_HISTORY_ITEM_DETAILS,item.task)} 
-                renderRightActions={()=> (<ListItemDeleteAction onPress={()=> handledelete(item)}/>)}    /> 
+                onPress={()=>navigation.navigate(screenRoute.USER_TASK_DETAILS,item)} 
+                renderRightActions={()=> (<ListItemDeleteAction onPress={()=> handledelete(item.task)}/>)}    /> 
            
             }
             refreshing = {refreshing}

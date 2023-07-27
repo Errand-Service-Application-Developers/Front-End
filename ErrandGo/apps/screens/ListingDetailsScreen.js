@@ -15,13 +15,16 @@ import TaskStatusButton from '../components/TaskStatusButton';
 import listingsApi from '../api/listings';
 
 function ListingDetailsScreen({ navigation,route }) {
+
+    const {user} = useAuth();
+
+
     const [request, setRequest] = useState(" ACCEPT ");
     const listing = route.params
     const poster = useCurrentUser(listing.user_id);
     const status = listing.task_status
     
-    
-
+  
     const handleRequest = async () => {
         if ( status === 'COMPLETED')
            return;
@@ -61,9 +64,13 @@ function ListingDetailsScreen({ navigation,route }) {
             </TouchableOpacity>
             </View>
             
+            {
+             user.user_id === poster.id ?
+             null :
             <View style={styles.AcceptButton}>
             <TaskAcceptButton title={request} onPress={()=> handleRequest()}/>
             </View>
+            }
 
             </View>
 

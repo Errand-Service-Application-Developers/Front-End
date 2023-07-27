@@ -65,7 +65,7 @@ const loadListings = async () => {
                 subtitle={'Ghc '+item.price} 
                 imageUrl= {item.image_url}
                 postTime={item.date_created}
-                onPress={()=>navigation.navigate(screenRoute.USER_HISTORY_ITEM_DETAILS,item)} /> 
+                /> 
            
             }
             refreshing = {refreshing}

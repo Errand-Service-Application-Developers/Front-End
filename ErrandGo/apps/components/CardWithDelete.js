@@ -35,7 +35,9 @@ function CardWithDelete({title,imageUrl,onPress,RequesterTitle,Requestersubtitle
               subtitle={ Requestersubtitle }/>
           
             </View>
-            <View style={{marginBottom: 10, flexDirection:'row',paddingLeft: 20,paddingRight: 20}}>
+            { task_status === 'PENDING' ?
+
+                <View style={{marginBottom: 10, flexDirection:'row',paddingLeft: 20,paddingRight: 20}}>
                 
                <View style={{flex:1}}>
 
@@ -62,7 +64,10 @@ function CardWithDelete({title,imageUrl,onPress,RequesterTitle,Requestersubtitle
                 </View>
                 </TouchableOpacity>}
               
-            </View>
+            </View> :
+            null
+            
+            } 
 
         </View>
         

@@ -53,7 +53,7 @@ const get = async(key) => {
         return item.value;
         
     } catch (error) {
-        console.log(error)
+        
         
     }
 

@@ -61,7 +61,7 @@ const handleDecline = request =>{
 const handleAccept = (request) =>{
     setListings(listings.filter(m => m.id !== request.id));
 
-    listingApi.UpdateRequestStatus(request.id,"Accepted");
+    listingApi.UpdateRequestStatus(request.id,"ACCEPTED");
     listingApi.UpdateTaskStatus(request.task.id,"IN PROGRESS");
 
     SetAccept("ACCEPTED")

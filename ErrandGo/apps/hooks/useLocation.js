@@ -14,7 +14,7 @@ const useLocation = () => {
             setLocation({latitude,longitude});
             
         } catch (error) {
-            console.log(error);
+           
             
         }
     }

@@ -46,8 +46,7 @@ function RegisterScreen({navigation}) {
             }
             else {
                 setRegisterError('An error occurred');
-                console.log(result);
-                
+               
             }
             return setRegisterFailed(true);
             

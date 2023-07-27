@@ -8,7 +8,7 @@ const storeToken = async (authToken) => {
         await SecureStore.setItemAsync(key,authToken);
         
     } catch (error) {
-        console.log("Error while storing user token",error)
+        
         
     }
 }
@@ -20,7 +20,7 @@ const getToken = async() =>{
         return await SecureStore.getItemAsync(key);
         
     } catch (error) {
-        console.log("Error while retrieving user token",error);
+        
         
     }
 }
@@ -35,7 +35,7 @@ const removeToken = async()=> {
         await SecureStore.deleteItemAsync(key);
         
     } catch (error) {
-        console.log("Error while deleting user token",error)
+        
         
     }
 }

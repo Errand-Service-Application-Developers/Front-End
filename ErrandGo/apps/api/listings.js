@@ -112,7 +112,7 @@ const addListing = async(listing,onUploadProgress)=>{
           const downloadUrl = await getDownloadURL(imageRef)
           data.append('image_url',downloadUrl)
         } catch (error) {
-          console.log(error);
+        
         } 
     }
 

@@ -12,8 +12,10 @@ const useCurrentUser = (userId) => {
     const getUser = async (user_Id) => {
         const response = await apiClient.get('/users/' + user_Id);
     
-        if (!response.ok)
-            console.log(response.problem)
+        if (!response.ok){
+            
+        }
+            
     
         setCurrentUser(response.data);
 }

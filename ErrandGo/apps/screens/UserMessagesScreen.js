@@ -1,69 +1,106 @@
-import React,{ useState} from 'react';
-import { FlatList, StyleSheet,View } from 'react-native';
-import  Constants  from 'expo-constants';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet,View,FlatList } from 'react-native';
 
-
-import ListItem from '../components/ListItem';
 import Screen from './Screen';
-import screenRoute from '../navigation/route';
-
-import ListItemSeparator from '../components/ListItemSeparator';
 import colors from '../config/colors';
-import ListItemDeleteAction from '../components/ListItemDeleteAction';
-import listings from '../api/listings';
-
-function UserMessagesScreen({navigation,route}) {
-
-    
-    
-    const values = route.params;
-    const userReviews = values['reviews']
-    const [reviews,SetReviews]  = useState(userReviews);
-
-    const handledelete = msg => {
-        SetReviews(reviews.filter(m => m.id !== msg.id))
-
-        listings.deleteReview(msg.item_id,msg.id);
+import screenRoute from '../navigation/route';
+import listingApi from '../api/listings';
+import AppText from '../components/AppText';
+import AppButtons from '../components/AppButtons';
+import ActivityIndicator from '../components/ActivityIndicator';
+import RequestCard from '../components/RequestCard';
 
 
-    }
 
-    return (
-        <Screen>
-        
-        <FlatList  
-        data={reviews}
-        keyExtractor={review => review.id.toString()}
-        renderItem={({ item }) =>
-         (<ListItem 
-            title={item.user.username} 
-            subtitle={item.message} 
-            onPress={()=> navigation.navigate(screenRoute.REVIEW_DETAILS, item)} 
-            showChevrons
-            renderRightActions={()=> (<ListItemDeleteAction onPress={()=> handledelete(item)}/>)}
-        />)}
+function UserMessagesScreen({ navigation,route }) {
 
-        ItemSeparatorComponent={ ListItemSeparator }
-        />
-        </Screen>
-        
+const user = route.params;
+
+const [listings,setListings] = useState([]);
+const [error,setError] = useState(false);
+const [loading,setLoading] = useState(false);
+const [refreshing,setRefreshing] = useState(false);
+
+useEffect(() =>{
+    loadListings();
+
+},[])
+
+
+
+const loadListings = async () => {
+    setLoading(true);
+    const response = await listingApi.getUserSentRequests(user.id);
+    setLoading(false);
+
+    if (!response.ok)
+        return setError(true);
+
+    setError(false);
+    setListings(response.data);
+
+}
+
+
+
+
+
+   return (
+
+
+    <Screen style={styles.screen}>
+            {error && <>
+            <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
+            <AppText>Couldn't retrieve user posts from server</AppText>
+            <View style={{padding:10}}>
+            <AppButtons title='Retry' onPress={loadListings} color='primary'/>
+            </View>
+
+            </View>
+            </>}
+
+            <ActivityIndicator visible ={loading} />
+            
+
+            <FlatList 
+            data={listings}
+            keyExtractor={listings => listings.id.toString() }
+            renderItem={({item}) => 
+                <RequestCard title={item.task.title} 
+                 imageUrl= {item.task.image_url}
+                 subtitle={item.task.price}
+                 requestStatus={item.status}
+                 onPress={()=>navigation.navigate(screenRoute.USER_HISTORY_ITEM_DETAILS,item)} 
+
+                /> 
+           
+            }
+            refreshing = {refreshing}
+            onRefresh={ ()=> {loadListings();}}
+            
+            /> 
+
        
-        
-    );
+
+
+        </Screen>
+       
+    
+   );
 }
 
 
 const styles = StyleSheet.create({
-    container:{
-        paddingTop: Constants.statusBarHeight
-    },
-    displayStyle:{
-        backgroundColor: colors.white
+    screen:{
+        backgroundColor:colors.light,
+        padding:15,
+        
     }
- 
+
+
 })
 
 
-
-
 export default UserMessagesScreen;
+
+

@@ -34,7 +34,7 @@ const AppNavigator = () => {
 
         } catch (error) {
 
-            console.log("Error getting Push token",error)
+            
             
         }
 

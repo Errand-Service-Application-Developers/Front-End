@@ -48,7 +48,7 @@ function ReviewDetailsScreen({route,navigation}) {
             }
             ItemSeparatorComponent={ListItemSeparator}
             refreshing = {refreshing}
-            onRefresh={ ()=> console.log("wait")}
+            onRefresh={ ()=> console.log("")}
             
             /> 
                 

@@ -36,7 +36,7 @@ function ImageInput({imageUri,onChangeImage}) {
              onChangeImage(result.assets[0].uri);
     
         } catch (error) {
-          console.log("Error reading Image")
+          
           
         }
       }

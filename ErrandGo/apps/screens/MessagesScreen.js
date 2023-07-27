@@ -33,10 +33,9 @@ function MessagesScreen({navigation,route}) {
             subtitle={item.message} 
             onPress={()=> navigation.navigate(screenRoute.REVIEW_DETAILS, item)} 
             showChevrons
-         
         />)}
 
-        ItemSeparatorComponent={() => (<ListItemSeparator style={{backgroundColor: colors.light}}/>) }
+        ItemSeparatorComponent={ ListItemSeparator }
         />
         <View style={styles.addComment}>
             <NewListingButton style={styles.button} onPress={()=>navigation.navigate(screenRoute.NEW_COMMENT,item_id)}/>
@@ -70,9 +69,6 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    displayStyle:{
-        backgroundColor: colors.light
     }
 })
 

@@ -56,14 +56,13 @@ function AccountScreen({navigation}) {
                 title={"My Errands"} 
                 IconComponent={<Icon name='run-fast' size={45} backgroundColor={colors.darkblue}/>}
                 showChevrons
-                onPress={()=>navigation.navigate(screenRoute.MESSAGES,{'reviews': reviews})}
+                onPress={()=>navigation.navigate(screenRoute.MESSAGES,currentUser)}
                 />
                 <ListItemSeparator/>
                 <ListItem
                 title={"My reviews"} 
                 IconComponent={<Icon name='email' size={45} backgroundColor={colors.lightBlue}/>}
                 showChevrons
-                onPress={()=>navigation.navigate(screenRoute.MESSAGES,{'reviews': reviews})}
                 />
 
                 </View>

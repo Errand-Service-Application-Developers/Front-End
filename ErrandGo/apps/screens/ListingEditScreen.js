@@ -43,7 +43,6 @@ function ListingEditScreen(props) {
        const result = await listingsApi.getCategories();
 
        if (!result.ok){
-        console.log(result.problem)
         return;
        }
        setCategories(result.data)

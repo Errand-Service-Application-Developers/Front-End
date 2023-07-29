@@ -8,6 +8,8 @@ import ReviewDetailsScreen from '../screens/ReviewDetailsScreen';
 import UserMessagesScreen from '../screens/UserMessagesScreen';
 import CurrentUserHistoryScreen from '../screens/CurrentUserHistoryScreen';
 import UserTaskDetails from '../screens/UserTaskDetails';
+import CurrentUserReviewScreen from '../screens/CurrentUserReviewScreen';
+import CurrentUserReviewDetailsScreen from '../screens/CurrentUserReviewDetailsScreen';
 
 
 
@@ -32,8 +34,20 @@ const AccountNavigator = () => (
             headerStyle: {backgroundColor:'#e5525f'},
             headerTintColor: "white",
             headerShown: true,
-            title:' My Reviews', }}/>
+            title:' My Errands', }}/>
          <Stack.Screen name='ReviewDetails' component={ReviewDetailsScreen} 
+        options={{
+            headerStyle: {backgroundColor:'#e5525f'},
+            headerTintColor: "white",
+            headerShown: true,
+            title:' Review Details', }}/>
+            <Stack.Screen name='CurrentUserReview' component={CurrentUserReviewScreen} 
+        options={{
+            headerStyle: {backgroundColor:'#e5525f'},
+            headerTintColor: "white",
+            headerShown: true,
+            title:' My Reviews', }}/>
+        <Stack.Screen name='CurrentUserReviewDetails' component={CurrentUserReviewDetailsScreen} 
         options={{
             headerStyle: {backgroundColor:'#e5525f'},
             headerTintColor: "white",

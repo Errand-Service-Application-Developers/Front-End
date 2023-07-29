@@ -63,6 +63,7 @@ function AccountScreen({navigation}) {
                 title={"My reviews"} 
                 IconComponent={<Icon name='email' size={45} backgroundColor={colors.lightBlue}/>}
                 showChevrons
+                onPress={()=>navigation.navigate(screenRoute.CURRENT_USER_REVIEW,{'reviews': reviews})}
                 />
 
                 </View>

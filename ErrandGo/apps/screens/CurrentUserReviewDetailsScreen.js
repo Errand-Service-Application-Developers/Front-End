@@ -11,13 +11,13 @@ import screenRoute from '../navigation/route';
 import ReviewListItem from '../components/ReviewListItem';
 
 
-function ReviewDetailsScreen({route,navigation}) {
+function CurrentUserReviewDetailsScreen({route,navigation}) {
 
    const [refreshing,setRefreshing] = useState(false);
 
    const review = route.params
 
-   const [replies,setReplies] = useState([]);
+   const replies = review.replies
   
    return (
     <Screen>
@@ -30,11 +30,10 @@ function ReviewDetailsScreen({route,navigation}) {
           message={review.message} 
           showDate={review.date_created}/>
         
-        <View style ={{paddingLeft: 60}}>
-
-        <Text style={{color: colors.primary,paddingTop: 5}} onPress={()=> navigation.navigate(screenRoute.NEW_REPLY,review)}>reply here</Text>
-        <Text style={styles.email} onPress={()=> setReplies(review.replies)}>show replies</Text>
         <ListItemSeparator/>
+        
+        <View style ={{paddingLeft: 60}}>
+ 
         <FlatList 
             data={replies}
             keyExtractor={reply => reply.id.toString() }
@@ -88,4 +87,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default ReviewDetailsScreen;
+export default CurrentUserReviewDetailsScreen;

@@ -1,4 +1,4 @@
-import React,{ useState} from 'react';
+import React from 'react';
 import { FlatList, StyleSheet,View } from 'react-native';
 import  Constants  from 'expo-constants';
 
@@ -6,7 +6,7 @@ import  Constants  from 'expo-constants';
 import ListItem from '../components/ListItem';
 import Screen from './Screen';
 import screenRoute from '../navigation/route';
-
+import ReviewListItem from '../components/ReviewListItem';
 import ListItemSeparator from '../components/ListItemSeparator';
 import NewListingButton from '../components/NewListingButton';
 import colors from '../config/colors';
@@ -28,9 +28,11 @@ function MessagesScreen({navigation,route}) {
         data={reviews}
         keyExtractor={review => review.id.toString()}
         renderItem={({ item }) =>
-         (<ListItem 
+        (<ReviewListItem
+            image={require('../assets/profile.jpg')}
             title={item.user.username} 
-            subtitle={item.message} 
+            subtitle={item.user.email} 
+            message={item.message}
             onPress={()=> navigation.navigate(screenRoute.REVIEW_DETAILS, item)} 
             showChevrons
         />)}

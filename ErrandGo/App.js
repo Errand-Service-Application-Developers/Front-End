@@ -18,7 +18,6 @@ import authStorage from './apps/auth/storage';
 
 export default function App() {
 
-  console.log("App Executed")
 
   const [user,setUser] = useState();
 

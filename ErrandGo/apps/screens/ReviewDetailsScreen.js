@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet,Text,TextInput,View,FlatList} from 'react-native';
+import { StyleSheet,Text,View,FlatList} from 'react-native';
 
 
 
 import Screen from './Screen';
 import colors from '../config/colors';
 import moment from 'moment';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import ReplyItem from '../components/ReplyItem';
 import ListItemSeparator from '../components/ListItemSeparator';
 import screenRoute from '../navigation/route';

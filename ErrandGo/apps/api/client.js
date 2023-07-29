@@ -4,7 +4,7 @@ import cache from '../utility/cache';
 
 
 const apiClient = create({
-    baseURL: 'http://192.168.43.173:8000/errand'
+    baseURL: 'http://errandapp-71874d388d6d.herokuapp.com/errand'
 });
 
 

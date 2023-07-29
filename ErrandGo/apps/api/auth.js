@@ -2,7 +2,7 @@ import { create } from 'apisauce'
 
 
 const apiClient = create({
-    baseURL: 'http://192.168.43.173:8000'
+    baseURL: 'http://errandapp-71874d388d6d.herokuapp.com'
 })
 
 const login = (username,password) => apiClient.post('/auth/jwt/create',{username,password});

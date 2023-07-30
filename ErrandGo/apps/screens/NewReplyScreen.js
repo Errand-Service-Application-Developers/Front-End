@@ -8,9 +8,6 @@ import Screen from './Screen';
 import { AppForm, AppFormField, SubmitButton} from '../components/forms'
 import listingsApi from '../api/listings';
 import UploadScreen from '../components/UploadScreen';
-import screenRoute from '../navigation/route';
-
-
 
 
 const validationSchema = Yup.object().shape({
@@ -21,7 +18,7 @@ const validationSchema = Yup.object().shape({
 
 
 
-function NewReplyScreen({navigation,route}) {
+function NewReplyScreen({route}) {
 
     const review = route.params
 

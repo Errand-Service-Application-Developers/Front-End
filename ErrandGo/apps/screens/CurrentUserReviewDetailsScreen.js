@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet,Text,View,FlatList} from 'react-native';
+import { StyleSheet,View,FlatList} from 'react-native';
 
 
 
@@ -7,11 +7,10 @@ import Screen from './Screen';
 import colors from '../config/colors';
 import ReplyItem from '../components/ReplyItem';
 import ListItemSeparator from '../components/ListItemSeparator';
-import screenRoute from '../navigation/route';
 import ReviewListItem from '../components/ReviewListItem';
 
 
-function CurrentUserReviewDetailsScreen({route,navigation}) {
+function CurrentUserReviewDetailsScreen({route}) {
 
    const [refreshing,setRefreshing] = useState(false);
 
@@ -31,7 +30,7 @@ function CurrentUserReviewDetailsScreen({route,navigation}) {
           showDate={review.date_created}/>
         
         <ListItemSeparator/>
-        
+
         <View style ={{paddingLeft: 60}}>
  
         <FlatList 

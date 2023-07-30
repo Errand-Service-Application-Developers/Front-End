@@ -46,7 +46,7 @@ function AccountScreen({navigation}) {
                 <View style={{marginVertical:20}}>
 
                 <ListItem
-                title={"My tasks"} 
+                title={"My Tasks"} 
                 IconComponent={<Icon name='format-list-bulleted' size={45} backgroundColor={colors.primary}/>}
                 showChevrons
                 onPress={()=> navigation.navigate(screenRoute.CURRENT_USER_HISTORY,currentUser)}
@@ -60,7 +60,7 @@ function AccountScreen({navigation}) {
                 />
                 <ListItemSeparator/>
                 <ListItem
-                title={"My reviews"} 
+                title={"My Reviews"} 
                 IconComponent={<Icon name='email' size={45} backgroundColor={colors.lightBlue}/>}
                 showChevrons
                 onPress={()=>navigation.navigate(screenRoute.CURRENT_USER_REVIEW,{'reviews': reviews})}

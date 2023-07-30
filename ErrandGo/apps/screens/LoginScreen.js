@@ -24,7 +24,7 @@ function LoginScreen({navigation}) {
 
     const { login }= useAuth();
     const [loginFailed,setLoginFailed] = useState(false);
-
+    console.log('nice')
 
     const handleSubmit = async (loginInfo,actions) => {
         const result = await authApi.login(loginInfo.username,loginInfo.password);

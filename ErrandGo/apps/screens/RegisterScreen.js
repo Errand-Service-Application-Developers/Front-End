@@ -7,12 +7,14 @@ import  { MaterialCommunityIcons } from '@expo/vector-icons'
 
 
 
+
 import defaultStyles from '../config/styles';
 import {AppForm,AppFormField,SubmitButton,ErrorMessage} from '../components/forms';
 import authApi from '../api/auth';;
 import useAuth from '../hooks/useAuth';
 import useApi from '../hooks/useApi';
 import ActivityIndicator from '../components/ActivityIndicator';
+import colors from '../config/colors';
 
 
 const validationSchema = Yup.object().shape(
@@ -40,17 +42,37 @@ function RegisterScreen({navigation}) {
     const handleSubmit = async (registerInfo,actions) => {
         const result = await registerApi.request(registerInfo);
 
-        if (!result.ok){
-            if(result.data) {
-                setRegisterError((result.data.username ? result.data.username : result.data.email))
-            }
-            else {
-                setRegisterError('An error occurred');
-               
-            }
-            return setRegisterFailed(true);
+        console.log('Register result:', result); // Debug log
+
+    if (!result.ok) {
+        if (result.data) {
+            // Handle different types of errors
+            let errorMessage = 'An error occurred';
             
+            if (result.data.username) {
+                errorMessage = Array.isArray(result.data.username) 
+                    ? result.data.username[0] 
+                    : result.data.username;
+            } else if (result.data.email) {
+                errorMessage = Array.isArray(result.data.email) 
+                    ? result.data.email[0] 
+                    : result.data.email;
+            } else if (result.data.password) {
+                errorMessage = Array.isArray(result.data.password) 
+                    ? result.data.password[0] 
+                    : result.data.password;
+            } else if (result.data.phone) {
+                errorMessage = Array.isArray(result.data.phone) 
+                    ? result.data.phone[0] 
+                    : result.data.phone;
+            }
+            
+            setRegisterError(errorMessage);
+        } else {
+            setRegisterError('An error occurred');
         }
+        return setRegisterFailed(true);
+    }
         
         setRegisterFailed(false);
         const {data: token } = await loginApi.request(registerInfo.username, registerInfo.password);
@@ -72,9 +94,9 @@ function RegisterScreen({navigation}) {
            <Text style={{fontSize:20,color:defaultStyles.colors.blue,paddingRight:5}}>
                 Hello
             </Text>
-            <MaterialCommunityIcons name='hand-wave' color='#f8ee39' size={20}/>
+            <MaterialCommunityIcons name='hand-wave' color={colors.primary} size={20}/>
             <Text style={{fontSize:20,color:defaultStyles.colors.blue,}}>
-            ,  Welcome To ErrandGo
+            ,  Welcome To PintoShop
             </Text>
             </View>
                 <Text style={{fontSize:14,fontWeight:'300',color:defaultStyles.colors.grey,marginBottom:10,marginTop:10}}>
@@ -143,7 +165,7 @@ function RegisterScreen({navigation}) {
             </View>
             <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                 <Text style={{fontStyle:'italic',color:defaultStyles.colors.grey,textAlign:'center'}}>Already have an account? </Text>
-                <Text style={{ color:"#f8ee39",textAlign:'center'}} onPress={()=> navigation.navigate("Login")}>Login</Text>
+                <Text style={{ color:defaultStyles.colors.primary,textAlign:'center'}} onPress={()=> navigation.navigate("Login")}>Login</Text>
             </View>
         
       </ScrollView>

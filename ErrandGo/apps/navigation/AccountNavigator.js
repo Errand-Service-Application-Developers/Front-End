@@ -10,6 +10,7 @@ import CurrentUserHistoryScreen from '../screens/CurrentUserHistoryScreen';
 import UserTaskDetails from '../screens/UserTaskDetails';
 import CurrentUserReviewScreen from '../screens/CurrentUserReviewScreen';
 import CurrentUserReviewDetailsScreen from '../screens/CurrentUserReviewDetailsScreen';
+import colors from '../config/colors';
 
 
 
@@ -24,32 +25,32 @@ const AccountNavigator = () => (
         <Stack.Screen name = 'UserTaskDetails'component={UserTaskDetails} />
         <Stack.Screen name='CurrentUserHistory' component={CurrentUserHistoryScreen} 
         options={{
-            headerStyle: {backgroundColor:'#e5525f'},
+            headerStyle: {backgroundColor:colors.primary},
             headerTintColor: "white",
             headerShown: true,
             title:'My Listings',
         }}/>
            <Stack.Screen name='Reviews' component={UserMessagesScreen} 
         options={{
-            headerStyle: {backgroundColor:'#e5525f'},
+            headerStyle: {backgroundColor:colors.primary},
             headerTintColor: "white",
             headerShown: true,
             title:' My Errands', }}/>
          <Stack.Screen name='ReviewDetails' component={ReviewDetailsScreen} 
         options={{
-            headerStyle: {backgroundColor:'#e5525f'},
+            headerStyle: {backgroundColor:colors.primary},
             headerTintColor: "white",
             headerShown: true,
             title:' Review Details', }}/>
             <Stack.Screen name='CurrentUserReview' component={CurrentUserReviewScreen} 
         options={{
-            headerStyle: {backgroundColor:'#e5525f'},
+            headerStyle: {backgroundColor:colors.primary},
             headerTintColor: "white",
             headerShown: true,
             title:' My Reviews', }}/>
         <Stack.Screen name='CurrentUserReviewDetails' component={CurrentUserReviewDetailsScreen} 
         options={{
-            headerStyle: {backgroundColor:'#e5525f'},
+            headerStyle: {backgroundColor:colors.primary},
             headerTintColor: "white",
             headerShown: true,
             title:' Review Details', }}/>

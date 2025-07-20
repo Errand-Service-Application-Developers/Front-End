@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "ErrandGo",
-    "slug": "ErrandGo",
+    "name": "PintoShop",
+    "slug": "PintoShop",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./apps/assets/appicon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./apps/assets/splashScreen.png",
+      "image": "./apps/assets/splash-screen.png",
       "resizeMode": "cover",
-      "backgroundColor": "#e5525f"
+      "backgroundColor": "#fc8c06"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -25,6 +25,9 @@
     },
     "web": {
       "favicon": "./apps/assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-secure-store"
+    ]
   }
 }

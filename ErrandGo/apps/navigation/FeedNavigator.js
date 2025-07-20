@@ -11,6 +11,7 @@ import MessagesScreen from '../screens/MessagesScreen';
 import ReviewDetailsScreen from '../screens/ReviewDetailsScreen';
 import NewCommentScreen from '../screens/NewCommentScreen';
 import NewReplyScreen from '../screens/NewReplyScreen';
+import colors from '../config/colors';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,7 +25,7 @@ const FeedNavigator = () => (
         <Stack.Screen name='UserHistoryItemDetails' component={UserHistoryItemDetails}/>
         <Stack.Screen name='UserHistory' component={UserHistoryScreen}
         options={{
-            headerStyle: {backgroundColor:'#e5525f'},
+            headerStyle: {backgroundColor:colors.primary},
             headerTintColor: "white",
             headerShown: true,
             title: 'User Listings',

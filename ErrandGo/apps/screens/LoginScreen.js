@@ -24,7 +24,6 @@ function LoginScreen({navigation}) {
 
     const { login }= useAuth();
     const [loginFailed,setLoginFailed] = useState(false);
-    console.log('nice')
 
     const handleSubmit = async (loginInfo,actions) => {
         const result = await authApi.login(loginInfo.username,loginInfo.password);
@@ -49,7 +48,8 @@ function LoginScreen({navigation}) {
         
             <View style={styles.container}>
                
-                 <Image style={styles.logo} source={require('../assets/logo.png')}/>
+                <Image style={styles.logo} source={require('../assets/logo.png')}/>
+                <Text style={{fontStyle:'italic',color:colors.black}}> sell happily, buy happily </Text>
                
             </View>
             <View style={{flexDirection:'row', padding:20,marginBottom:10}}>
@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
 
     container:{
         width: '100%',
-        height: '35%',
-        backgroundColor: defaultStyles.colors.secondary,
+        height: '40%',
+        backgroundColor: colors.grey,
         marginBottom: 10,
         borderBottomLeftRadius: 75,
         justifyContent: 'center',
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     },
     logo:{
         width:260,
-        height: 120,
+        height: 150,
         alignSelf: 'center',
 
     },

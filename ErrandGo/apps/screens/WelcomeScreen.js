@@ -7,11 +7,11 @@ import colors from '../config/colors';
 
 function WelcomeScreen({navigation}) {
     return (
-        <ImageBackground blurRadius={0} style={styles.background} source={require('../assets/shopcart.jpg')}>
+        <ImageBackground blurRadius={0} style={styles.background} source={require('../assets/shopcart.png')}>
             <View style={styles.logoContainer}>
 
                 <Image style={styles.logo} source={require('../assets/logo.png')} />
-                <Text style={styles.tagline}>Need Help! Just Post It</Text>
+                <Text style={styles.tagline}>Sell Happily, Buy Happily</Text>
                 
             </View>
 
@@ -58,9 +58,9 @@ const styles = StyleSheet.create({
 
     },
     tagline:{
-        fontSize:20,
-        fontWeight:'500',
-        paddingTop: 3,
+        fontSize:15,
+        fontWeight:'400',
+        paddingTop: 5,
         
     },
 

@@ -34,6 +34,8 @@ function ListingEditScreen(props) {
     const [progress,setProgress] = useState(0);
     const scrollView = useRef();
 
+
+
     useEffect(() =>{
         loadcategories();
     
@@ -54,16 +56,33 @@ function ListingEditScreen(props) {
     const handleSubmit = async (listing, actions) => {
         setProgress(0);
         setUploadVisible(true);
-        const result = await listingsApi.addListing({...listing,location},progress => setProgress(progress));
+
+
+        const result = await listingsApi.addListing({...listing,image:listing.images[0]},progress => setProgress(progress));
+
+        console.log("Result: ", result);
+
+
       
 
         if (!result.ok){
             setUploadVisible(false);
 
+            console.log("Error uploading listing: ", result.data);
+        
+
             return;
         }
+
+        setProgress(1);
+        setTimeout(() => setUploadVisible(false), 1000);
+
         
+
+
         actions.resetForm();
+
+
     }
 
 
@@ -122,7 +141,7 @@ function ListingEditScreen(props) {
             multilines
             numberOfLines = {3} 
             />
-          
+
 
             <SubmitButton title="Post" />
 

@@ -1,7 +1,6 @@
 import authStorage from '../auth/storage';
 import client from './client'
-import {ref, uploadBytes, getDownloadURL} from 'firebase/storage'
-import { storage } from '../config/firebase';
+import mime from 'mime';
 
 const endpoint = '/tasks';
 
@@ -87,44 +86,38 @@ const addListing = async(listing,onUploadProgress)=>{
 
     const user = await authStorage.getUser();
 
+
+
     const data = new FormData()
     data.append('title',listing.title);
     data.append('description',listing.description);
     data.append('price',listing.price);
     data.append('category',listing.category.id);
     data.append('user_id',user.user_id);
+    data.append('image',listing.image);
+
+
+    const fileType = mime.getType(listing.image);  // e.g., "image/jpeg"
+    const fileName = listing.image.split('/').pop();
+
+
+    data.append("image", {
+    uri: listing.image,      // must be a file:// or content:// URI
+    type: fileType, // e.g., "image/jpeg"
+    name: fileName, // e.g., "photo.jpg"
+  });
+
+
+  //   if (listing.location)
+  //        data.append('location',JSON.stringify(listing.location)) 
     
 
+    return client.post('/tasks/',
+      data,
+      {headers: {'Content-Type': 'multipart/form-data'} },
+      {onUploadProgress: (progress) => onUploadProgress(progress.loaded / progress.total)},
+    );
 
-
-    const imageUrl = async (image) => {
-
-        const filename =  image.split('/').pop()
-        
-        const response = await fetch(image);
-        const blob = await response.blob();
-
-        const imageRef = ref(storage, filename);
-        const uploadImage = uploadBytes(imageRef, blob)
-
-        try {
-          await uploadImage;
-          const downloadUrl = await getDownloadURL(imageRef)
-          data.append('image_url',downloadUrl)
-        } catch (error) {
-        
-        } 
-    }
-
-   await imageUrl(listing.images[0])
-    
-    
-
-    if (listing.location)
-         data.append('location',JSON.stringify(listing.location)) 
-    
-
-    return client.post('/tasks/',data,{onUploadProgress: (progress) => onUploadProgress(progress.loaded / progress.total)})
 }
 
 

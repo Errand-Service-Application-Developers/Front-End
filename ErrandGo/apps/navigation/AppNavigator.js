@@ -43,25 +43,40 @@ const AppNavigator = () => {
     
     return (
 
-    <Tab.Navigator 
-    screenOptions={{ headerShown:false }}>
-        <Tab.Screen name='Feed' 
+    <Tab.Navigator
+      screenOptions={{ headerShown: false }}
+    >
+      <Tab.Screen
+        name="Home"
         component={FeedNavigator}
-        options={{tabBarIcon:({color,size})=> <MaterialCommunityIcons name='home' color={color} size={size}/>}}
-
-        />
-
-        <Tab.Screen 
-        name='ListingEdit' 
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home-variant" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Add"
         component={ListingEditScreen}
-        options={({navigation})=> ({ tabBarButton: () => <NewListingButton onPress={()=> navigation.navigate(route.LISTING_EDIT) }/>
-             })}/>
-
-        <Tab.Screen 
-        name='Account' 
+        options={({ navigation }) => ({
+          tabBarLabel: '',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="plus-circle" color={color} size={size + 8} />
+          ),
+          tabBarButton: () => <NewListingButton onPress={() => navigation.navigate('Add')} />,
+        })}
+      />
+      <Tab.Screen
+        name="Profile"
         component={AccountNavigator}
-        options={{tabBarIcon:({color,size})=> <MaterialCommunityIcons name='account' color={color} size={size}/>}}
-        />
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account-circle" color={color} size={size} />
+          ),
+        }}
+      />
     </Tab.Navigator>
 );
 };

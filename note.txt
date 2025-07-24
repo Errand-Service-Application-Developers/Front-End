@@ -1,3 +1,4 @@
 install mime in frontend
 install pillow in backend
 npm install @react-navigation/native @react-navigation/bottom-tabs react-native-screens react-native-safe-area-context
+npm install lottie-react-native

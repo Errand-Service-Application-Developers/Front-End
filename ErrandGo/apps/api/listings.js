@@ -86,36 +86,33 @@ const addListing = async(listing,onUploadProgress)=>{
 
     const user = await authStorage.getUser();
 
-
-
     const data = new FormData()
     data.append('title',listing.title);
     data.append('description',listing.description);
     data.append('price',listing.price);
     data.append('category',listing.category.id);
     data.append('user_id',user.user_id);
-    data.append('image',listing.image);
 
+    // Handle multiple images - append each image individually
+    if (listing.image_uploads && listing.image_uploads.length > 0) {
+        listing.image_uploads.forEach((imageUri, index) => {
+            const fileType = mime.getType(imageUri);
+            const fileName = imageUri.split('/').pop();
 
-    const fileType = mime.getType(listing.image);  // e.g., "image/jpeg"
-    const fileName = listing.image.split('/').pop();
-
-
-    data.append("image", {
-    uri: listing.image,      // must be a file:// or content:// URI
-    type: fileType, // e.g., "image/jpeg"
-    name: fileName, // e.g., "photo.jpg"
-  });
-
-
-  //   if (listing.location)
-  //        data.append('location',JSON.stringify(listing.location)) 
-    
+            data.append('image_uploads', {
+                uri: imageUri,
+                type: fileType,
+                name: fileName,
+            });
+        });
+    }
 
     return client.post('/tasks/',
       data,
-      {headers: {'Content-Type': 'multipart/form-data'} },
-      {onUploadProgress: (progress) => onUploadProgress(progress.loaded / progress.total)},
+      {
+        headers: {'Content-Type': 'multipart/form-data'},
+        onUploadProgress: (progress) => onUploadProgress(progress.loaded / progress.total)
+      }
     );
 
 }

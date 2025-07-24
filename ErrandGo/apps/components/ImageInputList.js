@@ -13,15 +13,15 @@ function ImageInputList({ imageUris = [], onRemoveImage, onAddImage }) {
         onContentSizeChange={() => scrollView.current.scrollToEnd()}
       >
         <View style={styles.container}>
-          {imageUris[0] ? ( // Check if the first image URI exists
-            <View style={styles.image}>
+          {imageUris.map((uri, index) => (
+            <View key={uri} style={styles.image}>
               <ImageInput
-                imageUri={imageUris[0]}
-                onChangeImage={()=>onRemoveImage(imageUris[0])} // Use onRemoveImage to handle image removal
+                imageUri={uri}
+                onChangeImage={() => onRemoveImage(uri)}
               />
             </View>
-          ) : null}
-          {imageUris[0] ? null : ( // If the first image URI doesn't exist, render the second ImageInput
+          ))}
+          {imageUris.length < 5 && ( // Show add button if less than 5 images
             <View style={styles.image}>
               <ImageInput onChangeImage={onAddImage} />
             </View>

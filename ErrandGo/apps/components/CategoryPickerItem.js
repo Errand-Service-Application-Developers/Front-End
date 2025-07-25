@@ -9,9 +9,16 @@ function CategoryPickerItem({item, onPress}) {
 
     <View style={styles.container}>
         <TouchableOpacity onPress={onPress}>
-        <Icon backgroundColor={item.backgroundColor} name={item.icon} size={80}  />
+        <Icon 
+            backgroundColor={item.background_color || item.backgroundColor || "#6c5ce7"} 
+            name={item.icon || "apps"} 
+            size={60}  
+        />
         </TouchableOpacity>
-        <Text style={styles.text}>{item.name}</Text>
+        <Text style={styles.text}>{item.title || item.name}</Text>
+        {item.product_count !== undefined && (
+            <Text style={styles.countText}>{item.product_count} products</Text>
+        )}
     </View>
     );
 }
@@ -19,17 +26,24 @@ function CategoryPickerItem({item, onPress}) {
 
 const styles = StyleSheet.create({
     container:{
-        paddingHorizontal:30,
-        paddingVertical:18,
+        paddingHorizontal:20,
+        paddingVertical:12,
         alignItems: 'center',
-        width:"34%"
+        width:"32%"
 
     },
     text:{
-        marginTop:5,
-        fontWeight: "400",
+        marginTop:8,
+        fontWeight: "500",
+        fontSize: 14,
         textAlign:"center",
         
+    },
+    countText:{
+        marginTop:3,
+        fontSize:11,
+        color:"#888",
+        textAlign:"center",
     }
     
 })

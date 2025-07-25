@@ -6,7 +6,7 @@ import moment from 'moment';
 import colors from '../config/colors';
 import AppText from './AppText';
 
-function Card({ title, subtitle, imageUrl, onPress, postTime, rating = 4, isFavorite = false, category }) {
+function Card({ title, subtitle, imageUrl, onPress, postTime, rating = 4, isFavorite = false, category, inventory }) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>
@@ -14,6 +14,11 @@ function Card({ title, subtitle, imageUrl, onPress, postTime, rating = 4, isFavo
           <TouchableOpacity style={styles.favoriteIcon}>
             <MaterialCommunityIcons name={isFavorite ? 'heart' : 'heart-outline'} size={28} color={isFavorite ? colors.primary : colors.white} />
           </TouchableOpacity>
+          {inventory !== undefined && (
+            <View style={styles.inventoryBadge}>
+              <Text style={styles.inventoryText}>{inventory} left</Text>
+            </View>
+          )}
           <View style={styles.gradientOverlay} />
         </ImageBackground>
         <View style={styles.detailscontainer}>
@@ -32,10 +37,12 @@ function Card({ title, subtitle, imageUrl, onPress, postTime, rating = 4, isFavo
           </View>
           <View style={styles.priceRow}>
             <AppText style={styles.subtitle}>{subtitle}</AppText>
-            <View style={styles.timeRow}>
-              <MaterialCommunityIcons name="timelapse" color={colors.grey} size={16} />
-              <Text style={styles.postTime}>{moment(postTime).format('ddd, HH:mm a')}</Text>
-            </View>
+            {postTime && (
+              <View style={styles.timeRow}>
+                <MaterialCommunityIcons name="timelapse" color={colors.grey} size={16} />
+                <Text style={styles.postTime}>{moment(postTime).format('ddd, HH:mm a')}</Text>
+              </View>
+            )}
           </View>
         </View>
       </View>
@@ -86,6 +93,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.18)',
     borderRadius: 20,
     padding: 4,
+  },
+  inventoryBadge: {
+    position: 'absolute',
+    bottom: 12,
+    left: 16,
+    zIndex: 2,
+    backgroundColor: colors.primary,
+    borderRadius: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  inventoryText: {
+    fontSize: 12,
+    color: colors.white,
+    fontWeight: 'bold',
   },
   detailscontainer: {
     padding: 12,

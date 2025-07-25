@@ -1,12 +1,12 @@
 import { create } from 'apisauce'
 
 const apiClient = create({
-    baseURL: 'http://192.168.126.239:8080',
+    baseURL: 'http://192.168.126.239:8050',
 })
 
-const login = (username, password) => {
-    console.log('Login data:', { username, password }); // Debug log
-    return apiClient.post('/auth/jwt/create', { username, password });
+const login = (email, password) => {
+    console.log('Login data:', { email, password }); // Debug log
+    return apiClient.post('/auth/jwt/create', { email, password });
 };
 
 const register = (userInfo) => {

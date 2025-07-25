@@ -1,23 +1,13 @@
 import authStorage from '../auth/storage';
 import client from './client'
 import mime from 'mime';
+import shopApi from './shop';
 
-const endpoint = '/tasks';
+const endpoint = '/products/';
 
-
-
-
-const getListings = () => client.get(endpoint);
-
-const getUserListings = (userId) => client.get('/users/'+ userId + '/history');
-
-const getUserReviews = (userId) => client.get('/users/'+ userId + '/reviews');
-
-const getUserOwnedRequests = (userId) => client.get('/users/'+ userId + '/ownedrequests');
-
-const getUserSentRequests = (userId) => client.get('/users/'+ userId + '/sentrequests');
-
-const getCategories = () => client.get('/categories');
+// Use shop API for products and collections
+const getListings = () => shopApi.getProducts();
+const getCategories = () => shopApi.getCollections();
 
 
 
@@ -85,12 +75,17 @@ const addReply = async(reply,item_id,review_id,onUploadProgress)=>{
 const addListing = async(listing,onUploadProgress)=>{
 
     const user = await authStorage.getUser();
+    const token = await authStorage.getToken();
+    
+    console.log('User:', user);
+    console.log('Token exists:', !!token);
 
     const data = new FormData()
     data.append('title',listing.title);
-    data.append('description',listing.description);
-    data.append('price',listing.price);
-    data.append('category',listing.category.id);
+    data.append('description', listing.description);
+    data.append('inventory', listing.inventory || 0);
+    data.append('unit_price', listing.unit_price || 0);
+    data.append('collection', listing.collection || null);
     data.append('user_id',user.user_id);
 
     // Handle multiple images - append each image individually
@@ -107,7 +102,10 @@ const addListing = async(listing,onUploadProgress)=>{
         });
     }
 
-    return client.post('/tasks/',
+    console.log('About to send POST request to /products/');
+    console.log('Form data keys:', Array.from(data.keys()));
+    
+    return client.post('/products/',
       data,
       {
         headers: {'Content-Type': 'multipart/form-data'},
@@ -121,16 +119,12 @@ const addListing = async(listing,onUploadProgress)=>{
 export default {
     addListing,
     getListings,
-    getUserListings,
-    getUserReviews,
     addReview,
     getCategories,
     deleteReview,
     deleteTask,
     addReply,
     makeRequest,
-    getUserOwnedRequests,
-    getUserSentRequests,
     deleteRequest,
     UpdateTaskStatus,
     UpdateRequestStatus

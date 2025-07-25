@@ -12,6 +12,7 @@ import screenRoute from '../navigation/route';
 import useCurrentUser from '../hooks/useCurrentUser';
 import useAuth from '../hooks/useAuth';
 import listingsApi from '../api/listings';
+import shopApi from '../api/shop';
 import ListItemDeleteAction from '../components/ListItemDeleteAction';
 
 
@@ -30,9 +31,10 @@ function AccountScreen({navigation}) {
 
 
     const loadReviews = async () => {
-        const response = await listingsApi.getUserReviews(user.user_id);
-        setReviews(response.data);
-
+        const response = await shopApi.getOrders();
+        if (response.ok) {
+            setReviews(response.data.results || response.data);
+        }
     }
 
     return (

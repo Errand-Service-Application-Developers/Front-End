@@ -28,7 +28,7 @@ function AppPicker({icon, selectedItem, onSelectItem,items,placeholder,size, Pic
 
 
         {selectedItem ? 
-        <AppText style={styles.placeholder}>{selectedItem.name}</AppText> : 
+        <AppText style={styles.placeholder}>{selectedItem.title || selectedItem.name}</AppText> : 
         <AppText style={styles.placeholder}>{placeholder}</AppText>}
 
         

@@ -75,7 +75,7 @@ function RegisterScreen({navigation}) {
     }
         
         setRegisterFailed(false);
-        const {data: token } = await loginApi.request(registerInfo.username, registerInfo.password);
+        const {data: token } = await loginApi.request(registerInfo.email, registerInfo.password);
         login(token['access']);
         
 

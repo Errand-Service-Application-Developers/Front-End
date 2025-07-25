@@ -11,6 +11,7 @@ import FormImagePicker from '../components/forms/FormImagePicker';
 import CategoryPickerItem from '../components/CategoryPickerItem';
 import useLocation from '../hooks/useLocation';
 import listingsApi from '../api/listings';
+import shopApi from '../api/shop';
 import UploadScreen from '../components/UploadScreen';
 import colors from '../config/colors';
 
@@ -18,9 +19,10 @@ import colors from '../config/colors';
 const validationSchema = Yup.object().shape({
     title: Yup.string().required().label('Title'),
     description: Yup.string().required().label('Description'),
-    category: Yup.object().required().nullable().label('Category'),
-    price: Yup.number().required().min(1).label('Price'),
-    images: Yup.array().min(0,"Images are optional").max(5,"You can select up to 5 images")
+    inventory: Yup.number().required().min(0).label('Inventory'),
+    collection: Yup.object().required().nullable().label('Collection'),
+    unit_price: Yup.number().required().min(1).label('Unit Price'),
+    image_uploads: Yup.array().min(0,"Images are optional").max(5,"You can select up to 5 images")
 })
 
 
@@ -50,12 +52,12 @@ function ListingEditScreen(props) {
     },[])
 
     const loadcategories = async () =>{
-       const result = await listingsApi.getCategories();
+       const result = await shopApi.getCollections();
 
        if (!result.ok){
         return;
        }
-       setCategories(result.data)
+       setCategories(result.data || []);
 
     }
 
@@ -96,8 +98,18 @@ function ListingEditScreen(props) {
         setShowSuccessAnimation(false);
 
         try {
+            // Transform the listing data to match the new API structure
+            const productData = {
+                title: listing.title,
+                description: listing.description,
+                inventory: parseInt(listing.inventory) || 0,
+                unit_price: parseFloat(listing.unit_price) || 0,
+                collection: listing.collection?.id || null,
+                image_uploads: listing.image_uploads || []
+            };
+
             const result = await listingsApi.addListing(
-                {...listing, image_uploads: listing.images}, 
+                productData, 
                 (uploadProgress) => {
                     console.log("Upload progress:", uploadProgress);
                     setProgress(uploadProgress);
@@ -187,52 +199,63 @@ function ListingEditScreen(props) {
           
           <View style={styles.cardContainer}>
             <Text style={styles.header}>Add New Product</Text>
-            <Text style={styles.hint}>Select up to 5 images and fill in the details below.</Text>
+            <Text style={styles.hint}>Select up to 5 images and fill in the product details below.</Text>
             <AppForm
               key={formKey}
               initialValues={{
                 title: "",
                 description: "",
-                category: null,
-                price: "",
-                images: []
+                inventory: "",
+                collection: null,
+                unit_price: "",
+                image_uploads: []
               }}
               onSubmit={handleSubmit}
               validationSchema={validationSchema}
             >
-              <FormImagePicker name="images" />
+              <FormImagePicker name="image_uploads" />
               <AppFormField
                 name="title"
-                placeholder="Title"
+                placeholder="Product Title"
                 maxLength={255}
                 style={styles.input}
               />
               <AppFormField
-                fieldWidth="40%"
-                name="price"
-                maxLength={8}
-                placeholder="Price"
-                keyboardType="numeric"
+                name="description"
+                placeholder="Product Description"
+                maxLength={500}
+                multiline
+                numberOfLines={3}
                 style={styles.input}
               />
+              <View style={styles.rowContainer}>
+                <AppFormField
+                  fieldWidth="48%"
+                  name="unit_price"
+                  maxLength={8}
+                  placeholder="Unit Price (Ghc)"
+                  keyboardType="numeric"
+                  style={styles.input}
+                />
+                <AppFormField
+                  fieldWidth="48%"
+                  name="inventory"
+                  maxLength={8}
+                  placeholder="Stock Quantity"
+                  keyboardType="numeric"
+                  style={styles.input}
+                />
+              </View>
               <AppFormPicker
                 PickerItemComponent={CategoryPickerItem}
                 numberOfColumns={3}
                 items={categories}
                 fieldWidth="70%"
-                name="category"
-                placeholder="Category"
+                name="collection"
+                placeholder="Collection"
                 style={styles.input}
               />
-              <AppFormField
-                name="description"
-                placeholder="Description"
-                maxLength={255}
-                multilines
-                numberOfLines={3}
-                style={styles.input}
-              />
-              <SubmitButton title="Post" style={styles.submitButton} />
+              <SubmitButton title="Add Product" style={styles.submitButton} />
             </AppForm>
           </View>
         </Screen>
@@ -307,6 +330,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderWidth: 1,
     borderColor: colors.light,
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   submitButton: {
     marginTop: 16,

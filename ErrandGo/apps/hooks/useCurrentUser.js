@@ -1,7 +1,7 @@
 import { useContext,useState, useEffect } from 'react';
 
 
-import apiClient from '../api/client';
+import apiClient from '../api/auth';
 
 
 const useCurrentUser = (userId) => {
@@ -10,7 +10,7 @@ const useCurrentUser = (userId) => {
 
 
     const getUser = async (user_Id) => {
-        const response = await apiClient.get('/users/' + user_Id);
+        const response = await apiClient.get('/auth/users/' + user_Id);
     
         if (!response.ok){
             

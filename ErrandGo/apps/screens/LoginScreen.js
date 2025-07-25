@@ -14,7 +14,7 @@ import useAuth from '../hooks/useAuth';
 
 const validationSchema = Yup.object().shape(
     {
-        username: Yup.string().required().min(5).label('Username'),
+        email: Yup.string().required().email().label('Email'),
         password: Yup.string().required().min(5).label('Password'),
 
     }
@@ -26,7 +26,9 @@ function LoginScreen({navigation}) {
     const [loginFailed,setLoginFailed] = useState(false);
 
     const handleSubmit = async (loginInfo,actions) => {
-        const result = await authApi.login(loginInfo.username,loginInfo.password);
+        const result = await authApi.login(loginInfo.email,loginInfo.password);
+
+        console.log(result);
 
         if (!result.ok){
             return setLoginFailed(true);
@@ -61,19 +63,20 @@ function LoginScreen({navigation}) {
             
 
             <AppForm
-            initialValues={{ username:"", password:""}}
+            initialValues={{ email:"", password:""}}
             onSubmit={handleSubmit}  
             validationSchema={validationSchema} >
 
-                <ErrorMessage error="Invalid username or password" visible={loginFailed}/>
+                <ErrorMessage error="Invalid email or password" visible={loginFailed}/>
                 <AppFormField
                 style={styles.Textinput}
-                name="username"
-                icon='account'
-                placeholder='Username'
+                name="email"
+                icon='email'
+                placeholder='Email'
                 autoCapitalize='none'
                 autoCorrect={false}
-                
+                keyboardType='email-address'
+                textContentType='emailAddress'
                 />
 
                 <AppFormField

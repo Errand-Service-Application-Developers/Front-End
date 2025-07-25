@@ -6,6 +6,7 @@ import Card from '../components/Card';
 import colors from '../config/colors';
 import screenRoute from '../navigation/route';
 import listingApi from '../api/listings';
+import shopApi from '../api/shop';
 import AppText from '../components/AppText';
 import AppButtons from '../components/AppButtons';
 import ActivityIndicator from '../components/ActivityIndicator';
@@ -28,14 +29,14 @@ useEffect(() =>{
 
 const loadListings = async () => {
     setLoading(true);
-    const response = await listingApi.getUserListings(user.id);
+    const response = await shopApi.getOrders();
     setLoading(false);
 
     if (!response.ok)
         return setError(true);
 
     setError(false);
-    setListings(response.data);
+    setListings(response.data.results || response.data);
 
 }
 

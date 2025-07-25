@@ -38,12 +38,22 @@ function ListingScreen({ navigation }) {
     setLoading(false);
     if (!response.ok) return setError(true);
     setError(false);
-    setListings(response.data);
+    // Handle the new API structure with results array
+    setListings(response.data.results || []);
+  };
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    const response = await listingApi.getListings();
+    setRefreshing(false);
+    if (!response.ok) return setError(true);
+    setError(false);
+    setListings(response.data.results || []);
   };
 
   const loadCategories = async () => {
     const response = await listingApi.getCategories();
-    if (response.ok) setCategories(response.data);
+    if (response.ok) setCategories(response.data || []);
   };
 
   const handleCategorySelect = (category) => {
@@ -62,20 +72,28 @@ function ListingScreen({ navigation }) {
 
   const getFilteredSortedListings = () => {
     let filtered = selectedCategory
-      ? listings.filter((l) => l.category === selectedCategory.id)
+      ? listings.filter((l) => l.collection?.id === selectedCategory.id)
       : listings;
     if (search.trim()) {
       filtered = filtered.filter((l) => 
         l.title.toLowerCase().includes(search.trim().toLowerCase()) ||
-        l.description.toLowerCase().includes(search.trim().toLowerCase())
+        (l.description && l.description.toLowerCase().includes(search.trim().toLowerCase()))
       );
     }
     if (sortOption === 'price') {
-      filtered = [...filtered].sort((a, b) => a.price - b.price);
+      filtered = [...filtered].sort((a, b) => a.unit_price - b.unit_price);
     } else if (sortOption === 'price_desc') {
-      filtered = [...filtered].sort((a, b) => b.price - a.price);
+      filtered = [...filtered].sort((a, b) => b.unit_price - a.unit_price);
+    } else if (sortOption === 'inventory') {
+      filtered = [...filtered].sort((a, b) => b.inventory - a.inventory);
     } else {
-      filtered = [...filtered].sort((a, b) => new Date(b.date_created) - new Date(a.date_created));
+      // Sort by last_update if available, otherwise by id
+      filtered = [...filtered].sort((a, b) => {
+        if (a.last_update && b.last_update) {
+          return new Date(b.last_update) - new Date(a.last_update);
+        }
+        return b.id - a.id;
+      });
     }
     return filtered;
   };
@@ -91,7 +109,7 @@ function ListingScreen({ navigation }) {
           <View style={styles.headerTop}>
             <View>
               <Text style={styles.welcomeText}>Welcome back!</Text>
-              <Text style={styles.headerTitle}>Find your perfect service</Text>
+              <Text style={styles.headerTitle}>Find your perfect product</Text>
             </View>
             <TouchableOpacity style={styles.notificationIcon}>
               <MaterialCommunityIcons name="bell-outline" size={24} color={colors.dark} />
@@ -104,7 +122,7 @@ function ListingScreen({ navigation }) {
               <MaterialCommunityIcons name="magnify" size={20} color={colors.grey} style={styles.searchIcon} />
               <TextInput
                 style={styles.searchInput}
-                placeholder="Search services, products..."
+                placeholder="Search products, brands..."
                 value={search}
                 onChangeText={setSearch}
                 placeholderTextColor={colors.grey}
@@ -131,7 +149,7 @@ function ListingScreen({ navigation }) {
         {/* Results Summary */}
         <View style={styles.resultsSummary}>
           <Text style={styles.resultsText}>
-            {filteredListings.length} service{filteredListings.length !== 1 ? 's' : ''} found
+            {filteredListings.length} product{filteredListings.length !== 1 ? 's' : ''} found
           </Text>
           {(selectedCategory || search || sortOption !== 'date') && (
             <TouchableOpacity onPress={clearFilters} style={styles.clearFiltersButton}>
@@ -157,7 +175,7 @@ function ListingScreen({ navigation }) {
                   onPress={() => handleCategorySelect(cat)}
                 >
                   <Text style={[styles.filterText, selectedCategory?.id === cat.id && styles.selectedText]}>
-                    {cat.name}
+                    {cat.title} ({cat.product_count})
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -170,7 +188,7 @@ function ListingScreen({ navigation }) {
                 onPress={() => handleSortChange('date')}
               >
                 <MaterialCommunityIcons name="clock-outline" size={16} color={sortOption === 'date' ? colors.white : colors.dark} />
-                <Text style={[styles.sortText, sortOption === 'date' && styles.selectedText]}>Recent</Text>
+                <Text style={[styles.sortText, sortOption === 'date' && styles.selectedText]}>Newest</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.sortChip, sortOption === 'price' && styles.selectedChip]}
@@ -185,6 +203,13 @@ function ListingScreen({ navigation }) {
               >
                 <MaterialCommunityIcons name="arrow-down" size={16} color={sortOption === 'price_desc' ? colors.white : colors.dark} />
                 <Text style={[styles.sortText, sortOption === 'price_desc' && styles.selectedText]}>High Price</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.sortChip, sortOption === 'inventory' && styles.selectedChip]}
+                onPress={() => handleSortChange('inventory')}
+              >
+                <MaterialCommunityIcons name="package-variant" size={16} color={sortOption === 'inventory' ? colors.white : colors.dark} />
+                <Text style={[styles.sortText, sortOption === 'inventory' && styles.selectedText]}>Stock</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -203,8 +228,8 @@ function ListingScreen({ navigation }) {
               </View>
             ) : filteredListings.length === 0 ? (
               <View style={styles.emptyContainer}>
-                <MaterialCommunityIcons name="magnify" size={64} color={colors.grey} />
-                <AppText style={styles.emptyTitle}>No services found</AppText>
+                <MaterialCommunityIcons name="package-variant-closed" size={64} color={colors.grey} />
+                <AppText style={styles.emptyTitle}>No products found</AppText>
                 <AppText style={styles.emptyText}>Try adjusting your search or filters</AppText>
               </View>
             ) : (
@@ -214,12 +239,13 @@ function ListingScreen({ navigation }) {
                 renderItem={({ item }) => (
                   <Card
                     title={item.title}
-                    subtitle={'Ghc ' + item.price}
+                    subtitle={'Ghc ' + item.unit_price.toFixed(2)}
                     imageUrl={item.images && item.images.length > 0 ? item.images[0].image_url : null}
-                    postTime={item.date_created}
-                    category={item.category_name || categories.find(c => c.id === item.category)?.name}
-                    rating={item.rating || 4}
-                    isFavorite={item.isFavorite || false}
+                    postTime={null} // Not available in new API
+                    category={item.collection?.title}
+                    rating={4} // Default rating since not available
+                    isFavorite={false} // Default since not available
+                    inventory={item.inventory}
                     onPress={() => navigation.navigate(route.LISTING_DETAILS, item)}
                   />
                 )}
@@ -228,7 +254,7 @@ function ListingScreen({ navigation }) {
                 refreshControl={
                   <RefreshControl
                     refreshing={refreshing}
-                    onRefresh={loadListings}
+                    onRefresh={handleRefresh}
                     colors={[colors.primary]}
                     tintColor={colors.primary}
                   />

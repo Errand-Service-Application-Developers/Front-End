@@ -220,18 +220,42 @@ function ListingScreen({ navigation }) {
         ) : (
           <>
             {error ? (
-              <View style={styles.errorContainer}>
-                <MaterialCommunityIcons name="wifi-off" size={64} color={colors.grey} />
-                <AppText style={styles.errorTitle}>Connection Error</AppText>
-                <AppText style={styles.errorText}>Couldn't retrieve posts from server</AppText>
-                <AppButtons title="Try Again" onPress={loadListings} color="primary" style={styles.retryButton} />
-              </View>
+              <ScrollView
+                contentContainerStyle={styles.scrollContainer}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={handleRefresh}
+                    colors={[colors.primary]}
+                    tintColor={colors.primary}
+                  />
+                }
+              >
+                <View style={styles.errorContainer}>
+                  <MaterialCommunityIcons name="wifi-off" size={64} color={colors.grey} />
+                  <AppText style={styles.errorTitle}>Connection Error</AppText>
+                  <AppText style={styles.errorText}>Couldn't retrieve posts from server</AppText>
+                  <AppButtons title="Try Again" onPress={loadListings} color="primary" style={styles.retryButton} />
+                </View>
+              </ScrollView>
             ) : filteredListings.length === 0 ? (
-              <View style={styles.emptyContainer}>
-                <MaterialCommunityIcons name="package-variant-closed" size={64} color={colors.grey} />
-                <AppText style={styles.emptyTitle}>No products found</AppText>
-                <AppText style={styles.emptyText}>Try adjusting your search or filters</AppText>
-              </View>
+              <ScrollView
+                contentContainerStyle={styles.scrollContainer}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={handleRefresh}
+                    colors={[colors.primary]}
+                    tintColor={colors.primary}
+                  />
+                }
+              >
+                <View style={styles.emptyContainer}>
+                  <MaterialCommunityIcons name="package-variant-closed" size={64} color={colors.grey} />
+                  <AppText style={styles.emptyTitle}>No products found</AppText>
+                  <AppText style={styles.emptyText}>Try adjusting your search or filters</AppText>
+                </View>
+              </ScrollView>
             ) : (
               <FlatList
                 data={filteredListings}
@@ -241,10 +265,10 @@ function ListingScreen({ navigation }) {
                     title={item.title}
                     subtitle={'Ghc ' + item.unit_price.toFixed(2)}
                     imageUrl={item.images && item.images.length > 0 ? item.images[0].image_url : null}
-                    postTime={null} // Not available in new API
+                    postTime={null}
                     category={item.collection?.title}
-                    rating={4} // Default rating since not available
-                    isFavorite={false} // Default since not available
+                    rating={4}
+                    isFavorite={false}
                     inventory={item.inventory}
                     onPress={() => navigation.navigate(route.LISTING_DETAILS, item)}
                   />
@@ -430,6 +454,9 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     paddingTop: 8,
+  },
+  scrollContainer: {
+    flex: 1,
   },
   errorContainer: {
     flex: 1,

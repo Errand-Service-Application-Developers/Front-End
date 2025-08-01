@@ -11,5 +11,6 @@ export default Object.freeze( {
     NEW_REPLY : 'NewReply',
     USER_TASK_DETAILS : 'UserTaskDetails',
     CURRENT_USER_REVIEW : 'CurrentUserReview',
-    CURRENT_USER_REVIEW_DATAILS:'CurrentUserReviewDetails'
+    CURRENT_USER_REVIEW_DATAILS:'CurrentUserReviewDetails',
+    USER_PRODUCTS: 'UserProducts'
 })

@@ -76,6 +76,14 @@ const AppNavigator = () => {
             <MaterialCommunityIcons name="account-circle" color={color} size={size} />
           ),
         }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            // Always reset to the Account screen when Profile tab is pressed
+            navigation.navigate('Profile', {
+              screen: 'Account',
+            });
+          },
+        })}
       />
     </Tab.Navigator>
 );

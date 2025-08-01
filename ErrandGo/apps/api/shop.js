@@ -13,6 +13,9 @@ const endpoints = {
 // Products API
 const getProducts = () => client.get(endpoints.products);
 const getProduct = (id) => client.get(`${endpoints.products}${id}/`);
+const getUserProducts = () => client.get(`${endpoints.products}me/`);
+const updateProduct = (id, productData) => client.put(`${endpoints.products}${id}/`, productData);
+const deleteProduct = (id) => client.delete(`${endpoints.products}${id}/`);
 
 // Collections API  
 const getCollections = () => client.get(endpoints.collections);
@@ -44,11 +47,12 @@ const removeFromCart = (cartId, itemId) => {
 
 const getCartItems = (cartId) => client.get(`${endpoints.carts}${cartId}/items/`);
 
-// Customer API
+// Customers API
 const getCustomers = () => client.get(endpoints.customers);
-const createCustomer = (customerData) => client.post(endpoints.customers, customerData);
+const createCustomer = (customer) => client.post(endpoints.customers, customer);
 const getCustomer = (id) => client.get(`${endpoints.customers}${id}/`);
-const updateCustomer = (id, customerData) => client.patch(`${endpoints.customers}${id}/`, customerData);
+const getCustomerMe = () => client.get(`${endpoints.customers}me/`);
+const updateCustomer = (id, customer) => client.put(`${endpoints.customers}${id}/`, customer);
 
 // Orders API
 const getOrders = () => client.get(endpoints.orders);
@@ -86,6 +90,9 @@ export default {
     // Products
     getProducts,
     getProduct,
+    getUserProducts,
+    updateProduct,
+    deleteProduct,
     
     // Collections
     getCollections,
@@ -108,6 +115,7 @@ export default {
     getCustomers,
     createCustomer,
     getCustomer,
+    getCustomerMe,
     updateCustomer,
     
     // Orders

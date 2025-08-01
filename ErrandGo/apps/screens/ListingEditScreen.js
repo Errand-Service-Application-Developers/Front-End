@@ -26,8 +26,10 @@ const validationSchema = Yup.object().shape({
 })
 
 
-function ListingEditScreen(props) {
+function ListingEditScreen({ route, navigation }) {
     const [categories, setCategories] = useState([]);
+    const editingProduct = route?.params || null;
+    const isEditing = !!editingProduct;
     const location = useLocation();
     const [uploadVisible, setUploadVisible] = useState(false);
     const [progress, setProgress] = useState(0);
@@ -92,9 +94,11 @@ function ListingEditScreen(props) {
     };
 
     const handleSubmit = async (listing, actions) => {
-        setProgress(0);
-        setSmoothProgress(0);
-        setUploadVisible(true);
+        if (!isEditing) {
+            setProgress(0);
+            setSmoothProgress(0);
+            setUploadVisible(true);
+        }
         setShowSuccessAnimation(false);
 
         try {
@@ -108,19 +112,27 @@ function ListingEditScreen(props) {
                 image_uploads: listing.image_uploads || []
             };
 
-            const result = await listingsApi.addListing(
-                productData, 
-                (uploadProgress) => {
-                    console.log("Upload progress:", uploadProgress);
-                    setProgress(uploadProgress);
-                    
-                    // Animate progress more slowly and smoothly
-                    // Add a slight delay and smooth animation
-                    setTimeout(() => {
-                        animateProgress(uploadProgress * 0.9); // Show 90% during upload
-                    }, 200);
-                }
-            );
+            let result;
+            
+            if (isEditing) {
+                // Update existing product
+                result = await shopApi.updateProduct(editingProduct.id, productData);
+            } else {
+                // Create new product
+                result = await listingsApi.addListing(
+                    productData, 
+                    (uploadProgress) => {
+                        console.log("Upload progress:", uploadProgress);
+                        setProgress(uploadProgress);
+                        
+                        // Animate progress more slowly and smoothly
+                        // Add a slight delay and smooth animation
+                        setTimeout(() => {
+                            animateProgress(uploadProgress * 0.9); // Show 90% during upload
+                        }, 200);
+                    }
+                );
+            }
 
             console.log("Result: ", result);
 
@@ -135,25 +147,36 @@ function ListingEditScreen(props) {
                 return;
             }
 
-            // Show final progress animation to 100%
-            animateProgress(1);
-            
-            // Wait for progress to complete, then show success animation
-            setTimeout(() => {
+            if (isEditing) {
+                // For editing, show immediate success and navigate back
                 setUploadVisible(false);
                 setShowSuccessAnimation(true);
                 
-                // Hide success animation and reset form after showing it
                 setTimeout(() => {
                     setShowSuccessAnimation(false);
-                    actions.resetForm();
-                    setSmoothProgress(0);
-                    if (progressInterval.current) {
-                        clearInterval(progressInterval.current);
-                    }
-                }, 2000); // Show success animation for 2 seconds
+                    navigation.goBack(); // Go back to user products screen
+                }, 2000);
+            } else {
+                // For adding, show progress animation
+                animateProgress(1);
                 
-            }, 3000); // Wait 3 seconds for progress to complete
+                // Wait for progress to complete, then show success animation
+                setTimeout(() => {
+                    setUploadVisible(false);
+                    setShowSuccessAnimation(true);
+                    
+                    // Hide success animation and reset form after showing it
+                    setTimeout(() => {
+                        setShowSuccessAnimation(false);
+                        actions.resetForm();
+                        setSmoothProgress(0);
+                        if (progressInterval.current) {
+                            clearInterval(progressInterval.current);
+                        }
+                    }, 2000); // Show success animation for 2 seconds
+                    
+                }, 3000); // Wait 3 seconds for progress to complete
+            }
 
         } catch (error) {
             console.log("Upload failed:", error);
@@ -191,23 +214,35 @@ function ListingEditScreen(props) {
                   loop={false}
                   style={styles.successAnimation}
                 />
-                <Text style={styles.successText}>Product Added Successfully!</Text>
-                <Text style={styles.successSubtext}>Your product is now live and ready for customers</Text>
+                <Text style={styles.successText}>
+                  {isEditing ? 'Product Updated Successfully!' : 'Product Added Successfully!'}
+                </Text>
+                <Text style={styles.successSubtext}>
+                  {isEditing 
+                    ? 'Your product changes have been saved' 
+                    : 'Your product is now live and ready for customers'
+                  }
+                </Text>
               </View>
             </View>
           )}
           
           <View style={styles.cardContainer}>
-            <Text style={styles.header}>Add New Product</Text>
-            <Text style={styles.hint}>Select up to 5 images and fill in the product details below.</Text>
+            <Text style={styles.header}>{isEditing ? 'Edit Product' : 'Add New Product'}</Text>
+            <Text style={styles.hint}>
+              {isEditing 
+                ? 'Update your product details below.' 
+                : 'Select up to 5 images and fill in the product details below.'
+              }
+            </Text>
             <AppForm
               key={formKey}
               initialValues={{
-                title: "",
-                description: "",
-                inventory: "",
-                collection: null,
-                unit_price: "",
+                title: editingProduct?.title || "",
+                description: editingProduct?.description || "",
+                inventory: editingProduct?.inventory?.toString() || "",
+                collection: editingProduct?.collection || null,
+                unit_price: editingProduct?.unit_price?.toString() || "",
                 image_uploads: []
               }}
               onSubmit={handleSubmit}
@@ -255,7 +290,7 @@ function ListingEditScreen(props) {
                 placeholder="Collection"
                 style={styles.input}
               />
-              <SubmitButton title="Add Product" style={styles.submitButton} />
+              <SubmitButton title={isEditing ? "Update Product" : "Add Product"} style={styles.submitButton} />
             </AppForm>
           </View>
         </Screen>

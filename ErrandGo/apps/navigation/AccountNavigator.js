@@ -1,6 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import AccountScreen from '../screens/AccountScreen';
+import ListingEditScreen from '../screens/ListingEditScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import UserHistoryScreen from '../screens/UserHistoryScreen';
 import UserHistoryItemDetails from '../screens/UserHistoryItemDetails';
@@ -10,6 +11,7 @@ import CurrentUserHistoryScreen from '../screens/CurrentUserHistoryScreen';
 import UserTaskDetails from '../screens/UserTaskDetails';
 import CurrentUserReviewScreen from '../screens/CurrentUserReviewScreen';
 import CurrentUserReviewDetailsScreen from '../screens/CurrentUserReviewDetailsScreen';
+import UserProductsScreen from '../screens/UserProductsScreen';
 import colors from '../config/colors';
 
 
@@ -17,10 +19,16 @@ import colors from '../config/colors';
 
 const Stack = createNativeStackNavigator();
 
-
 const AccountNavigator = () => (
-    <Stack.Navigator mode="modal" screenOptions={{headerShown:false}}>
+    <Stack.Navigator mode="modal" screenOptions={{headerShown:false}} initialRouteName="Account">
         <Stack.Screen name='Account' component={AccountScreen}/>
+        <Stack.Screen name='ListingEdit' component={ListingEditScreen} 
+        options={{
+            headerStyle: {backgroundColor:colors.primary},
+            headerTintColor: "white",
+            headerShown: true,
+            title:'Add Product',
+        }}/>
         <Stack.Screen name='UserHistoryItemDetails' component={UserHistoryItemDetails}/>
         <Stack.Screen name = 'UserTaskDetails'component={UserTaskDetails} />
         <Stack.Screen name='CurrentUserHistory' component={CurrentUserHistoryScreen} 
@@ -54,9 +62,9 @@ const AccountNavigator = () => (
             headerTintColor: "white",
             headerShown: true,
             title:' Review Details', }}/>
+        <Stack.Screen name='UserProducts' component={UserProductsScreen} />
     </Stack.Navigator>
 );
-
 
 export default AccountNavigator;
 

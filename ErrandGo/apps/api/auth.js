@@ -1,8 +1,21 @@
 import { create } from 'apisauce'
+import authStorage from '../auth/storage';
 
 const apiClient = create({
-    baseURL: 'http://192.168.100.20:8050',
+    baseURL: 'http://192.168.43.232:8050',
 })
+
+// Add authentication to all requests
+const addAuthToRequest = async (config) => {
+    const token = await authStorage.getToken();
+    if (token) {
+        config.headers = {
+            ...config.headers,
+            'Authorization': `JWT ${token}`
+        };
+    }
+    return config;
+};
 
 const login = (email, password) => {
     console.log('Login data:', { email, password }); // Debug log
@@ -14,7 +27,24 @@ const register = (userInfo) => {
     return apiClient.post('/auth/users/', userInfo);
 };
 
+const getUsers = async () => {
+    const token = await authStorage.getToken();
+    
+    if (token) {
+        const config = {
+            headers: {
+                'Authorization': `JWT ${token}`
+            }
+        };
+        const response = await apiClient.get('/auth/users/', {}, config);
+        return response;
+    } else {
+        return { ok: false, data: null };
+    }
+};
+
 export default {
     login,
     register,
+    getUsers,
 };

@@ -128,8 +128,7 @@ function ListingDetailsScreen({ navigation, route }) {
                             text: 'View Cart',
                             style: 'default',
                             onPress: () => {
-                                // TODO: Navigate to cart screen
-                                console.log('Navigate to cart screen');
+                                navigation.navigate('Cart');
                             }
                         }
                     ]
@@ -342,32 +341,18 @@ function ListingDetailsScreen({ navigation, route }) {
                 {/* Action Buttons */}
                 <View style={styles.actionButtons}>
                     <View style={styles.buttonRow}>
-                        <AppButtons 
-                            title={
-                                isAddingToCart 
-                                    ? "Adding..." 
-                                    : "Add to Cart"
-                            }
-                            onPress={handleAddToCart}
-                            color="secondary"
-                            style={[
-                                styles.addToCartButton, 
-                                styles.halfButton,
-                                ((listing.inventory || 0) === 0 || isAddingToCart) && styles.disabledButton
-                            ]}
-                            disabled={(listing.inventory || 0) === 0 || isAddingToCart}
-                        />
-                        <AppButtons 
-                            title="Buy Now"
-                            onPress={handleBuyNow}
-                            color="primary"
-                            style={[
-                                styles.buyNowButton,
-                                styles.halfButton,
-                                ((listing.inventory || 0) === 0 || isAddingToCart) && styles.disabledButton
-                            ]}
-                            disabled={(listing.inventory || 0) === 0 || isAddingToCart}
-                        />
+                            {/* Removed duplicate Add to Cart button */}
+                            <AppButtons 
+                                title={isAddingToCart ? "Adding..." : "Add to Cart"}
+                                onPress={handleAddToCart}
+                                color="secondary"
+                                style={[
+                                    styles.addToCartButton, 
+                                    styles.halfButton,
+                                    ((listing.inventory || 0) === 0 || isAddingToCart) && styles.disabledButton
+                                ]}
+                                disabled={(listing.inventory || 0) === 0 || isAddingToCart}
+                            />
                     </View>
                     {(listing.inventory || 0) === 0 && (
                         <Text style={styles.outOfStockText}>This item is currently out of stock</Text>
@@ -417,31 +402,7 @@ function ListingDetailsScreen({ navigation, route }) {
                 </View>
             )}
             
-            {/* Sticky Bottom Section */}
-            <View style={styles.stickyBottom}>
-                <View style={styles.priceSection}>
-                    <Text style={styles.stickyPrice}>Ghc {(listing.unit_price || 0).toFixed(2)}</Text>
-                    {(listing.inventory || 0) > 0 && quantity > 1 && (
-                        <Text style={styles.stickyTotal}>Total: Ghc {((listing.unit_price || 0) * quantity).toFixed(2)}</Text>
-                    )}
-                </View>
-                <AppButtons 
-                    title={
-                        isAddingToCart 
-                            ? "Adding..." 
-                            : (listing.inventory || 0) > 0 
-                                ? `Add ${quantity} to Cart` 
-                                : "Out of Stock"
-                    }
-                    onPress={handleAddToCart}
-                    color={(listing.inventory || 0) > 0 ? "primary" : "grey"}
-                    style={[
-                        styles.stickyButton, 
-                        ((listing.inventory || 0) === 0 || isAddingToCart) && styles.disabledButton
-                    ]}
-                    disabled={(listing.inventory || 0) === 0 || isAddingToCart}
-                />
-            </View>
+            {/* Removed sticky Add to Cart button at the bottom */}
         </ScrollView>
     );
 }

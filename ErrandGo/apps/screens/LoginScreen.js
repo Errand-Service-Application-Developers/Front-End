@@ -36,8 +36,8 @@ function LoginScreen({navigation}) {
         
         setLoginFailed(false);
         login(result.data['access']);
-
-    actions.resetForm();
+        actions.resetForm();
+    navigation.navigate('Home');
     }
 
 

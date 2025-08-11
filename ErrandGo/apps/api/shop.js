@@ -22,10 +22,7 @@ const getCollections = () => client.get(endpoints.collections);
 const getCollection = (id) => client.get(`${endpoints.collections}${id}/`);
 
 // Cart API
-const getCarts = () => client.get(endpoints.carts);
-const createCart = () => client.post(endpoints.carts, {});
-const getCart = (id) => client.get(`${endpoints.carts}${id}/`);
-const deleteCart = (id) => client.delete(`${endpoints.carts}${id}/`);
+// Removed getCarts, createCart, getCart, deleteCart to avoid direct /carts/ requests
 
 // Cart Items API
 const addToCart = async (cartId, productId, quantity = 1) => {
@@ -60,31 +57,7 @@ const createOrder = (orderData) => client.post(endpoints.orders, orderData);
 const getOrder = (id) => client.get(`${endpoints.orders}${id}/`);
 const updateOrder = (id, orderData) => client.patch(`${endpoints.orders}${id}/`, orderData);
 
-// Helper function to get or create user's cart
-const getUserCart = async () => {
-    try {
-        const user = await authStorage.getUser();
-        if (!user) return null;
-
-        // Try to get existing carts
-        const cartsResponse = await getCarts();
-        if (cartsResponse.ok && cartsResponse.data.length > 0) {
-            // Return the first active cart
-            return cartsResponse.data[0];
-        }
-
-        // Create a new cart if none exists
-        const newCartResponse = await createCart();
-        if (newCartResponse.ok) {
-            return newCartResponse.data;
-        }
-
-        return null;
-    } catch (error) {
-        console.log('Error getting user cart:', error);
-        return null;
-    }
-};
+// Removed getUserCart to avoid direct /carts/ requests. Use /customers/{customer_id}/cart/ instead.
 
 export default {
     // Products
@@ -99,11 +72,7 @@ export default {
     getCollection,
     
     // Cart management
-    getCarts,
-    createCart,
-    getCart,
-    deleteCart,
-    getUserCart,
+    // Removed getCarts, createCart, getCart, deleteCart, getUserCart
     
     // Cart items
     addToCart,

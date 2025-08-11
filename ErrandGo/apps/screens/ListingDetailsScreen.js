@@ -11,6 +11,7 @@ import useCurrentUser from '../hooks/useCurrentUser';
 import screenRoute from '../navigation/route';
 import AppButtons from '../components/AppButtons';
 import shopApi from '../api/shop';
+import cartApi from '../api/cart';
 import useAuth from '../hooks/useAuth';
 
 const { width } = Dimensions.get('window');
@@ -96,28 +97,36 @@ function ListingDetailsScreen({ navigation, route }) {
 
     const handleAddToCart = async () => {
         setIsAddingToCart(true);
-        
         try {
-            // Get or create user's cart
-            const cart = await shopApi.getUserCart();
-            
-            if (!cart) {
-                Alert.alert('Error', 'Unable to access cart. Please try again.');
+            // 1. Get customer id
+            const customerRes = await shopApi.getCustomerMe();
+            if (!customerRes.ok || !customerRes.data?.id) {
+                Alert.alert('Error', 'Unable to get customer info. Please try again.');
+                setIsAddingToCart(false);
                 return;
             }
+            const customerId = customerRes.data.id;
 
-            // Add item to cart
-            const response = await shopApi.addToCart(cart.id, listing.id, quantity);
-            
-            if (response.ok) {
+            // 2. Get or create cart for customer
+            const cartRes = await cartApi.getOrCreateCart(customerId);
+            if (!cartRes.ok || !cartRes.data?.id) {
+                Alert.alert('Error', 'Unable to access cart. Please try again.');
+                setIsAddingToCart(false);
+                return;
+            }
+            const cartId = cartRes.data.id;
+
+            // 3. Add item to cart
+            const addRes = await cartApi.addItemToCart(cartId, listing.id, quantity);
+            if (addRes.ok) {
                 Alert.alert(
-                    'Success!', 
+                    'Success!',
                     `${quantity} ${listing.title}${quantity > 1 ? 's' : ''} added to cart`,
                     [
                         { text: 'Continue Shopping', style: 'default' },
-                        { 
-                            text: 'View Cart', 
-                            style: 'default', 
+                        {
+                            text: 'View Cart',
+                            style: 'default',
                             onPress: () => {
                                 // TODO: Navigate to cart screen
                                 console.log('Navigate to cart screen');
@@ -125,9 +134,7 @@ function ListingDetailsScreen({ navigation, route }) {
                         }
                     ]
                 );
-                // Reset quantity after successful addition
                 setQuantity(1);
-                // Update cart count
                 loadCartItemCount();
             } else {
                 Alert.alert('Error', 'Failed to add item to cart. Please try again.');

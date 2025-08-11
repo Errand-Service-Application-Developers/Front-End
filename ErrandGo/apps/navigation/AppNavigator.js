@@ -6,10 +6,12 @@ import * as Permissions from 'expo-permissions'
 
 
 import ListingEditScreen from '../screens/ListingEditScreen';
+import CartScreen from '../screens/CartScreen';
 import FeedNavigator from './FeedNavigator';
 import AccountNavigator from './AccountNavigator';
 import NewListingButton from '../components/NewListingButton';
 import route from './route';
+import PlaceholderScreen from '../screens/PlaceholderScreen';
 import AuthContext from '../auth/context';
 import expoPushTokenApi from '../api/expoPushToken';
 
@@ -47,6 +49,16 @@ const AppNavigator = () => {
       screenOptions={{ headerShown: false }}
     >
       <Tab.Screen
+        name="Cart"
+        component={CartScreen}
+        options={{
+          tabBarLabel: 'Cart',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="cart" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Home"
         component={FeedNavigator}
         options={{
@@ -64,8 +76,18 @@ const AppNavigator = () => {
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="plus-circle" color={color} size={size + 8} />
           ),
-          tabBarButton: () => <NewListingButton onPress={() => navigation.navigate('Add')} />,
+          tabBarButton: (props) => <NewListingButton {...props} onPress={() => navigation.navigate('Add')} style={{ top: -20, shadowColor: '#000', shadowOpacity: 0.2, shadowRadius: 8, elevation: 8 }} />, // visually center
         })}
+      />
+      <Tab.Screen
+        name="Explore"
+        component={PlaceholderScreen}
+        options={{
+          tabBarLabel: 'Explore',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="compass-outline" color={color} size={size} />
+          ),
+        }}
       />
       <Tab.Screen
         name="Profile"
@@ -78,7 +100,6 @@ const AppNavigator = () => {
         }}
         listeners={({ navigation }) => ({
           tabPress: (e) => {
-            // Always reset to the Account screen when Profile tab is pressed
             navigation.navigate('Profile', {
               screen: 'Account',
             });

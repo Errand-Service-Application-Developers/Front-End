@@ -13,7 +13,7 @@ const endpoints = {
 // Products API
 const getProducts = () => client.get(endpoints.products);
 const getProduct = (id) => client.get(`${endpoints.products}${id}/`);
-const getUserProducts = () => client.get(`${endpoints.products}me/`);
+const getUserProducts = () => client.get('/products/me/');
 const updateProduct = (id, productData) => client.put(`${endpoints.products}${id}/`, productData);
 const deleteProduct = (id) => client.delete(`${endpoints.products}${id}/`);
 

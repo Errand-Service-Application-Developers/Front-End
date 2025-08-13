@@ -239,7 +239,7 @@ function AccountScreen({ navigation }) {
                             subtitle="Cards and payment options"
                             icon="credit-card-outline"
                             color="#795548"
-                            onPress={() => {/* Navigate to payment methods */}}
+                            onPress={() => navigation.navigate(screenRoute.PAYMENT_METHODS)}
                         />
                         <ActionButton
                             title="Notifications"

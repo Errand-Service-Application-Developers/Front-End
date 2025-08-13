@@ -4,6 +4,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Screen from './Screen';
 import Card from '../components/Card';
+import favoritesApi from '../api/favorites';
+import useAuth from '../hooks/useAuth';
+import shopApi from '../api/shop';
+import { Alert } from 'react-native';
 import colors from '../config/colors';
 import route from '../navigation/route';
 import listingApi from '../api/listings';
@@ -26,11 +30,31 @@ function ListingScreen({ navigation }) {
   const [sortOption, setSortOption] = useState('date');
   const [search, setSearch] = useState('');
   const [showFilters, setShowFilters] = useState(false);
+  const [favorites, setFavorites] = useState([]);
+  const [customerId, setCustomerId] = useState(null);
+  const { user } = useAuth();
 
   useEffect(() => {
     loadListings();
     loadCategories();
-  }, []);
+    fetchCustomerIdAndFavorites();
+  }, [user]);
+
+  const fetchCustomerIdAndFavorites = async () => {
+    try {
+      const res = await shopApi.getCustomerMe();
+      if (res.ok && res.data?.id) {
+        setCustomerId(res.data.id);
+        loadFavorites(res.data.id);
+      }
+    } catch (e) {}
+  };
+
+  const loadFavorites = async (cid = customerId) => {
+    if (!cid) return;
+    const response = await favoritesApi.getFavorites(cid);
+    if (response.ok) setFavorites(response.data);
+  };
 
   const loadListings = async () => {
     setLoading(true);
@@ -99,6 +123,24 @@ function ListingScreen({ navigation }) {
   };
 
   const filteredListings = getFilteredSortedListings();
+
+  const handleAddFavorite = async (productId) => {
+    if (!customerId) {
+      Alert.alert('Login Required', 'Please log in to save favorites.');
+      return;
+    }
+    const response = await favoritesApi.addFavorite(customerId, productId);
+    if (response.ok) {
+      loadFavorites(customerId);
+      Alert.alert('Added to Favorites', 'Product has been added to your favorites.');
+    } else {
+      Alert.alert('Error', 'Could not add to favorites.');
+    }
+  };
+
+  const isProductFavorite = (productId) => {
+    return favorites.some(fav => fav.product && fav.product.id === productId);
+  };
 
   return (
     <>
@@ -268,9 +310,10 @@ function ListingScreen({ navigation }) {
                     postTime={null}
                     category={item.collection?.title}
                     rating={4}
-                    isFavorite={false}
+                    isFavorite={isProductFavorite(item.id)}
                     inventory={item.inventory}
                     onPress={() => navigation.navigate(route.LISTING_DETAILS, item)}
+                    onFavoritePress={() => handleAddFavorite(item.id)}
                   />
                 )}
                 showsVerticalScrollIndicator={false}

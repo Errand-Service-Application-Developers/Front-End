@@ -6,12 +6,12 @@ import moment from 'moment';
 import colors from '../config/colors';
 import AppText from './AppText';
 
-function Card({ title, subtitle, imageUrl, onPress, postTime, rating = 4, isFavorite = false, category, inventory }) {
+function Card({ title, subtitle, imageUrl, onPress, postTime, rating = 4, isFavorite = false, category, inventory, onFavoritePress }) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>
         <ImageBackground source={{ uri: imageUrl }} style={styles.image} imageStyle={styles.imageStyle}>
-          <TouchableOpacity style={styles.favoriteIcon}>
+          <TouchableOpacity style={styles.favoriteIcon} onPress={onFavoritePress}>
             <MaterialCommunityIcons name={isFavorite ? 'heart' : 'heart-outline'} size={28} color={isFavorite ? colors.primary : colors.white} />
           </TouchableOpacity>
           {inventory !== undefined && (

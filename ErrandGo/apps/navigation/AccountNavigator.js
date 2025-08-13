@@ -1,3 +1,4 @@
+import FavoritesScreen from '../screens/FavoritesScreen';
 import PaymentMethodsScreen from '../screens/PaymentMethodsScreen';
 import MobileWalletsScreen from '../screens/MobileWalletsScreen';
 import ComingSoonScreen from '../screens/ComingSoonScreen';
@@ -27,6 +28,14 @@ const Stack = createNativeStackNavigator();
 const AccountNavigator = () => {
     return (
         <Stack.Navigator mode="modal" screenOptions={{headerShown:false}} initialRouteName="Account">
+            <Stack.Screen name='Favorites' component={FavoritesScreen} 
+                options={{
+                    headerStyle: {backgroundColor:colors.primary},
+                    headerTintColor: "white",
+                    headerShown: true,
+                    title:'Wishlist',
+                }}
+            />
             <Stack.Screen name='Account' component={AccountScreen}/>
             <Stack.Screen name='ListingEdit' component={ListingEditScreen} 
                 options={{

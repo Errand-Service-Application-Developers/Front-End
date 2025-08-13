@@ -181,7 +181,7 @@ function AccountScreen({ navigation }) {
                             subtitle="Saved items"
                             icon="heart-outline"
                             color="#E91E63"
-                            onPress={() => {/* Navigate to wishlist */}}
+                            onPress={() => navigation.navigate(screenRoute.FAVORITES)}
                         />
                         <ActionButton
                             title="Address Book"

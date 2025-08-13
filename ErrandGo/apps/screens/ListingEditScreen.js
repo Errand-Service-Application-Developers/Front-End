@@ -6,6 +6,7 @@ import LottieView from 'lottie-react-native';
 
 import Screen from './Screen';
 import { AppForm, AppFormField, SubmitButton} from '../components/forms'
+import AppFormSwitch from '../components/forms/AppFormSwitch';
 import AppFormPicker from '../components/forms/AppFormPicker';
 import FormImagePicker from '../components/forms/FormImagePicker';
 import CategoryPickerItem from '../components/CategoryPickerItem';
@@ -22,6 +23,7 @@ const validationSchema = Yup.object().shape({
     inventory: Yup.number().required().min(0).label('Inventory'),
     collection: Yup.object().required().nullable().label('Collection'),
     unit_price: Yup.number().required().min(1).label('Unit Price'),
+    is_active: Yup.boolean().label('Published'),
     image_uploads: Yup.array().min(0,"Images are optional").max(5,"You can select up to 5 images")
 })
 
@@ -102,15 +104,24 @@ function ListingEditScreen({ route, navigation }) {
         setShowSuccessAnimation(false);
 
         try {
-            // Transform the listing data to match the new API structure
-            const productData = {
-                title: listing.title,
-                description: listing.description,
-                inventory: parseInt(listing.inventory) || 0,
-                unit_price: parseFloat(listing.unit_price) || 0,
-                collection: listing.collection?.id || null,
-                image_uploads: listing.image_uploads || []
-            };
+            // Only allow specific fields to be sent to backend
+            const allowedFields = ['title', 'description', 'inventory', 'unit_price', 'collection', 'is_active', 'image_uploads'];
+            const productData = {};
+            allowedFields.forEach(field => {
+                if (field === 'inventory') {
+                    productData[field] = parseInt(listing[field]) || 0;
+                } else if (field === 'unit_price') {
+                    productData[field] = parseFloat(listing[field]) || 0;
+                } else if (field === 'collection') {
+                    productData[field] = listing.collection?.id || null;
+                } else if (field === 'is_active') {
+                    productData[field] = typeof listing.is_active === 'boolean' ? listing.is_active : true;
+                } else if (field === 'image_uploads') {
+                    productData[field] = listing.image_uploads || [];
+                } else {
+                    productData[field] = listing[field];
+                }
+            });
 
             let result;
             
@@ -124,11 +135,8 @@ function ListingEditScreen({ route, navigation }) {
                     (uploadProgress) => {
                         console.log("Upload progress:", uploadProgress);
                         setProgress(uploadProgress);
-                        
-                        // Animate progress more slowly and smoothly
-                        // Add a slight delay and smooth animation
                         setTimeout(() => {
-                            animateProgress(uploadProgress * 0.9); // Show 90% during upload
+                            animateProgress(uploadProgress * 0.9);
                         }, 200);
                     }
                 );
@@ -148,24 +156,17 @@ function ListingEditScreen({ route, navigation }) {
             }
 
             if (isEditing) {
-                // For editing, show immediate success and navigate back
                 setUploadVisible(false);
                 setShowSuccessAnimation(true);
-                
                 setTimeout(() => {
                     setShowSuccessAnimation(false);
-                    navigation.goBack(); // Go back to user products screen
+                    navigation.goBack();
                 }, 2000);
             } else {
-                // For adding, show progress animation
                 animateProgress(1);
-                
-                // Wait for progress to complete, then show success animation
                 setTimeout(() => {
                     setUploadVisible(false);
                     setShowSuccessAnimation(true);
-                    
-                    // Hide success animation and reset form after showing it
                     setTimeout(() => {
                         setShowSuccessAnimation(false);
                         actions.resetForm();
@@ -173,9 +174,8 @@ function ListingEditScreen({ route, navigation }) {
                         if (progressInterval.current) {
                             clearInterval(progressInterval.current);
                         }
-                    }, 2000); // Show success animation for 2 seconds
-                    
-                }, 3000); // Wait 3 seconds for progress to complete
+                    }, 2000);
+                }, 3000);
             }
 
         } catch (error) {
@@ -243,6 +243,7 @@ function ListingEditScreen({ route, navigation }) {
                 inventory: editingProduct?.inventory?.toString() || "",
                 collection: editingProduct?.collection || null,
                 unit_price: editingProduct?.unit_price?.toString() || "",
+                is_active: typeof editingProduct?.is_active === 'boolean' ? editingProduct.is_active : true,
                 image_uploads: []
               }}
               onSubmit={handleSubmit}
@@ -290,6 +291,7 @@ function ListingEditScreen({ route, navigation }) {
                 placeholder="Collection"
                 style={styles.input}
               />
+              <AppFormSwitch name="is_active" label="Published (Visible to customers)" style={{ marginVertical: 10 }} />
               <SubmitButton title={isEditing ? "Update Product" : "Add Product"} style={styles.submitButton} />
             </AppForm>
           </View>

@@ -13,5 +13,6 @@ export default Object.freeze( {
     CURRENT_USER_REVIEW : 'CurrentUserReview',
     CURRENT_USER_REVIEW_DATAILS:'CurrentUserReviewDetails',
     USER_PRODUCTS: 'UserProducts',
-    PAYMENT_METHODS: 'PaymentMethods'
+    PAYMENT_METHODS: 'PaymentMethods',
+    FAVORITES: 'Favorites'
 })

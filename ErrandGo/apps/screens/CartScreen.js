@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, Alert, Image, TouchableOpacity } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import cartApi from '../api/cart';
 import shopApi from '../api/shop';
 import colors from '../config/colors';
 
 const CartScreen = () => {
+  const navigation = useNavigation();
   const [cart, setCart] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -149,7 +150,10 @@ const CartScreen = () => {
       />
       <View style={styles.totalContainer}>
         <Text style={styles.totalText}>Total: ${cart.total_price}</Text>
-        <TouchableOpacity style={styles.checkoutButton}>
+        <TouchableOpacity
+          style={styles.checkoutButton}
+          onPress={() => navigation.navigate('Checkout', { cartId: cart.id, cartItems: cart.items })}
+        >
           <Text style={styles.checkoutText}>Checkout</Text>
         </TouchableOpacity>
       </View>

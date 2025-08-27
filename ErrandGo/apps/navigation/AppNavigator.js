@@ -6,7 +6,7 @@ import * as Permissions from 'expo-permissions'
 
 
 import ListingEditScreen from '../screens/ListingEditScreen';
-import CartScreen from '../screens/CartScreen';
+import CartStackNavigator from './CartStackNavigator';
 import FeedNavigator from './FeedNavigator';
 import AccountNavigator from './AccountNavigator';
 import NewListingButton from '../components/NewListingButton';
@@ -49,8 +49,8 @@ const AppNavigator = () => {
       screenOptions={{ headerShown: false }}
     >
       <Tab.Screen
-        name="Cart"
-        component={CartScreen}
+  name="Cart"
+  component={CartStackNavigator}
         options={{
           tabBarLabel: 'Cart',
           tabBarIcon: ({ color, size }) => (

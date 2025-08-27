@@ -16,6 +16,8 @@ import UserTaskDetails from '../screens/UserTaskDetails';
 import CurrentUserReviewScreen from '../screens/CurrentUserReviewScreen';
 import CurrentUserReviewDetailsScreen from '../screens/CurrentUserReviewDetailsScreen';
 import UserProductsScreen from '../screens/UserProductsScreen';
+import OrdersScreen from '../screens/OrdersScreen';
+import OrderDetailsScreen from '../screens/OrderDetailsScreen';
 import colors from '../config/colors';
 
 
@@ -118,6 +120,22 @@ const AccountNavigator = () => {
                     headerTintColor: "white",
                     headerShown: true,
                     title:'Debit Cards',
+                }}
+            />
+            <Stack.Screen name='Orders' component={OrdersScreen} 
+                options={{
+                    headerStyle: {backgroundColor:colors.primary},
+                    headerTintColor: "white",
+                    headerShown: true,
+                    title:'My Orders',
+                }}
+            />
+            <Stack.Screen name='OrderDetails' component={OrderDetailsScreen} 
+                options={{
+                    headerStyle: {backgroundColor:colors.primary},
+                    headerTintColor: "white",
+                    headerShown: true,
+                    title:'Order Details',
                 }}
             />
         </Stack.Navigator>

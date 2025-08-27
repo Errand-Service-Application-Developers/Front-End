@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, ScrollView, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, View, FlatList, Text, TouchableOpacity, Dimensions } from 'react-native';
 import Constants from 'expo-constants';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -108,167 +108,178 @@ function AccountScreen({ navigation }) {
         </TouchableOpacity>
     );
 
+    // Compose all sections into a header for FlatList
+    const renderHeader = () => (
+        <>
+            {/* Header Profile Section */}
+            <View style={styles.headerContainer}>
+                <View style={styles.profileSection}>
+                    <View style={styles.profileImageContainer}>
+                        <MaterialCommunityIcons name="account-circle" size={80} color={colors.primary} />
+                        <TouchableOpacity style={styles.editProfileButton}>
+                            <MaterialCommunityIcons name="pencil" size={16} color={colors.white} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.profileInfo}>
+                        <View style={styles.userNameRow}>
+                            <Text style={styles.userName}>{userDetails?.user?.username || user?.username || 'User'}</Text>
+                            {userDetails?.membership && (
+                                <View style={styles.membershipBadge}>
+                                    <Text style={styles.membershipText}>{userDetails.membership}</Text>
+                                </View>
+                            )}
+                        </View>
+                        <Text style={styles.memberSince}>
+                            Member since {userDetails?.user?.date_joined ? new Date(userDetails.user.date_joined).getFullYear() : '2024'}
+                        </Text>
+                    </View>
+                </View>
+            </View>
+
+            {/* Stats Section */}
+            <View style={styles.statsContainer}>
+                <Text style={styles.sectionTitle}>Your Activity</Text>
+                <View style={styles.statsRow}>
+                    <StatCard
+                        title="Orders"
+                        value={stats.totalOrders}
+                        icon="shopping"
+                        color={colors.primary}
+                        onPress={() => navigation.navigate(screenRoute.CURRENT_USER_HISTORY, user)}
+                    />
+                    <StatCard
+                        title="Spent"
+                        value={`₵${stats.totalSpent.toFixed(2)}`}
+                        icon="currency-usd"
+                        color="#4CAF50"
+                    />
+                    <StatCard
+                        title="Products"
+                        value={stats.totalProducts}
+                        icon="package-variant"
+                        color="#FF9800"
+                        onPress={() => navigation.navigate(screenRoute.LISTING_EDIT)}
+                    />
+                </View>
+            </View>
+
+            {/* Shopping Actions */}
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Shopping</Text>
+                <View style={styles.actionContainer}>
+                    <ActionButton
+                        title="My Orders"
+                        subtitle="Track your purchases"
+                        icon="package-variant-closed"
+                        color={colors.primary}
+                        onPress={() => navigation.navigate('Orders')}
+                        showBadge={true}
+                        badgeCount={stats.totalOrders}
+                    />
+                    <ActionButton
+                        title="Wishlist"
+                        subtitle="Saved items"
+                        icon="heart-outline"
+                        color="#E91E63"
+                        onPress={() => navigation.navigate(screenRoute.FAVORITES)}
+                    />
+                    <ActionButton
+                        title="Address Book"
+                        subtitle="Manage delivery addresses"
+                        icon="map-marker-outline"
+                        color="#607D8B"
+                        onPress={() => {/* Navigate to addresses */}}
+                    />
+                </View>
+            </View>
+
+            {/* Seller Actions */}
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Selling</Text>
+                <View style={styles.actionContainer}>
+                    <ActionButton
+                        title="My Products"
+                        subtitle="Manage your listings"
+                        icon="store"
+                        color="#FF9800"
+                        onPress={() => navigation.navigate(screenRoute.USER_PRODUCTS)}
+                        showBadge={true}
+                        badgeCount={stats.totalProducts}
+                    />
+                    <ActionButton
+                        title="Add Product"
+                        subtitle="List a new item"
+                        icon="plus-circle"
+                        color="#4CAF50"
+                        onPress={() => navigation.navigate(screenRoute.LISTING_EDIT)}
+                    />
+                    <ActionButton
+                        title="Sales Analytics"
+                        subtitle="View your performance"
+                        icon="chart-line"
+                        color="#3F51B5"
+                        onPress={() => {/* Navigate to analytics */}}
+                    />
+                </View>
+            </View>
+
+            {/* Account Settings */}
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Account</Text>
+                <View style={styles.actionContainer}>
+                    <ActionButton
+                        title="Profile Settings"
+                        subtitle="Edit your information"
+                        icon="account-edit"
+                        color="#607D8B"
+                        onPress={() => {/* Navigate to profile settings */}}
+                    />
+                    <ActionButton
+                        title="Payment Methods"
+                        subtitle="Cards and payment options"
+                        icon="credit-card-outline"
+                        color="#795548"
+                        onPress={() => navigation.navigate(screenRoute.PAYMENT_METHODS)}
+                    />
+                    <ActionButton
+                        title="Notifications"
+                        subtitle="Manage alerts and updates"
+                        icon="bell-outline"
+                        color="#FF5722"
+                        onPress={() => {/* Navigate to notifications */}}
+                    />
+                    <ActionButton
+                        title="Help & Support"
+                        subtitle="Get assistance"
+                        icon="help-circle-outline"
+                        color="#009688"
+                        onPress={() => {/* Navigate to help */}}
+                    />
+                </View>
+            </View>
+
+            {/* Logout Section */}
+            <View style={styles.logoutSection}>
+                <TouchableOpacity style={styles.logoutButton} onPress={logout}>
+                    <MaterialCommunityIcons name="logout" size={24} color={colors.white} />
+                    <Text style={styles.logoutText}>Log Out</Text>
+                </TouchableOpacity>
+            </View>
+
+            {/* Bottom Spacing */}
+            <View style={styles.bottomSpacing} />
+        </>
+    );
+
     return (
         <Screen style={styles.screen}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                {/* Header Profile Section */}
-                <View style={styles.headerContainer}>
-                    <View style={styles.profileSection}>
-                        <View style={styles.profileImageContainer}>
-                            <MaterialCommunityIcons name="account-circle" size={80} color={colors.primary} />
-                            <TouchableOpacity style={styles.editProfileButton}>
-                                <MaterialCommunityIcons name="pencil" size={16} color={colors.white} />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.profileInfo}>
-                            <View style={styles.userNameRow}>
-                                <Text style={styles.userName}>{userDetails?.user?.username || user?.username || 'User'}</Text>
-                                {userDetails?.membership && (
-                                    <View style={styles.membershipBadge}>
-                                        <Text style={styles.membershipText}>{userDetails.membership}</Text>
-                                    </View>
-                                )}
-                            </View>
-                            <Text style={styles.memberSince}>
-                                Member since {userDetails?.user?.date_joined ? new Date(userDetails.user.date_joined).getFullYear() : '2024'}
-                            </Text>
-                        </View>
-                    </View>
-                </View>
-
-                {/* Stats Section */}
-                <View style={styles.statsContainer}>
-                    <Text style={styles.sectionTitle}>Your Activity</Text>
-                    <View style={styles.statsRow}>
-                        <StatCard
-                            title="Orders"
-                            value={stats.totalOrders}
-                            icon="shopping"
-                            color={colors.primary}
-                            onPress={() => navigation.navigate(screenRoute.CURRENT_USER_HISTORY, user)}
-                        />
-                        <StatCard
-                            title="Spent"
-                            value={`₵${stats.totalSpent.toFixed(2)}`}
-                            icon="currency-usd"
-                            color="#4CAF50"
-                        />
-                        <StatCard
-                            title="Products"
-                            value={stats.totalProducts}
-                            icon="package-variant"
-                            color="#FF9800"
-                            onPress={() => navigation.navigate(screenRoute.LISTING_EDIT)}
-                        />
-                    </View>
-                </View>
-
-                {/* Shopping Actions */}
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Shopping</Text>
-                    <View style={styles.actionContainer}>
-                        <ActionButton
-                            title="My Orders"
-                            subtitle="Track your purchases"
-                            icon="package-variant-closed"
-                            color={colors.primary}
-                            onPress={() => navigation.navigate(screenRoute.CURRENT_USER_HISTORY, user)}
-                            showBadge={true}
-                            badgeCount={stats.totalOrders}
-                        />
-                        <ActionButton
-                            title="Wishlist"
-                            subtitle="Saved items"
-                            icon="heart-outline"
-                            color="#E91E63"
-                            onPress={() => navigation.navigate(screenRoute.FAVORITES)}
-                        />
-                        <ActionButton
-                            title="Address Book"
-                            subtitle="Manage delivery addresses"
-                            icon="map-marker-outline"
-                            color="#607D8B"
-                            onPress={() => {/* Navigate to addresses */}}
-                        />
-                    </View>
-                </View>
-
-                {/* Seller Actions */}
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Selling</Text>
-                    <View style={styles.actionContainer}>
-                        <ActionButton
-                            title="My Products"
-                            subtitle="Manage your listings"
-                            icon="store"
-                            color="#FF9800"
-                            onPress={() => navigation.navigate(screenRoute.USER_PRODUCTS)}
-                            showBadge={true}
-                            badgeCount={stats.totalProducts}
-                        />
-                        <ActionButton
-                            title="Add Product"
-                            subtitle="List a new item"
-                            icon="plus-circle"
-                            color="#4CAF50"
-                            onPress={() => navigation.navigate(screenRoute.LISTING_EDIT)}
-                        />
-                        <ActionButton
-                            title="Sales Analytics"
-                            subtitle="View your performance"
-                            icon="chart-line"
-                            color="#3F51B5"
-                            onPress={() => {/* Navigate to analytics */}}
-                        />
-                    </View>
-                </View>
-
-                {/* Account Settings */}
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Account</Text>
-                    <View style={styles.actionContainer}>
-                        <ActionButton
-                            title="Profile Settings"
-                            subtitle="Edit your information"
-                            icon="account-edit"
-                            color="#607D8B"
-                            onPress={() => {/* Navigate to profile settings */}}
-                        />
-                        <ActionButton
-                            title="Payment Methods"
-                            subtitle="Cards and payment options"
-                            icon="credit-card-outline"
-                            color="#795548"
-                            onPress={() => navigation.navigate(screenRoute.PAYMENT_METHODS)}
-                        />
-                        <ActionButton
-                            title="Notifications"
-                            subtitle="Manage alerts and updates"
-                            icon="bell-outline"
-                            color="#FF5722"
-                            onPress={() => {/* Navigate to notifications */}}
-                        />
-                        <ActionButton
-                            title="Help & Support"
-                            subtitle="Get assistance"
-                            icon="help-circle-outline"
-                            color="#009688"
-                            onPress={() => {/* Navigate to help */}}
-                        />
-                    </View>
-                </View>
-
-                {/* Logout Section */}
-                <View style={styles.logoutSection}>
-                    <TouchableOpacity style={styles.logoutButton} onPress={logout}>
-                        <MaterialCommunityIcons name="logout" size={24} color={colors.white} />
-                        <Text style={styles.logoutText}>Log Out</Text>
-                    </TouchableOpacity>
-                </View>
-
-                {/* Bottom Spacing */}
-                <View style={styles.bottomSpacing} />
-            </ScrollView>
+            <FlatList
+                data={[]}
+                keyExtractor={() => 'dummy'}
+                renderItem={null}
+                ListHeaderComponent={renderHeader}
+                showsVerticalScrollIndicator={false}
+            />
         </Screen>
     );
 }

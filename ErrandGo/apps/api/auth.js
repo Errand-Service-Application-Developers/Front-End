@@ -1,8 +1,9 @@
 import { create } from 'apisauce'
 import authStorage from '../auth/storage';
 
+
 const apiClient = create({
-    baseURL: 'http://192.168.126.239:8050',
+    baseURL: 'https://e-commerce-ud7p.onrender.com',
 })
 
 // Add authentication to all requests

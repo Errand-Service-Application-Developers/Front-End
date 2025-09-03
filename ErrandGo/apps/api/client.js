@@ -5,7 +5,7 @@ import authStorage from '../auth/storage';
 
 
 const apiClient = create({
-    baseURL: 'http://192.168.126.239:8050/shop',
+    baseURL: 'https://e-commerce-ud7p.onrender.com/shop',
 });
 
 // Override methods to include authentication
